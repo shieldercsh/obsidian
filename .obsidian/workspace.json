@@ -1,0 +1,214 @@
+{
+  "main": {
+    "id": "3717fc9bb16edd14",
+    "type": "split",
+    "children": [
+      {
+        "id": "b7b6bf7bba89896c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "96b7c0a92b05ce01",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2531e6ea76ae09bd",
+    "type": "split",
+    "children": [
+      {
+        "id": "a52b9de74aa09a71",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e4847daf8b231e93",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "0a877ff617e8f6ee",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "7651ea9f34c05308",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "548f73b250110f77",
+    "type": "split",
+    "children": [
+      {
+        "id": "511327d55e75e632",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b0ca1475eb5f5467",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "7ea41e6bb6b49458",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "3a21b65f50dfc0f5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "1ee2033148da9de5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "e4847daf8b231e93",
+  "lastOpenFiles": [
+    "pwnable.kr/rand.md",
+    "pwnable.kr/passcode.md",
+    "pwnable.kr",
+    "image/Pasted image 20250125183042.png",
+    "image/Pasted image 20250213193901.png",
+    "image/Pasted image 20250125184125.png",
+    "image/Pasted image 20250125183539.png",
+    "image/Pasted image 20250125183214.png",
+    "image/Pasted image 20250125183020.png",
+    "image/Pasted image 20240920230324.png",
+    "image/Pasted image 20250125182956.png",
+    "image/Pasted image 20250124214236.png",
+    "image/Pasted image 20240920230208.png",
+    "image",
+    "FSOP/stdout.md",
+    "FSOP/stderr.md",
+    "FSOP",
+    "Dreamhack/writeup/pwn/yisf_hospital.md",
+    "Dreamhack/writeup/pwn/ultra_c.md",
+    "Dreamhack/writeup/pwn/shiftalloc.md",
+    "Dreamhack/writeup/pwn/pop rdi.md",
+    "Dreamhack/writeup/pwn/operator.md",
+    "Dreamhack/writeup/pwn/oob.md",
+    "Dreamhack/writeup/pwn/ROT-253.md",
+    "Dreamhack/writeup/pwn/Pet Pals.md",
+    "Dreamhack/writeup/pwn/Period.md",
+    "Dreamhack/writeup/pwn/PAC-MAN.md",
+    "Dreamhack/writeup/pwn/ODS 1.md",
+    "Dreamhack/writeup/pwn/note.md",
+    "Dreamhack/writeup/pwn/msg_msg.md",
+    "Dreamhack/writeup/pwn/Mili.md",
+    "Dreamhack/writeup/pwn/kapomarket.md",
+    "Dreamhack/writeup/pwn/kapocasino.md",
+    "Dreamhack/writeup/pwn/IhrVertra.md",
+    "Dreamhack/writeup/pwn/Flip and Probe 2.md",
+    "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
+    "Dreamhack/writeup/crypto/AB84.md",
+    "Dreamhack/writeup/pwn",
+    "Dreamhack/writeup/crypto",
+    "Dreamhack/my_problem/send_safe.md",
+    "Dreamhack/my_problem/random_calculator.md",
+    "Dreamhack/writeup",
+    "Dreamhack/my_problem",
+    "Dreamhack/brainstorming",
+    "Dreamhack",
+    "CTF/2024 JBU-CTF"
+  ]
+}
