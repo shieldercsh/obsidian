@@ -3,16 +3,19 @@
 `write` 함수를 실행할 수 있다고 하자. 그럼 `libc` 함수를 출력해야 하므로 `rdi`, `rsi`, `rdx`를 변경해야 한다. `rdi`는 `main`에서 변조가 가능한데, 나머지 두 개가 문제다. `write` 내부를 보면 다음과 같은 로직이 있다.
 ```
 0x0000000000114a44 <+36>:    mov    QWORD PTR [rsp+0x18],rdx
-   0x0000000000114a49 <+41>:    mov    QWORD PTR [rsp+0x10],rsi
-   0x0000000000114a4e <+46>:    mov    DWORD PTR [rsp+0x8],edi
-   0x0000000000114a52 <+50>:    call   0x90a70
-   0x0000000000114a57 <+55>:    mov    rdx,QWORD PTR [rsp+0x18]
-   0x0000000000114a5c <+60>:    mov    rsi,QWORD PTR [rsp+0x10]
-   0x0000000000114a61 <+65>:    mov    r8d,eax
-   0x0000000000114a64 <+68>:    mov    edi,DWORD PTR [rsp+0x8]
-   0x0000000000114a68 <+72>:    mov    eax,0x1
-   0x0000000000114a6d <+77>:    syscall
+0x0000000000114a49 <+41>:    mov    QWORD PTR [rsp+0x10],rsi
+0x0000000000114a4e <+46>:    mov    DWORD PTR [rsp+0x8],edi
+0x0000000000114a52 <+50>:    call   0x90a70
+0x0000000000114a57 <+55>:    mov    rdx,QWORD PTR [rsp+0x18]
+0x0000000000114a5c <+60>:    mov    rsi,QWORD PTR [rsp+0x10]
+0x0000000000114a61 <+65>:    mov    r8d,eax
+0x0000000000114a64 <+68>:    mov    edi,DWORD PTR [rsp+0x8]
+0x0000000000114a68 <+72>:    mov    eax,0x1
+0x0000000000114a6d <+77>:    syscall
 ```
+
+윗 부분과 아랫 부분이 어떤 행동을 하는지 감이 올 것이다. 여기서 `rdx`랑 `rsi`를 불러오는 곳에 값을 입력하고 `write + 46`으로 뛰고 
+
 # exploit
 
 ```python
