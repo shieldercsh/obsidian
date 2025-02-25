@@ -21,7 +21,7 @@
 
 `libc` 릭이 끝났다. 이제 `pop rsi ; ret`과 `syscall` 가젯이 있다. 근데 `pop rdi ; ret` 가젯이 없다. 사실 있는데 필자가 이 문제를 8시간 째 푸는 중이라 정신이 없는 상태에서
 `ROPgadget --binary libc.so.6 | grep "pop rdx ; ret"`
-이렇게만 찾고 없어서 그냥 없다고 착각해버렸다. 그래서 `pop rdx` 가젯 없이 orw 코드를 짜야했다. `open`은 `rdx`를 안 쓰니까 그냥 하고, `bss`에 값을 
+이렇게만 찾고 없어서 그냥 없다고 착각해버렸다. 그래서 `pop rdx` 가젯 없이 orw 코드를 짜야했다. `open`은 `rdx`를 안 쓰니까 그냥 하고, `bss`에 값을 의도적으로 넣어서 스택 이동을 생각해주면 `main`의 `read`를 방금 열은 `flag`파일을 읽는데 사용하고 다시 `ROP`를 할 수 있게 된다. `write`는 `rdx`가 필요해서 
 
 # exploit
 
