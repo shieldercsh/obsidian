@@ -19,7 +19,9 @@
 `add dword ptr [rbp - 0x3d], ebx ; nop ; ret`
 이 가젯을 4번 써야 한다. 정말 귀찮았다.
 
-`libc` 릭이 끝났다. 이제 `pop rdi ; ret`과 `pop rsi ; ret`
+`libc` 릭이 끝났다. 이제 `pop rsi ; ret`과 `syscall` 가젯이 있다. 근데 `pop rdi ; ret` 가젯이 없다. 사실 있는데 필자가 이 문제를 8시간 째 푸는 중이라 정신이 없는
+`ROPgadget --binary libc.so.6 | grep "pop rdx ; ret"`
+이렇게만 찾고 없어서 
 
 # exploit
 
