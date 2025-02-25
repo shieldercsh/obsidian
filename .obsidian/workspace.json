@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/writeup/pwn/bytechanger.md",
+                "file": "Dreamhack/writeup/pwn/void.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "bytechanger"
+              "title": "void"
             }
           }
         ]
@@ -178,8 +178,9 @@
   },
   "active": "96b7c0a92b05ce01",
   "lastOpenFiles": [
-    "hello.md",
     "Dreamhack/writeup/pwn/bytechanger.md",
+    "Dreamhack/writeup/pwn/void.md",
+    "hello.md",
     "pwnable.kr/rand.md",
     "pwnable.kr/passcode.md",
     "pwnable.kr",
@@ -216,7 +217,6 @@
     "Dreamhack/writeup/pwn/IhrVertra.md",
     "Dreamhack/writeup/pwn/Flip and Probe 2.md",
     "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
-    "Dreamhack/writeup/crypto/AB84.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
