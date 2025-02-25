@@ -14,14 +14,14 @@
 0x0000000000114a6d <+77>:    syscall
 ```
 
-윗 부분과 아랫 부분이 어떤 행동을 하는지 감이 올 것이다. 여기서 `rdx`랑 `rsi`를 불러오는 스택에 값을 입력하고 `write + 46`으로 뛰면 `rsi`, `rdx`를 원하는대로 설정할 수 있다.
+윗 부분과 아랫 부분이 어떤 행동을 하는지 감이 올 것이다. 여기서 `rdx`랑 `rsi`를 불러오는 `bss`에 값을 입력하고 `write + 46`으로 뛰면 `rsi`, `rdx`를 원하는대로 설정할 수 있다.
 근데 이러면
 `add dword ptr [rbp - 0x3d], ebx ; nop ; ret`
 이 가젯을 4번 써야 한다. 정말 귀찮았다.
 
-`libc` 릭이 끝났다. 이제 `pop rsi ; ret`과 `syscall` 가젯이 있다. 근데 `pop rdi ; ret` 가젯이 없다. 사실 있는데 필자가 이 문제를 8시간 째 푸는 중이라 정신이 없는
+`libc` 릭이 끝났다. 이제 `pop rsi ; ret`과 `syscall` 가젯이 있다. 근데 `pop rdi ; ret` 가젯이 없다. 사실 있는데 필자가 이 문제를 8시간 째 푸는 중이라 정신이 없는 상태에서
 `ROPgadget --binary libc.so.6 | grep "pop rdx ; ret"`
-이렇게만 찾고 없어서 
+이렇게만 찾고 없어서 그냥 없다고 착각해버렸다. 그래서 `pop rdx` 가젯 없이 orw 코드를 짜야했다. `open`은 `rdx`를 안 쓰니까 그냥 하고, `bss`에 값을 
 
 # exploit
 
