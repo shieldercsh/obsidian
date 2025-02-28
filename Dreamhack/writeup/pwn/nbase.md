@@ -11,4 +11,4 @@
 0x7fffffffc8c0: 0x00007fffffffc900      0x00007fffffffc9d8
 ```
 
-`0x7fffffffc850`에 `unsigned long long int `
+`0x7fffffffc850`에 `unsigned long long int k[16];`이 선언되어있다고 가정하자. `k[0] ~ k[7]`은 0으로 초기화되고, `k[8], k[10], k[12], k[14], k[15]`은 스택 관련 주소, `k[9]`는 카나리, 
