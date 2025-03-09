@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/stderr.md",
+                "file": "Dreamhack/writeup/pwn/sandrop.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "stderr"
+              "title": "sandrop"
             }
           }
         ]
@@ -178,6 +178,8 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
+    "FSOP/stderr.md",
+    "Dreamhack/writeup/pwn/sandrop.md",
     "FSOP/stdout.md",
     "pwnable.kr/rand.md",
     "pwnable.kr/passcode.md",
@@ -198,7 +200,6 @@
     "image/Pasted image 20250125182956.png",
     "image/Pasted image 20250124214236.png",
     "image",
-    "FSOP/stderr.md",
     "FSOP",
     "Dreamhack/writeup/pwn/yisf_hospital.md",
     "Dreamhack/writeup/pwn/ultra_c.md",
@@ -216,7 +217,6 @@
     "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
     "Dreamhack/writeup/pwn/kapocasino.md",
-    "Dreamhack/writeup/pwn/IhrVertra.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
