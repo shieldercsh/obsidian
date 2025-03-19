@@ -23,10 +23,10 @@ Seoul National University 25, Energy Resources Engineering Major
 - [random_calculator](https://dreamhack.io/wargame/challenges/1408)
 
 #### CTF
-- 2024 PwnSec CTF Organizer
-- [secure and simple](https://dreamhack.io/wargame/challenges/1737)
-- [themeviewer](https://dreamhack.io/wargame/challenges/1726)
-- [admin console](https://dreamhack.io/wargame/challenges/1725)
+- 2024 WaRP CTF Organizer
+	- [crosssssstack](https://dreamhack.io/wargame/challenges/1727)
+	- [themeviewer](https://dreamhack.io/wargame/challenges/1726)
+	- [admin console](https://dreamhack.io/wargame/challenges/1725)
 
 ---
 # Research
