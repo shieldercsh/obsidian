@@ -163,23 +163,23 @@ _IO_wdoallocbuf (FILE *fp)
 libc_hidden_def (_IO_wdoallocbuf)
 ```
 
-_IO_WDOALLOCATE (fp)를 실행시키고자 한다.
+\_IO\_WDOALLOCATE (fp)를 실행시키고자 한다.
 
-if (fp->_wide_data->_IO_buf_base) 를 만족하지 않아야 한다.
+if (fp->\_wid\e_data->\_IO\_buf\_base) 를 만족하지 않아야 한다.
 
-if (!(fp->_flags & _IO_UNBUFFERED)) 을 만족해야 한다. ( (fp->_flags & _IO_UNBUFFERED) == 0 )
+if (!(fp->\_flags & \_IO\_UNBUFFERED)) 을 만족해야 한다. ( (fp->\_flags & \_IO\_UNBUFFERED) == 0 )
 
-이 때 _IO_WDOALLOCATE은 _IO_wide_data의 vtable을 참조하는 매크로이다. 따라서 FSOP가 성립한다.
+이 때 \_IO\_WDOALLOCATE은 \_IO\_wide\_data의 vtable을 참조하는 매크로이다. 따라서 FSOP가 성립한다.
 
-문제에서 접근할 때, puts, write, scanf는 내부적으로 vtable의 함수를 호출하는데 이들을 잘 조작해서 _IO_wfile_overflow가 호출되도록 하면 된다. _IO_wfile_overflow는 _IO_validate_vtable에 걸리지 않는 유효한 범위에 있으므로 가능하다.
+문제에서 접근할 때, puts, write, scanf는 내부적으로 vtable의 함수를 호출하는데 이들을 잘 조작해서 \_IO\_wfile\_overflow가 호출되도록 하면 된다. \_IO\_wfile\_overflow는 \_IO\_validate\_vtable에 걸리지 않는 유효한 범위에 있으므로 가능하다.
 
-한 줄로 정리하자면 fp -> _wide_data(변조) -> _wide_vtable(변조) -> one_gadget or system with fp = ';sh'
+한 줄로 정리하자면 fp -> \_wide\_data(변조) -> \_wide\_vtable(변조) -> one_gadget or system with fp = ';sh'
 
 ---
 
 puts를 기준으로 정리해보자.
 
-```javascript
+```python
 def FSOP_struct(flags=0, _IO_read_ptr=0, _IO_read_end=0, _IO_read_base=0,
                 _IO_write_base=0, _IO_write_ptr=0, _IO_write_end=0, _IO_buf_base=0, _IO_buf_end=0,
                 _IO_save_base=0, _IO_backup_base=0, _IO_save_end=0, _markers=0, _chain=0, _fileno=0,
