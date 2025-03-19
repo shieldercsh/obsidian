@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2025 irisCTF.md",
+                "file": "CTF/2024 whitehat quals.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 irisCTF"
+              "title": "2024 whitehat quals"
             }
           }
         ]
@@ -178,6 +178,8 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
+    "CTF/2025 irisCTF.md",
+    "CTF/2024 whitehat quals.md",
     "pwnable.kr/rand.md",
     "pwnable.kr/passcode.md",
     "Dreamhack/writeup/pwn/nbase.md",
@@ -215,8 +217,6 @@
     "Dreamhack/writeup/pwn/pop rdi.md",
     "Dreamhack/writeup/pwn/operator.md",
     "Dreamhack/writeup/pwn/oob.md",
-    "Dreamhack/writeup/pwn/ROT-253.md",
-    "Dreamhack/writeup/pwn/Pet Pals.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
