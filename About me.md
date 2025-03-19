@@ -9,5 +9,6 @@ Seoul National University, Energy Resources Engineering Major, class of 2029
 ## Social
 
 Mail : shieldercsh@gmail.com / whites0701@snu.ac.kr
-Github : github.com/shieldercsh
-Blog : 
+Github : https://github.com/shieldercsh
+Blog : https://shielder.tistory.com/
+Discord : shielder(guardianch)
