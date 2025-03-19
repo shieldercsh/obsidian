@@ -20,21 +20,8 @@
               "icon": "lucide-file",
               "title": "Chat with Me"
             }
-          },
-          {
-            "id": "c86cea0a2f1dc4ab",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.8.9"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.9"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -189,7 +176,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c86cea0a2f1dc4ab",
+  "active": "acd70bb0741dc727",
   "lastOpenFiles": [
     "Dreamhack/writeup/pwn/sandrop.md",
     "Dreamhack/writeup/pwn/Chat with Me.md",
