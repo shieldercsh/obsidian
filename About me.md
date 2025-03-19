@@ -7,6 +7,14 @@ Gyeonggi Science High School 40th
 Seoul National University 25, Energy Resources Engineering Major
 
 ---
+# Competition
+
+- 2023 Whitehat Contest Finalist
+- 2024 CCE Finalist
+- 2024 JBU CTF 1st place
+- 2025 Soongsil University SSU CTF 4th place
+
+---
 # Research
 
 ### Awards
