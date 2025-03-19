@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/writeup/pwn/Flip and Probe 2.md",
+                "file": "Dreamhack/writeup/pwn/kapocasino.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Flip and Probe 2"
+              "title": "kapocasino"
             }
           }
         ]
@@ -176,8 +176,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e4847daf8b231e93",
+  "active": "acd70bb0741dc727",
   "lastOpenFiles": [
+    "Dreamhack/writeup/pwn/IhrVertra.md",
+    "Dreamhack/writeup/pwn/Flip and Probe 2.md",
     "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
     "Dreamhack/writeup/pwn/Chat with Me.md",
     "Dreamhack/writeup/pwn/bytechanger.md",
@@ -202,8 +204,6 @@
     "FSOP/stderr.md",
     "CTF/2025 nullcon CTF.md",
     "pwnable.kr/rand.md",
-    "pwnable.kr/passcode.md",
-    "Dreamhack/writeup/pwn/nbase.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
