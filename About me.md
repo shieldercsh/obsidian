@@ -7,12 +7,29 @@ Gyeonggi Science High School 40th
 Seoul National University 25, Energy Resources Engineering Major
 
 ---
-# Competition
+# Cybersecurity
+
+### Competition
 
 - 2023 Whitehat Contest Finalist
 - 2024 CCE Finalist
 - 2024 JBU CTF 1st place
 - 2025 SSU CTF 4th place
+
+### Authored Problems
+
+#### Wargame
+
+- [jsdoc](https://dreamhack.io/wargame/challenges/1135)
+- [development-env](https://dreamhack.io/wargame/challenges/783)
+
+▼
+
+#### CTF
+
+- [secure and simple](https://dreamhack.io/wargame/challenges/1737)
+- [themeviewer](https://dreamhack.io/wargame/challenges/1726)
+- [admin console](https://dreamhack.io/wargame/challenges/1725)
 
 ---
 # Research
