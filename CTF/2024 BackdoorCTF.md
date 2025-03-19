@@ -20,7 +20,7 @@ pwn 1 solve, misc 1 solve
 
 ## 보호기법
 
-```
+```bash
 csh@csh:/mnt/d/hk/_contest/2024BackdoorCTF/Merry Christmas$ file chall
 chall: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter ./ld-linux-x86-64.so.2, BuildID[sha1]=0b093ff583da42e2eac9417c897072627959eab5, for GNU/Linux 3.2.0, not stripped
 
@@ -42,7 +42,7 @@ csh@csh:/mnt/d/hk/_contest/2024BackdoorCTF/Merry Christmas$ checksec chall
 
 `main`에서 `Christmas` 를 실행한다.
 
-```
+```C
 int Christmas()
 {
   char s[8]; // [rsp+8h] [rbp-88h] BYREF
@@ -76,7 +76,7 @@ int Christmas()
 
 `s` is declared as 8 bytes, but since it receives 9 bytes, `off-by-one` occurs. And, `v2` is declared after `s` on the stack. Since the second letter of `v2` is p, if the 9th byte is input as %, `v2` becomes %p... and `fsb` occurs. So we can get the stack address.
 
-```
+```C
 int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
 {
   char s[140]; // [rsp+0h] [rbp-90h] BYREF
@@ -119,7 +119,7 @@ In `printf(s);`, `fsb` occurs. However, since `stdout` is closed in `main`, we c
 
 ## 익스플로잇 설계
 
-```
+```asm
 0x7ffff7e165ca <__vfprintf_internal+218>    pop    rbx     RBX => 0x7fffffffc8c8
 0x7ffff7e165cb <__vfprintf_internal+219>    pop    r12     R12 => 1
 0x7ffff7e165cd <__vfprintf_internal+221>    pop    r13     R13 => 0
@@ -135,7 +135,7 @@ In `printf(s);`, `fsb` occurs. However, since `stdout` is closed in `main`, we c
 
 At the end of `__vfprintf_internal`, it does `pop rbx`, `pop r12` to recover registers. Since we can use `fsb`, we can make `rbx` and `r12` NULL, so I used the following one\_gadget.
 
-```
+```bash
 0xef4ce execve("/bin/sh", rbp-0x50, r12)
 constraints:
   address rbp-0x48 is writable
