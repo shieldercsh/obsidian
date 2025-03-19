@@ -19,7 +19,7 @@ glibc 버전이 높아지면서 vtable을 변조하면 IO_validate_vtable에 의
 
 \_IO\_FILE 구조체를 살펴보면
 
-```javascript
+```C
 struct _IO_FILE
 {
   int _flags;		/* High-order word is _IO_MAGIC; rest is flags. */
@@ -66,9 +66,9 @@ struct _IO_FILE_complete
 struct _IO_wide_data *_wide_data;
 ```
 
-여기에 _IO_wide_data 가 있음을 알 수 있다.
+여기에 \_IO\_wide\_data 가 있음을 알 수 있다.
 
-```javascript
+```C
 struct _IO_wide_data
 {
   wchar_t *_IO_read_ptr;	/* Current read pointer */
@@ -95,15 +95,15 @@ struct _IO_wide_data
 };
 ```
 
-여기서 _wide_vtable을 확인할 수 있다. 즉, fp->_wide_data->_wide_vtable을 변조할 수 있다면 항상 익스 가능하다.
+여기서 \_wide\_vtable을 확인할 수 있다. 즉, fp->\_wide\_data->\_wide\_vtable을 변조할 수 있다면 항상 익스 가능하다.
 
 ---
 
-_IO_wfile_overflow
+# \_IO\_wfile\_overflow
 
 이제 함수를 분석해보자.
 
-```javascript
+```C
 wint_t
 _IO_wfile_overflow (f, wch)
      _IO_FILE *f;
@@ -138,17 +138,17 @@ _IO_wfile_overflow (f, wch)
 libc_hidden_def (_IO_wfile_overflow)
 ```
 
-_IO_wdoallocbuf(f)를 실행시키고자 한다.
+\_IO\_wdoallocbuf(f)를 실행시키고자 한다.
 
-if (f->_flags & _IO_NO_WRITES) 를 만족하지 않아야 한다.
+if (f->\_flags & \_IO\_NO\_WRITES) 를 만족하지 않아야 한다.
 
-if ((f->_flags & _IO_CURRENTLY_PUTTING) == 0) 를 만족해야 한다.
+if ((f->\_flags & \_IO\_CURRENTLY\_PUTTING) == 0) 를 만족해야 한다.
 
-if (f->_wide_data->_IO_write_base == 0) 를 만족해야 한다.
+if (f->\_wide\_data->\_IO\_write\_base == 0) 를 만족해야 한다.
 
 모두 만족했다면, 해당 함수로 들어간다.
 
-```javascript
+```C
 void
 _IO_wdoallocbuf (FILE *fp)
 {
