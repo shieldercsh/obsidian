@@ -219,4 +219,4 @@ puts는 내부적으로 \*vtable + 0x38에 있는 \_IO\_new\_file\_xsputn를 호
 
 \*\_wide\_data의 offset은 자유롭게 설정할 수 있지만, -0x10이 가장 무난해보인다. 이렇게 설정하면, \_wide\_vtable은 \_unused2의 마지막 부분에 있게 되므로, 이를 \*\_IO\_2\_1\_stdout\_ - 0x8로 바꾼다. 여기서의 offset 또한 자유이지만 가장 직관적인 것을 선택했다.
 
-_IO_WDOALLOCATE는 *wide_vtable + 0x68을 참조하는 매크로이다. 따라서 위와 같이 FSOP를 진행했다면 *_IO_2_1_stdout_ + 0x60(- 0x8 + 0x68)인 _markers 부분을 참조하는 것이다. 여기에 system함수나, one_gadget을 넣어 쉘을 딸 수 있다.
+\_IO\_WDOALLOCATE는 \*wide\_vtable + 0x68을 참조하는 매크로이다. 따라서 위와 같이 FSOP를 진행했다면 \*\_IO\_2\_1\_stdout\_ + 0x60(- 0x8 + 0x68)인 \_markers 부분을 참조하는 것이다. 여기에 system함수나, one\_gadget을 넣어 쉘을 딸 수 있다.
