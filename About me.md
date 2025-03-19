@@ -19,8 +19,8 @@ Seoul National University 25, Energy Resources Engineering Major
 ### Authored Problems
 
 #### Wargame
-- [jsdoc](https://dreamhack.io/wargame/challenges/1135)
-- [development-env](https://dreamhack.io/wargame/challenges/783)
+- [send_safe](https://dreamhack.io/wargame/challenges/1174)
+- [random_calculator](https://dreamhack.io/wargame/challenges/1408)
 
 #### CTF
 - [secure and simple](https://dreamhack.io/wargame/challenges/1737)
