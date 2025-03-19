@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2024 niteCTF.md",
+                "file": "CTF/2024 BackdoorCTF.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024 niteCTF"
+              "title": "2024 BackdoorCTF"
             }
           }
         ]
@@ -179,8 +179,11 @@
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
     "CTF/2024 whitehat quals.md",
-    "CTF/2024 niteCTF.md",
+    "CTF/2024 BackdoorCTF.md",
     "CTF/2025 irisCTF.md",
+    "CTF/2025 SSUCTF.md",
+    "CTF/2025 nullcon CTF.md",
+    "CTF/2024 niteCTF.md",
     "pwnable.kr/rand.md",
     "pwnable.kr/passcode.md",
     "Dreamhack/writeup/pwn/nbase.md",
@@ -207,7 +210,6 @@
     "Dreamhack/writeup/pwn/sandrop.md",
     "FSOP/stderr.md",
     "FSOP/stdout.md",
-    "CTF/2025SSUCTF.md",
     "Dreamhack/writeup/pwn/bytechanger.md",
     "hello.md",
     "pwnable.kr",
@@ -215,8 +217,6 @@
     "FSOP",
     "Dreamhack/writeup/pwn/ultra_c.md",
     "Dreamhack/writeup/pwn/shiftalloc.md",
-    "Dreamhack/writeup/pwn/pop rdi.md",
-    "Dreamhack/writeup/pwn/operator.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
