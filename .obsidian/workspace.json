@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/writeup/pwn/yisf_hospital.md",
+                "file": "About Me.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "yisf_hospital"
+              "title": "About Me"
             }
           }
         ]
@@ -176,8 +176,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e4847daf8b231e93",
+  "active": "acd70bb0741dc727",
   "lastOpenFiles": [
+    "Dreamhack/writeup/pwn/yisf_hospital.md",
     "Dreamhack/writeup/pwn/void.md",
     "Dreamhack/writeup/pwn/ultra_c.md",
     "Dreamhack/writeup/pwn/shiftalloc.md",
@@ -203,7 +204,6 @@
     "Dreamhack/writeup/pwn/bytechanger.md",
     "Dreamhack/writeup/crypto/AB84.md",
     "Dreamhack/my prob/send_safe.md",
-    "Dreamhack/my prob/random_calculator.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
