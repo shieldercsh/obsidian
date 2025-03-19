@@ -26,7 +26,7 @@ pwn 3/3
 
 ## 보호기법
 
-```
+```bash
 [*] '/mnt/c/Users/a/Desktop/Wanna Play a Game/chall'
     Arch:       amd64-64-little
     RELRO:      Full RELRO
@@ -40,7 +40,7 @@ PIE가 꺼져있다.
 
 ## 프로그램 분석
 
-```
+```python
 int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
 {
   __int64 v3; // rdi
@@ -71,7 +71,7 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
 
 v4가 1이면 `easy(v3)`가 실행되고, v4가 2면 `hard(v3)`가 실행된다. 익스에서 `easy`는 중요하지 않다.
 
-```
+```C
 unsigned __int64 __fastcall hard(__int64 a1)
 {
   int i; // [rsp+14h] [rbp-2Ch]
@@ -106,7 +106,7 @@ unsigned __int64 __fastcall hard(__int64 a1)
 
 ## dec.py
 
-```
+```python
 from pwn import *
 
 context.terminal = ['tmux', 'splitw', '-h']
@@ -133,7 +133,7 @@ p.interactive()
 
 ## 보호기법
 
-```
+```bash
 [*] '/mnt/c/Users/a/Desktop/Yet Another Format String Bug/yet_another_fsb'
     Arch:       amd64-64-little
     RELRO:      Partial RELRO
@@ -147,7 +147,7 @@ Partial RELRO이고, canary 없고, PIE가 꺼져있다.
 
 ## 프로그램 분석
 
-```
+```C
 int __fastcall main(int argc, const char **argv, const char **envp)
 {
   char buf[270]; // [rsp+0h] [rbp-110h] BYREF
@@ -171,7 +171,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 
 스택에 있는 값을 봤을 때, 한 번의 `FSB`로는 쉘을 딸 수 없었다. 그래서 v5를 변조하는 과정이 필요하다.
 
-```
+```bash
 pwndbg> x/50gx $rsp
 0x7fffffffc700: 0x0000000000000040      0x00007fffffffc7e0
 0x7fffffffc710: 0x00007fffffffc820      0x00007ffff7fe068d
@@ -199,7 +199,7 @@ pwndbg> x/50gx $rsp
 
 ## dec.py
 
-```
+```python
 from pwn import *
 
 context.terminal = ['tmux', 'splitw', '-h']
@@ -240,7 +240,7 @@ p.interactive()
 
 ## 보호기법
 
-```
+```bash
 [*] '/mnt/c/Users/a/Desktop/Recover Your Vision/blind'
     Arch:       amd64-64-little
     RELRO:      Partial RELRO
@@ -254,7 +254,7 @@ p.interactive()
 
 Partial RELRO이고, NX가 꺼져있고, PIE가 없다.
 
-```
+```bash
 line  CODE  JT   JF      K
 =================================
  0000: 0x20 0x00 0x00 0x00000004  A = arch
@@ -276,7 +276,7 @@ read, write, open, close, exit, exit\_group만 허용한다.
 
 ## 프로그램 분석
 
-```
+```C
 int __fastcall main(int argc, const char **argv, const char **envp)
 {
   pthread_t newthread[2]; // [rsp+0h] [rbp-10h] BYREF

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2024 0xl4ughCTF.md",
+                "file": "CTF/Untitled.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024 0xl4ughCTF"
+              "title": "Untitled"
             }
           }
         ]
@@ -178,8 +178,9 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
-    "CTF/2024 BackdoorCTF.md",
     "CTF/2024 0xl4ughCTF.md",
+    "CTF/Untitled.md",
+    "CTF/2024 BackdoorCTF.md",
     "CTF/2024 whitehat quals.md",
     "CTF/2025 irisCTF.md",
     "CTF/2025 SSUCTF.md",
@@ -216,7 +217,6 @@
     "pwnable.kr",
     "image",
     "FSOP",
-    "Dreamhack/writeup/pwn/ultra_c.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
