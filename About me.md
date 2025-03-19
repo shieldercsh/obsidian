@@ -1,4 +1,4 @@
-## PROFILE
+# PROFILE
 
 NAME : 조수호 / shielder
 FIELD : PWN
@@ -7,7 +7,7 @@ Gyeonggi Science High School 40th
 Seoul National University 25, Energy Resources Engineering Major
 
 ---
-## Research
+# Research
 
 ### Awards
 
@@ -21,7 +21,7 @@ Seoul National University 25, Energy Resources Engineering Major
 - Development of a Code Similarity Detection Model Utilizing Abstract Syntax Trees and Graph Embedding (2025). DOI: [10.6109/jkiice.2025.29.1.55](https://doi.org/10.6109/jkiice.2025.29.1.55)
 
 ---
-## Social
+# Social
 
 Mail : shieldercsh@gmail.com / whites0701@snu.ac.kr
 Github : https://github.com/shieldercsh
