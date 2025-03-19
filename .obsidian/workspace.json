@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/writeup/pwn/msg_msg.md",
+                "file": "Dreamhack/writeup/pwn/oob.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "msg_msg"
+              "title": "oob"
             }
           }
         ]
@@ -179,6 +179,9 @@
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
     "Dreamhack/writeup/pwn/ODS 1.md",
+    "Dreamhack/writeup/pwn/note.md",
+    "Dreamhack/writeup/pwn/nbase.md",
+    "Dreamhack/writeup/pwn/msg_msg.md",
     "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
     "Dreamhack/writeup/pwn/kapocasino.md",
@@ -201,9 +204,6 @@
     "CTF/2024 0xl4ugh CTF.md",
     "CTF/2024 WaRP CTF/GoOutside.md",
     "CTF/2024 WaRP CTF/r_jh0213's hip.md",
-    "CTF/2024 WaRP CTF/crosssssstack.md",
-    "FSOP/FSOP.md",
-    "About Me.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
