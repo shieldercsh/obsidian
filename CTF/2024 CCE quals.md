@@ -386,9 +386,9 @@ int main()
 
 그래서인지 실제 바이너리에는 while문에 (idx < 10) 이 조건이 빠져있어서 buffer overflow가 가능하다. 그렇게 Ret2Main, ROP가 가능하다.
 
-저 while문은 어떻게 탈출하나면, 어떤 값을 입력하면 input_list[idx]에 들어가고, 이것은 score_list[idx + 10]과 같으므로, 페이로드를 다 설정하고 엄청 큰 수를 입력하면 score_sum += score_list[idx] 에 의해서 whlie문을 벗어날 수 있다.
+저 while문은 어떻게 탈출하나면, 어떤 값을 입력하면 input_list\[idx\]에 들어가고, 이것은 score_list\[idx + 10\]과 같으므로, 페이로드를 다 설정하고 엄청 큰 수를 입력하면 score_sum += score_list\[idx\] 에 의해서 whlie문을 벗어날 수 있다.
 
-```C
+```bash
 root@csh:/home/csh# checksec chall
 [*] '/home/csh/chall'
     Arch:       amd64-64-little
