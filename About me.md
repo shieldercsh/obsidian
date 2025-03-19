@@ -27,7 +27,7 @@ Seoul National University 25, Energy Resources Engineering Major
 	- [crosssssstack](https://dreamhack.io/wargame/challenges/1727)
 	- [GoOutside](https://dreamhack.io/wargame/challenges/1729)
 	- [r_jh0213's hip](https://dreamhack.io/wargame/challenges/1730)
-	- [r_jh0213's hip](https://dreamhack.io/wargame/challenges/1730)
+	- [justeval](https://dreamhack.io/wargame/challenges/1732)
 
 ---
 # Research
