@@ -213,17 +213,17 @@ __int64 view()
 
 ---
 
-note[-11]에 __dso_handle이 있는데, *__dso_handle=__dso_handle 이므로 pie_base를 얻어낼 수 있을 뿐 아니라, edit에서 여길 변조할 수 있다. note[1]에 주소를 할당하고(size[-11]), edit으로 note[-10]에 note[-8]의 주소를 넣으면 view에서 libc_base를 구할 수 있다.
+note\[-11\]에 \_\_dso\_handle이 있는데, \*\_\_dso\_handle=\_\_dso\_handle 이므로 pie_base를 얻어낼 수 있을 뿐 아니라, edit에서 여길 변조할 수 있다. note\[1\]에 주소를 할당하고(size\[-11\]), edit으로 note\[-10\]에 note\[-8\]의 주소를 넣으면 view에서 libc_base를 구할 수 있다.
 
 &note = pie_base + 0x4060, stdout은 pie_bae + 0x4020에 있다.-> idx = -8
 
-&sizes = pie_base + 0x40c0 -> idx=-8일 때 size가 참조하는 곳이 note[4]이므로 이곳에 먼저 할당해주면 stdout을 변조할만한 사이즈를 입력시킬 수 있다.
+&sizes = pie_base + 0x40c0 -> idx=-8일 때 size가 참조하는 곳이 note\[4\]이므로 이곳에 먼저 할당해주면 stdout을 변조할만한 사이즈를 입력시킬 수 있다.
 
 그 다음은 FSOP이다.
 
 근데 원래하던 FSOP가 작동을 안 한다. fread 때문에 전에 입력했던 '\n'이 들어가는데, 그것 때문에 플래그가 망가지는 것 같다. add rcx 0x10 가젯 필요한 그 FSOP를 써야 하는 것 같다.
 
-```javascript
+```python
 from pwn import *
 context.log_level = "debug"
 
@@ -293,11 +293,9 @@ p.interactive()
 
 ---
 
-Untrusted Compiler
+# Untrusted Compiler
 
-대회 끝나고 1시간 뒤에 푼 문제이다. 굉장히 쉬운 문제였는데 놓쳐서 너무너무너무 아쉽다.
-
-```javascript
+```C
 // gcc -o chall chall.c -no-pie -z relro -O2 -fno-stack-protector
 
 #include <stdio.h>
@@ -390,7 +388,7 @@ int main()
 
 저 while문은 어떻게 탈출하나면, 어떤 값을 입력하면 input_list[idx]에 들어가고, 이것은 score_list[idx + 10]과 같으므로, 페이로드를 다 설정하고 엄청 큰 수를 입력하면 score_sum += score_list[idx] 에 의해서 whlie문을 벗어날 수 있다.
 
-```javascript
+```C
 root@csh:/home/csh# checksec chall
 [*] '/home/csh/chall'
     Arch:       amd64-64-little
@@ -406,7 +404,7 @@ root@csh:/home/csh# checksec chall
 
 Canary도 없고 PIE도 안 걸려있어서, libc_base만 구하면 된다. Ret2Main으로 libc_base를 구하고 main으로 돌아와서 ROP 페이로드를 짜면 된다.
 
-```javascript
+```python
 from pwn import *
 
 typ = 1
