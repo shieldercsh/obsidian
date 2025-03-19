@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/my prob/send_safe.md",
+                "file": "Dreamhack/writeup/crypto/AB84.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "send_safe"
+              "title": "AB84"
             }
           }
         ]
@@ -178,6 +178,7 @@
   },
   "active": "e4847daf8b231e93",
   "lastOpenFiles": [
+    "Dreamhack/my prob/send_safe.md",
     "Dreamhack/my prob/random_calculator.md",
     "CTF/2025 SSU CTF.md",
     "CTF/2025 iris CTF.md",
@@ -213,7 +214,6 @@
     "image/Pasted image 20250124214236.png",
     "image/Pasted image 20240920230324.png",
     "image/Pasted image 20240920230208.png",
-    "Dreamhack/brainstorming/new_problem.md",
     "pwnable.kr",
     "image",
     "FSOP",
