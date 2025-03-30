@@ -75,3 +75,5 @@ p.interactive()
 ---
 
 ## pwn/Magic Palette
+
+`print_palette`에서 `FSB`가 터지는데, 
