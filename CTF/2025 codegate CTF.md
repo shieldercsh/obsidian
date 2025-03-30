@@ -76,4 +76,4 @@ p.interactive()
 
 ## pwn/Magic Palette
 
-`print_palette`에서 ㅇ`FSB`가 터지는데
+`print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다. `k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다.
