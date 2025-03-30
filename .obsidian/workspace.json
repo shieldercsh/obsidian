@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/stderr.md",
+                "file": "FSOP/FSOP.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "stderr"
+              "title": "FSOP"
             }
           }
         ]
@@ -178,6 +178,7 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
+    "FSOP/stderr.md",
     "FSOP/stdout.md",
     "FSOP/FSOP.md",
     "CTF/2025 iris CTF.md",
@@ -203,7 +204,6 @@
     "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
     "Dreamhack/writeup/pwn/kapocasino.md",
-    "Dreamhack/writeup/pwn/IhrVertra.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
