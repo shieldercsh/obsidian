@@ -50,3 +50,4 @@ p.interactive()
 ---
 ## pwn/What's Happening?
 
+pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놨다. 그래서 got overwrite가 된다
