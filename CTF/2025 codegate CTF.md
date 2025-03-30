@@ -188,3 +188,31 @@ print(long_to_bytes(c))
 ---
 ## rev/inital
 
+main만 분석하면 된다. 코드가 짧기 때문에 그냥 역연산해준다.
+
+```python
+from pwn import *
+
+e = ELF('./prob')
+dt = e.read(0x4020, 0x100)
+ans = e.read(0x4120, 0x20)
+
+flag = list()
+
+def f(a1 : int, a2 : int):
+    return ((a1 >> (8 - a2)) | (a1 << a2)) & 0xff
+
+for i in range(32):
+    c = ans[i]
+    c = f(c, i & 6)
+    c = dt.index(c)
+    flag.append(c)
+
+for i in range(31, -1, -1):
+    flag[i] ^= flag[(i + 1) % 32]
+
+for i in range(32):
+    print(chr(flag[i]), end="")
+print()
+```
+
