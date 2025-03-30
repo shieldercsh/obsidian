@@ -23,3 +23,4 @@
 ---
 ## misc/safePythonExecutor
 
+중요한 것은 `RestrictedPython==6.1`이다. CVE를 찾아보니 format, format_map, formatter 쪽에 필터링 실패 취약점이 있다고 한다.
