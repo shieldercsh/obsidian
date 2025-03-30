@@ -76,7 +76,7 @@ p.interactive()
 
 ## pwn/Magic Palette
 
-`print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다. `k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다. `FS`
+`print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다. `k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다. `FSB`가 무제한이므로 릭은 얼마든지 할 수 있다.
 원가젯은
 ```
 0xebd38 execve("/bin/sh", rbp-0x50, [rbp-0x70])
@@ -87,3 +87,4 @@ constraints:
 ```
 
 이걸 쓰고, r12를 0으로 만들어줬다. `FSB`로 `printf` 내부 스택 프레임의 `pop r12`와 ret 부분에 덮어줘서 해결했다.
+
