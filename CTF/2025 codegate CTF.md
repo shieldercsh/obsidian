@@ -50,4 +50,6 @@ p.interactive()
 ---
 ## pwn/What's Happening?
 
-pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놨다. 그래서 got overwrite가 된다
+pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놨다. 그래서 got overwrite가 된다. puts got을 win 함수로 덮으면 된다. system got이 망가지긴 하는데, pie가 꺼져 있어서 그냥 다시 입력 해주면 된다.
+
+### exploit.py
