@@ -297,3 +297,4 @@ print(flag)
 ---
 ## web/Ping Tester
 
+커맨드 인젝션이 된다. `1.1.1.1;cat flag`하면 된다.
