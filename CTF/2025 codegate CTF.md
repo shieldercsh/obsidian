@@ -228,3 +228,72 @@ print()
 132e : 행렬덧셈
 
 결과물에서 역연산해준다. 컨볼루션 역과정은, 처음에 가장 바깥 테두리는 0이고, 그 하나 안쪽 테두리는 고정값이라서 확정적으로 익스가 가능하다.
+
+### exploit.py
+
+```python
+from pwn import *
+from sage.all import *
+
+e = ELF('./prob')
+
+def btoi(arr):
+    return [int.from_bytes(arr[i:i+4], 'little') for i in range(0, 576 * 4, 4)]
+
+a1 = btoi(e.read(0x3220, 576 * 4))
+a2 = btoi(e.read(0x3b20, 576 * 4))
+a4 = btoi(e.read(0x4d20, 576 * 4))
+ans = btoi(e.read(0x5620, 576 * 4))
+a1 = [-(2 ** 32 - num) if num > 2**31 else num for num in a1]
+a2 = [-(2 ** 32 - num) if num > 2**31 else num for num in a2]
+a4 = [-(2 ** 32 - num) if num > 2**31 else num for num in a4]
+ans = [-(2 ** 32 - num) if num > 2**31 else num for num in ans]
+c = b'C0D3GAT3'
+
+v19 = [0 for _ in range(576)]
+v26 = [0 for _ in range(26 * 26)]
+
+for i in range(12) :
+    if ( (i & 1) != 0 ) :
+        v19[24 * (23 - i) + i] = 1
+        v3 = 23 - i
+        v4 = 24 * i
+    else :
+        v19[25 * i] = 1
+        v3 = 23 - i
+        v4 = 24 * v3
+    v19[v3 + v4] = 1
+
+v19 = matrix(ZZ, 24, 24, v19)
+v24 = matrix(ZZ, 24, 24, ans)
+a1 = matrix(ZZ, 24, 24, a1)
+a2 = matrix(ZZ, 24, 24, a2)
+a4 = matrix(ZZ, 24, 24, a4)
+
+v23 = v24 - a2
+v22 = v23 * a4.inverse()
+v20 = v22 - a1
+v20 = v20[::-1].transpose()
+v21 = v19.inverse() * v20
+v20 = v21 * v19.inverse()
+v20 = v20.transpose()[::-1]
+
+for m in range(1, 25) :
+    for n in range(1, 25) :
+        if m == 1 or m == 24 or n == 1 or n == 24 :
+            v26[26 * m + n] = c[(n - 1 + m - 1) % 8]
+
+v26 = matrix(ZZ, 26, 26, v26)
+flag = ""
+for i in range(22):
+    for j in range(22):
+        num = v26[i, j] + v26[i, j + 1] + v26[i, j + 2] + v26[i + 1, j] + v26[i + 1, j + 1] + v26[i + 1, j + 2] + v26[i + 2, j] + v26[i + 2,j + 1]
+        flag += chr((v20[i, j] - num) % 0xffff)
+        v26[i + 2, j + 2] = (v20[i, j] - num) % 0xffff
+
+print(flag)
+```
+
+---
+## web/Ping Tester
+
