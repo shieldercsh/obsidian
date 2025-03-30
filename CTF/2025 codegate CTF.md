@@ -13,3 +13,4 @@
 ---
 ## misc/Hello Codegate
 
+디코 방에 플래그가 낭
