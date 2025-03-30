@@ -154,3 +154,4 @@ p.interactive()
 ---
 ## crypto/Encrypted flag
 
+`q = nextprime(`
