@@ -77,3 +77,13 @@ p.interactive()
 ## pwn/Magic Palette
 
 `print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다. `k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다.
+원가젯은
+```
+0xebd38 execve("/bin/sh", rbp-0x50, [rbp-0x70])
+constraints:
+  address rbp-0x48 is writable
+  r12 == NULL || {"/bin/sh", r12, NULL} is a valid argv
+  [[rbp-0x70]] == NULL || [rbp-0x70] == NULL || [rbp-0x70] is a valid envp
+```
+
+이걸 쓰고, r12를 0으로 만들어줬다.
