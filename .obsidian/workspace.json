@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/stderr.md",
+                "file": "CTF/2025 codegate CTF.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "stderr"
+              "title": "2025 codegate CTF"
             }
           }
         ]
@@ -178,8 +178,9 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
-    "FSOP/FSOP.md",
     "FSOP/stderr.md",
+    "CTF/2025 codegate CTF.md",
+    "FSOP/FSOP.md",
     "FSOP/stdout.md",
     "CTF/2025 iris CTF.md",
     "Dreamhack/writeup/pwn/Flip and Probe 2.md",
@@ -203,7 +204,6 @@
     "Dreamhack/writeup/pwn/msg_msg.md",
     "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
-    "Dreamhack/writeup/pwn/kapocasino.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
