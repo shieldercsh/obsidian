@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2025 codegate CTF.md",
+                "file": "통실/과제1 - 3장.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 codegate CTF"
+              "title": "과제1 - 3장"
             }
           }
         ]
@@ -178,8 +178,11 @@
   },
   "active": "acd70bb0741dc727",
   "lastOpenFiles": [
-    "FSOP/stderr.md",
+    "Untitled.md",
+    "통실/과제1 - 3장.md",
     "CTF/2025 codegate CTF.md",
+    "통실",
+    "FSOP/stderr.md",
     "FSOP/FSOP.md",
     "FSOP/stdout.md",
     "CTF/2025 iris CTF.md",
@@ -202,8 +205,6 @@
     "Dreamhack/writeup/pwn/note.md",
     "Dreamhack/writeup/pwn/nbase.md",
     "Dreamhack/writeup/pwn/msg_msg.md",
-    "Dreamhack/writeup/pwn/Mili.md",
-    "Dreamhack/writeup/pwn/kapomarket.md",
     "image/Pasted image 20250213193901.png",
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
@@ -222,7 +223,6 @@
     "Dreamhack/writeup",
     "Dreamhack/my prob",
     "Dreamhack/brainstorming",
-    "Dreamhack",
-    "CTF/2024 JBU CTF"
+    "Dreamhack"
   ]
 }
