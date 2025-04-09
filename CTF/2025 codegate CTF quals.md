@@ -407,7 +407,7 @@ __int64 __fastcall sub_11A9(unsigned __int8 a1, char a2)
 }
 ```
 
-`s`가 32바이트여야 한다. xor과, bit shift 
+`s`가 32바이트여야 한다. xor과, bit shift를 거친 후 답과 확인한다. 연산이 간단하므로 역연산해준다.
 
 ```python
 from pwn import *
@@ -437,6 +437,126 @@ print()
 
 ---
 ## rev/C0D3Matr1x
+
+```C
+// bad sp value at call has been detected, the output may be wrong!
+__int64 __fastcall main(int a1, char **a2, char **a3)
+{
+  __int64 v3; // rcx
+  __int64 v4; // rax
+  int v5; // eax
+  int v7; // [rsp+0h] [rbp-4BE8h]
+  int i; // [rsp+4h] [rbp-4BE4h]
+  int j; // [rsp+8h] [rbp-4BE0h]
+  int k; // [rsp+Ch] [rbp-4BDCh]
+  int m; // [rsp+10h] [rbp-4BD8h]
+  int n; // [rsp+14h] [rbp-4BD4h]
+  int ii; // [rsp+18h] [rbp-4BD0h]
+  int jj; // [rsp+1Ch] [rbp-4BCCh]
+  int kk; // [rsp+20h] [rbp-4BC8h]
+  int mm; // [rsp+24h] [rbp-4BC4h]
+  int nn; // [rsp+28h] [rbp-4BC0h]
+  int i1; // [rsp+2Ch] [rbp-4BBCh]
+  _DWORD v19[576]; // [rsp+38h] [rbp-4BB0h] BYREF
+  _BYTE v20[2304]; // [rsp+938h] [rbp-42B0h] BYREF
+  _BYTE v21[2304]; // [rsp+1238h] [rbp-39B0h] BYREF
+  _BYTE v22[2304]; // [rsp+1B38h] [rbp-30B0h] BYREF
+  _BYTE v23[2304]; // [rsp+2438h] [rbp-27B0h] BYREF
+  _DWORD v24[576]; // [rsp+2D38h] [rbp-1EB0h] BYREF
+  _QWORD v25[288]; // [rsp+3638h] [rbp-15B0h] BYREF
+  _DWORD v26[676]; // [rsp+3F38h] [rbp-CB0h] BYREF
+  _BYTE v27[32]; // [rsp+49C8h] [rbp-220h] BYREF
+  _BYTE v28[496]; // [rsp+49E8h] [rbp-200h] BYREF
+  int v29; // [rsp+4BD8h] [rbp-10h]
+  unsigned __int64 v30; // [rsp+4BE0h] [rbp-8h]
+
+  while ( &v25[182] != (_QWORD *)&v20[688] )
+    ;
+  v30 = __readfsqword(0x28u);
+  setlocale(6, &locale);
+  memset(v26, 0, sizeof(v26));
+  memset(v19, 0, sizeof(v19));
+  memset(v20, 0, sizeof(v20));
+  memset(v21, 0, sizeof(v21));
+  memset(v22, 0, sizeof(v22));
+  memset(v23, 0, sizeof(v23));
+  memset(v24, 0, sizeof(v24));
+  memset(v25, 0, sizeof(v25));
+  memset(v28, 0, sizeof(v28));
+  v29 = 0;
+  v7 = 0;
+  for ( i = 0; i <= 11; ++i )
+  {
+    if ( (i & 1) != 0 )
+    {
+      v19[24 * (23 - i) + i] = 1;
+      v3 = 23 - i;
+      v4 = 24LL * i;
+    }
+    else
+    {
+      v19[25 * i] = 1;
+      v3 = 23 - i;
+      v4 = 24 * v3;
+    }
+    v19[v3 + v4] = 1;
+  }
+  __isoc99_scanf("%484[^\n]", v28);
+  for ( j = 2; j <= 23; ++j )
+  {
+    for ( k = 2; k <= 23; ++k )
+    {
+      v5 = v7++;
+      v26[26 * j + k] = (char)v28[v5];
+    }
+  }
+  for ( m = 1; m <= 24; ++m )
+  {
+    for ( n = 1; n <= 24; ++n )
+    {
+      if ( !v26[26 * m + n] )
+        v26[26 * m + n] = aC0d3gat3[(n - 1 + m - 1) % 8];
+    }
+  }
+  sub_1527(v26, v20);
+  sub_1919(v20);
+  sub_1413(v20, v19, v21);
+  sub_1413(v19, v21, v20);
+  sub_1765(v20);
+  sub_1249(v20, ::a1, v22);
+  sub_1413(v22, a4, v23);
+  sub_132E(v23, ::a2, v24);
+  sub_132E(v23, ::a3, v25);
+  for ( ii = 0; ii <= 23; ++ii )
+  {
+    for ( jj = 0; jj <= 23; ++jj )
+    {
+      if ( v24[24 * ii + jj] != dword_5620[24 * ii + jj] )
+      {
+        puts("Wrong");
+        return 0LL;
+      }
+    }
+  }
+  system("clear");
+  wprintf("\n");
+  for ( kk = 0; kk <= 23; ++kk )
+  {
+    for ( mm = 0; mm <= 23; ++mm )
+      wprintf("%", dword_3020[v24[24 * kk + mm] - 1]);
+    for ( nn = 0; nn <= 23; ++nn )
+      wprintf("%", dword_3020[*((_DWORD *)&v25[12 * kk] + nn) - 1]);
+    wprintf("\n");
+  }
+  wprintf("\n");
+  sub_1ACA(v28, v27);
+  wprintf(U"FLAG: codegate2025{");
+  for ( i1 = 0; i1 <= 31; ++i1 )
+    wprintf(U"%02x", (unsigned __int8)v27[i1]);
+  wprintf(U"}\n");
+  return 0LL;
+}
+```
 
 1527 : 3\*3 -> 1 컨볼루션
 1919 : 시계방향으로 90도 회전
