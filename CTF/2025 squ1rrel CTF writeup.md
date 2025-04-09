@@ -305,4 +305,4 @@ LABEL_15:
 }
 ```
 
-In, `initialize_game` `main` functions as a game menu.
+In, `initialize_game`, receive `name` input. After it, `main` functions as a game menu. You can `show_balance` doesn't have any vuln
