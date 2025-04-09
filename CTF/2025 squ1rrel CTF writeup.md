@@ -448,4 +448,40 @@ LABEL_35:
 }
 ```
 
-`play_blackjack` play game menu role. What we need to check first is, We don't have to care win or lose. Because there isn't price about our money, and we can just leave game, not to drop money. Another thing we can know from this is, we don't have to predict `rand` although we can do it. Honestly, it's annoying. Thank goodness.
+`play_blackjack` play game menu role. What we need to check first is, We don't have to care win or lose. Because there isn't price about our money, and we can just leave game, not to drop money. Another thing we can know from this is, we don't have to predict `rand` although we can do it. Honestly, it's annoying, isn't it? Thank goodness.
+
+```C
+unsigned __int64 view_card()
+{
+  __int64 *card_name; // rax
+  unsigned __int8 card; // [rsp+Bh] [rbp-25h]
+  int v3; // [rsp+Ch] [rbp-24h] BYREF
+  char *v4; // [rsp+10h] [rbp-20h]
+  unsigned __int64 v5; // [rsp+18h] [rbp-18h]
+
+  v5 = __readfsqword(0x28u);
+  printf("Which card to view? ");
+  if ( (unsigned int)__isoc99_scanf("%d", &v3) == 1 )
+  {
+    if ( --v3 > 2 )
+    {
+      puts("Not your card!");
+    }
+    else
+    {
+      v4 = &byte_40E8;
+      card = get_card((__int64)&byte_40E8, v3);
+      card_name = get_card_name(card);
+      printf("Card #%d: %s (0x%X)\n", v3 + 1, (const char *)card_name, card);
+    }
+  }
+  else
+  {
+    puts("Invalid input!");
+    while ( getchar() != 10 )
+      ;
+  }
+  return v5 - __readfsqword(0x28u);
+}
+```
+
