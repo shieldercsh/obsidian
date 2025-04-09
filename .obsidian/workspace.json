@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "aaba5ca238a76c45",
+        "id": "c557ee051aa22d70",
         "type": "tabs",
         "children": [
           {
-            "id": "acd70bb0741dc727",
+            "id": "78e31b97b2eb1b2f",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -176,10 +176,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "acd70bb0741dc727",
+  "active": "78e31b97b2eb1b2f",
   "lastOpenFiles": [
-    "CTF/2024 nite CTF.md",
+    "image/Pasted image 20250125182956.png",
     "CTF/2025 SSU CTF.md",
+    "CTF/2024 nite CTF.md",
     "FSOP/FSOPpayload.md",
     "FSOP/stdout.md",
     "Dreamhack/writeup/pwn/yisf_hospital.md",
@@ -203,7 +204,6 @@
     "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
     "Dreamhack/writeup/pwn/Chat with Me.md",
     "Dreamhack/writeup/pwn/bytechanger.md",
-    "통실/과제2 - 2장.md",
     "image/Pasted image 20250405222338.png",
     "image/Pasted image 20250405222332.png",
     "image/Pasted image 20250405221916.png",
