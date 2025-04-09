@@ -590,4 +590,4 @@ unsigned __int64 replace_card()
 ```
 
 In `replace_card`, same `oob` occurs for same reason as `view_card`, so we can do `got overwrite`. Now, what is the plan?
-At the end of the `main` function, `gettimeofday` called. Overwrite it's got to `main` address to call `main` again. (For `localtime` function, this logic establish exactly same.) Next, overwrite `fgets`' got to system. The reason this works is because 
+At the end of the `main` function, `gettimeofday` called. Overwrite it's got to `main` address to call `main` again. (For `localtime` function, this logic establish exactly same.) Next, overwrite `fgets`' got to system. The reason this works is because we can type `/bin/sh\x00` in the `name` first. So it operate like `syst`
