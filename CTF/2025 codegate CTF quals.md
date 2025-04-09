@@ -636,4 +636,27 @@ print(flag)
 ---
 ## web/Ping Tester
 
+```python
+from flask import Flask, request, render_template
+import subprocess
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def execute():
+    return render_template('index.html')
+
+@app.route('/ping', methods=['GET'])
+def ping():
+    ip = request.args.get('ip')
+    if ip:
+        result = subprocess.run(f"ping -c 3 {ip}", shell=True, capture_output=True, text=True)
+        return render_template('ping.html', result=result.stdout)
+    else:
+        return render_template('ping.html', message="Please provide IP address.")
+
+if __name__ == '__main__':
+    app.run('0.0.0.0', port=5000, debug=True)
+```
+
 커맨드 인젝션이 된다. `1.1.1.1;cat flag`하면 된다.
