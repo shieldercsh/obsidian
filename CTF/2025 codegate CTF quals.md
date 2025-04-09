@@ -71,7 +71,62 @@ p.interactive()
 ---
 ## pwn/What's Happening?
 
-pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놨다. 그래서 got overwrite가 된다. puts got을 win 함수로 덮으면 된다. system got이 망가지긴 하는데, pie가 꺼져 있어서 그냥 다시 입력 해주면 된다.
+```C
+int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
+{
+  unsigned __int64 v3; // rax
+  int v4; // r8d
+  int v5; // r9d
+  int v6[2]; // [rsp+18h] [rbp-68h] BYREF
+  int v7[2]; // [rsp+20h] [rbp-60h]
+  char *v8; // [rsp+28h] [rbp-58h]
+  char s[8]; // [rsp+30h] [rbp-50h] BYREF
+  __int64 v10; // [rsp+50h] [rbp-30h] BYREF
+  int v11[2]; // [rsp+60h] [rbp-20h] BYREF
+  unsigned __int64 v12; // [rsp+68h] [rbp-18h]
+
+  v12 = __readfsqword(0x28u);
+  init(argc, argv, envp);
+  *(_QWORD *)v7 = &objects;
+  init_solar_system(&objects);
+  puts("Planet Distance Calculator v1.0");
+  while ( 1 )
+  {
+    menu();
+    v3 = prompt();
+    if ( v3 == 3 )
+      break;
+    if ( v3 <= 3 )
+    {
+      if ( v3 == 1 )
+      {
+        printf("Enter planet index to update (0-12): ");
+        __isoc99_scanf("%ld", v6);
+        printf("Enter planet name: ");
+        getchar();
+        if ( fgets(s, 32, stdin) )
+        {
+          v8 = strchr(s, 10);
+          if ( v8 )
+            *v8 = 0;
+        }
+        printf("Enter AU value: ");
+        __isoc99_scanf("%lf", &v10);
+        printf("Enter color (0-10): ");
+        __isoc99_scanf("%d", &v11[1]);
+        update(v7[0], v6[0], v7[0], v11[0], v4, v5, s[0]);
+      }
+      else if ( v3 == 2 )
+      {
+        print_solar_system(*(_QWORD *)v7);
+      }
+    }
+  }
+  _exit(0);
+}
+```
+
+pie가 꺼져 있다. Partial RELRO이다. 행성 정보 업데이트를 하는데 음수 인덱스를 안 막아 놔서 `oob`가 발생한다. 그래서 got overwrite가 된다. puts got을 win 함수로 덮으면 된다. system got이 망가지긴 하는데, pie가 꺼져 있어서 그냥 다시 입력 해주면 된다.
 
 ### exploit.py
 
