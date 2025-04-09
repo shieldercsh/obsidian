@@ -110,4 +110,5 @@ Partial RELRO, NO PIE
 prison: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, BuildID[sha1]=11861526f4bb256264011fa2e0118c82e3b99e2c, for GNU/Linux 3.2.0, not stripped
 ```
 
-`statically linked`. So, It has many gadgets.
+`statically linked`. So, It has many gadgets like `pop rax, rdi, rsi, rdx` or `syscall` etc..
+
