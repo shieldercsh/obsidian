@@ -33,4 +33,4 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 }
 ```
 
-So easy brp
+So easy prob. It has `bof` vuln. 
