@@ -21,6 +21,29 @@
 ---
 ## misc/safePythonExecutor
 
+```Dockerfile
+FROM python:3.11@sha256:68a8863d0625f42d47e0684f33ca02f19d6094ef859a8af237aaf645195ed477
+
+ENV user safe_python_executor
+ENV chall_port 42424
+
+RUN apt-get update
+RUN apt-get -y install socat adduser python3-pip netcat-traditional
+
+RUN pip3 install RestrictedPython==6.1
+
+RUN adduser -u 4103 $user
+
+ADD ./deploy/executor.py /home/$user/executor.py
+
+RUN chown $user:root /home/$user/
+RUN chmod 755 /home/$user/executor.py
+
+WORKDIR /home/$user
+EXPOSE $chall_port
+CMD socat TCP-LISTEN:$chall_port,reuseaddr,fork EXEC:"su -c 'python3 executor.py' $user",stderr
+```
+
 중요한 것은 `RestrictedPython==6.1`이다. CVE를 찾아보니 format, format_map, formatter 쪽에 필터링 실패 취약점이 있다고 한다.
 
 https://github.com/nikosChalk/ctf-writeups/blob/master/uiuctf23/pyjail/rattler-read/writeup/README.md
