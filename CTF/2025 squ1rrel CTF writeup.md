@@ -168,4 +168,4 @@ __int64 __fastcall prison(__int64 a1, int a2, int a3, int a4, int a5, int a6)
 }
 ```
 
-Since it doesn't check `v20`, it has `oob` vuln, but I didn't use this vuln.
+Since it doesn't check `v20`, it has `oob` vuln, but anyway I didn't use this vuln.
