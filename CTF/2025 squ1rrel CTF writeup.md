@@ -448,4 +448,4 @@ LABEL_35:
 }
 ```
 
-`play_blackjack` play game menu role. What we need to check first is, We don't have to care win or lose. Because, there isn't price about our money, and we can just leave game, not to lose money.
+`play_blackjack` play game menu role. What we need to check first is, We don't have to care win or lose. Because, there isn't price about our money, and we can just leave game, not to drop money.
