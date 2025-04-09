@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/stderr.md",
+                "file": "FSOP/FSOPpayload.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "stderr"
+              "title": "FSOPpayload"
             }
           }
         ]
@@ -176,10 +176,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "e4847daf8b231e93",
+  "active": "acd70bb0741dc727",
   "lastOpenFiles": [
     "FSOP/stdout.md",
-    "FSOP/stderr.md",
+    "FSOP/FSOPpayload.md",
     "Dreamhack/writeup/pwn/yisf_hospital.md",
     "Dreamhack/writeup/pwn/void.md",
     "Dreamhack/writeup/pwn/ultra_c.md",
