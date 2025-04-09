@@ -451,6 +451,64 @@ LABEL_35:
 `play_blackjack` play game menu role. What we need to check first is, We don't have to care win or lose. Because there isn't price about our money, and we can just leave game, not to drop money. Another thing we can know from this is, we don't have to predict `rand` although we can do it. Honestly, it's annoying, isn't it? Thank goodness.
 
 ```C
+__int64 *__fastcall get_card_name(char a1)
+{
+  switch ( a1 )
+  {
+    case 1:
+      name_0 = ')1( ecA';
+      break;
+    case 2:
+      name_0 = ')2( owT';
+      break;
+    case 3:
+      strcpy((char *)&name_0, "Three (3)");
+      break;
+    case 4:
+      strcpy((char *)&name_0, "Four (4)");
+      break;
+    case 5:
+      strcpy((char *)&name_0, "Five (5)");
+      break;
+    case 6:
+      name_0 = ')6( xiS';
+      break;
+    case 7:
+      strcpy((char *)&name_0, "Seven (7)");
+      break;
+    case 8:
+      strcpy((char *)&name_0, "Eight (8)");
+      break;
+    case 9:
+      strcpy((char *)&name_0, "Nine (9)");
+      break;
+    case 10:
+      strcpy((char *)&name_0, "Ten (10)");
+      break;
+    case 11:
+      strcpy((char *)&name_0, "Jack (10)");
+      break;
+    case 12:
+      strcpy((char *)&name_0, "Queen (10)");
+      break;
+    case 13:
+      strcpy((char *)&name_0, "King (10)");
+      break;
+    case 14:
+      strcpy((char *)&name_0, "Joker (10)");
+      break;
+    case 15:
+      strcpy((char *)&name_0, "Special (10)");
+      break;
+    default:
+      name_0 = 'nwonknU';
+      break;
+  }
+  return &name_0;
+}
+```
+
+```C
 unsigned __int64 view_card()
 {
   __int64 *card_name; // rax
@@ -485,4 +543,4 @@ unsigned __int64 view_card()
 }
 ```
 
-In `view_card`, 
+In `view_card`, it doesn't check negative index of `v3`, so `oob` occurs.
