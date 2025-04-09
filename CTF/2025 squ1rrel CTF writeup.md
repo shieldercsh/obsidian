@@ -448,4 +448,4 @@ LABEL_35:
 }
 ```
 
-`play_blackjack`
+`play_blackjack` play game menu role.
