@@ -152,9 +152,106 @@ p.interactive()
 
 ## pwn/Magic Palette
 
-`print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다. `k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다. `FSB`가 무제한이므로 릭은 얼마든지 할 수 있다.
+```C
+unsigned __int64 __fastcall print_palette(_QWORD *a1)
+{
+  int v1; // eax
+  int v2; // eax
+  unsigned __int16 v4; // [rsp+16h] [rbp-102Ah]
+  unsigned int i; // [rsp+18h] [rbp-1028h]
+  unsigned int j; // [rsp+1Ch] [rbp-1024h]
+  int v7; // [rsp+24h] [rbp-101Ch]
+  int v8; // [rsp+28h] [rbp-1018h]
+  _BYTE v9[16]; // [rsp+30h] [rbp-1010h] BYREF
+  unsigned __int64 v10; // [rsp+1038h] [rbp-8h]
+  __int64 savedregs; // [rsp+1040h] [rbp+0h] BYREF
+
+  v10 = __readfsqword(0x28u);
+  handle_output(a1, v9);
+  for ( i = 0; i <= 0x3F; ++i )
+  {
+    for ( j = 0; j <= 0x3F; ++j )
+    {
+      v4 = *(_WORD *)(*a1 + ((unsigned __int64)i << 7) + 2LL * j);
+      if ( (v4 & 0x1000) != 0 )
+      {
+        v7 = (v4 >> 4) & 0xF;
+        if ( (v4 & 0xF) + j <= 0x40 && v7 + i <= 0x40 )
+        {
+          if ( (v4 & 0x400) != 0 )
+            v1 = -(v4 & 0xF);
+          else
+            v1 = v4 & 0xF;
+          v8 = v1;
+          if ( (v4 & 0x800) != 0 )
+            v2 = -v7;
+          else
+            v2 = (v4 >> 4) & 0xF;
+          j += v8;
+          i += v2;
+        }
+      }
+      else if ( (v4 & 0x8000u) == 0 )
+      {
+        putchar(*((char *)&savedregs + 64 * (unsigned __int64)i + j - 4112));
+      }
+      else
+      {
+        printf(&v9[64 * (unsigned __int64)i + j]);
+      }
+    }
+    putchar(10);
+  }
+  return v10 - __readfsqword(0x28u);
+}
+```
+
+`print_palette`에서 입력 때 조건을 좀 맞춰주면 `FSB`가 터진다.
+
+```C
+void *__fastcall handle_output(_QWORD *a1, void *a2)
+{
+  void *result; // rax
+  char v3; // cl
+  int i; // [rsp+18h] [rbp-8h]
+  int j; // [rsp+1Ch] [rbp-4h]
+
+  result = memset(a2, 0, 0x1000uLL);
+  for ( i = 0; i <= 63; ++i )
+  {
+    for ( j = 0; j <= 63; ++j )
+    {
+      if ( (*(_WORD *)(*a1 + ((__int64)i << 7) + 2LL * j) & 0x2000) != 0 )
+      {
+        result = (void *)j;
+        *((_BYTE *)a2 + 64 * (__int64)i + j) = 0;
+        break;
+      }
+      if ( *(__int16 *)(*a1 + ((__int64)i << 7) + 2LL * j) >= 0
+        || (*(_WORD *)(*a1 + ((__int64)i << 7) + 2LL * j) & 0x1000) != 0 )
+      {
+        if ( (*(_WORD *)(*a1 + ((__int64)i << 7) + 2LL * j) & 0x4000) != 0 )
+          v3 = 35;
+        else
+          v3 = 32;
+        result = (void *)j;
+        *((_BYTE *)a2 + 64 * (__int64)i + j) = v3;
+      }
+      else
+      {
+        result = (void *)j;
+        *((_BYTE *)a2 + 64 * (__int64)i + j) = *(_WORD *)(*a1 + ((__int64)i << 7) + 2LL * j);
+      }
+    }
+  }
+  return result;
+}
+```
+
+`k`라는 바이트를 출력하고 싶으면 `k + b'\x80'`을 입력해주면 된다. `FSB`가 무제한이므로 릭은 얼마든지 할 수 있다.
 
 원가젯은
+
 ```
 0xebd38 execve("/bin/sh", rbp-0x50, [rbp-0x70])
 constraints:
@@ -164,6 +261,8 @@ constraints:
 ```
 
 이걸 쓰고, r12를 0으로 만들어줬다. `FSB`로 `printf` 내부 스택 프레임의 `pop r12`와 ret 부분에 덮어줘서 해결했다.
+
+
 
 ### exploit.py
 
