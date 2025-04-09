@@ -305,4 +305,4 @@ LABEL_15:
 }
 ```
 
-In, `initialize_game`, receive `name` input. After it, `main` functions as a game menu. You can `show_balance` doesn't have any vuln
+In, `initialize_game`, receive `name` input. After it, `main` functions as a game menu. You can sense easily `show_balance` doesn't have any vuln. Let's check `play_blackjack`.
