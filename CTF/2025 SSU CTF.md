@@ -485,7 +485,7 @@ p.sendlineafter(b'$ ', b"'`cat ./*lag_*`'")
 p.interactive()
 ```
 
-# uni
+# pwn / uni
 
 유니콘 에뮬레이터로 돌아가는데 딱히 이걸로 인한 특징은 없는 것 같다.
 
