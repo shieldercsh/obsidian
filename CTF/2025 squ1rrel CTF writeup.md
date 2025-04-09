@@ -305,4 +305,147 @@ LABEL_15:
 }
 ```
 
-In, `initialize_game`, receive `name` input. After it, `main` functions as a game menu. You can sense easily `show_balance` doesn't have any vuln. Let's check `play_blackjack`.
+In, `initialize_game`, receive `name` input. After it, `main` functions as a initial menu. You can sense easily `show_balance` doesn't have any vuln. Let's check `play_blackjack`.
+
+```C
+unsigned __int64 play_blackjack()
+{
+  __int64 *card_name; // rax
+  __int64 *v1; // rax
+  __int64 *v2; // rax
+  __int64 *v3; // r12
+  __int64 *v4; // rax
+  int card_value; // ebx
+  int v6; // ebx
+  char v8; // [rsp+5h] [rbp-3Bh]
+  unsigned __int8 v9; // [rsp+6h] [rbp-3Ah]
+  unsigned __int8 v10; // [rsp+7h] [rbp-39h]
+  unsigned __int8 v11; // [rsp+8h] [rbp-38h]
+  unsigned __int8 v12; // [rsp+9h] [rbp-37h]
+  char v13; // [rsp+Ah] [rbp-36h]
+  unsigned __int8 v14; // [rsp+Bh] [rbp-35h]
+  int v15; // [rsp+Ch] [rbp-34h] BYREF
+  int v16; // [rsp+10h] [rbp-30h]
+  int v17; // [rsp+14h] [rbp-2Ch]
+  unsigned __int64 v18; // [rsp+18h] [rbp-28h]
+
+  v18 = __readfsqword(0x28u);
+  v9 = draw_card();
+  v10 = draw_card();
+  v11 = draw_card();
+  v12 = draw_card();
+  byte_40E8 = (16 * v10) | v9;
+  printf("\nWelcome to Blackjack, %s!\n", byte_40A8);
+  printf("Your balance: $%d\n", player);
+  puts("\nYour cards:");
+  card_name = get_card_name(v9);
+  printf("Card 1: %s (0x%X)\n", (const char *)card_name, v9);
+  v1 = get_card_name(v10);
+  printf("Card 2: %s (0x%X)\n", (const char *)v1, v10);
+  v2 = get_card_name(v11);
+  printf("Dealer's face-up card: %s (0x%X)\n", (const char *)v2, v11);
+  v8 = 1;
+  do
+  {
+    puts("\nOptions:");
+    puts("1. View a card");
+    if ( v8 )
+      puts("2. Replace a card (once per game)");
+    puts("3. Stand (end your turn)");
+    puts("4. Exit game");
+    printf("Choose an option: ");
+    if ( (unsigned int)__isoc99_scanf("%d", &v15) == 1 )
+    {
+      if ( v15 == 4 )
+        return v18 - __readfsqword(0x28u);
+      if ( v15 > 4 )
+      {
+LABEL_35:
+        puts("Invalid option!");
+        continue;
+      }
+      switch ( v15 )
+      {
+        case 3:
+          v3 = get_card_name(v12);
+          v4 = get_card_name(v11);
+          printf("\nDealer's cards: %s (0x%X) and %s (0x%X)\n", (const char *)v4, v11, (const char *)v3, v12);
+          v13 = byte_40E8 & 0xF;
+          v14 = (unsigned __int8)byte_40E8 >> 4;
+          card_value = get_card_value(byte_40E8 & 0xF);
+          v16 = card_value + get_card_value(v14);
+          v6 = get_card_value(v11);
+          v17 = v6 + get_card_value(v12);
+          if ( v16 > 21 && (v13 == 1 || v14 == 1) )
+            v16 -= 10;
+          if ( v17 > 21 && (v11 == 1 || v12 == 1) )
+            v17 -= 10;
+          printf("Your total: %d\n", v16);
+          printf("Dealer's total: %d\n", v17);
+          if ( v16 <= 21 )
+          {
+            if ( v17 <= 21 )
+            {
+              if ( v16 <= v17 )
+              {
+                if ( v17 <= v16 )
+                {
+                  puts("It's a tie!");
+                }
+                else
+                {
+                  puts("Dealer wins.");
+                  player -= 10;
+                }
+              }
+              else
+              {
+                puts("You win!");
+                player += 20;
+                ++dword_40A4;
+              }
+            }
+            else
+            {
+              puts("Dealer busts! You win!");
+              player += 20;
+              ++dword_40A4;
+            }
+          }
+          else
+          {
+            puts("You bust! Dealer wins.");
+            player -= 10;
+          }
+          break;
+        case 1:
+          view_card();
+          break;
+        case 2:
+          if ( v8 )
+          {
+            replace_card();
+            v8 = 0;
+          }
+          else
+          {
+            puts("You've already replaced a card this game!");
+          }
+          break;
+        default:
+          goto LABEL_35;
+      }
+    }
+    else
+    {
+      puts("Invalid input!");
+      while ( getchar() != 10 )
+        ;
+    }
+  }
+  while ( v15 != 3 && v15 != 4 );
+  return v18 - __readfsqword(0x28u);
+}
+```
+
+`play_blackjack`
