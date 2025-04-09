@@ -448,4 +448,4 @@ LABEL_35:
 }
 ```
 
-`play_blackjack` play game menu role.
+`play_blackjack` play game menu role. What we need to c
