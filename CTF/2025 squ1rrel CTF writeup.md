@@ -546,5 +546,46 @@ unsigned __int64 view_card()
 In `view_card`, it doesn't check negative index of `v3`, so `oob` occurs. Also, since it prints this info, we can leak pie, libc address. (libc : read `puts`'s got, pie : read `__dso_handle` which points itself)
 
 ```C
-
+__int64 draw_card()
+{
+  return (unsigned int)(rand() % 15 + 1);
+}
 ```
+
+```C
+unsigned __int64 replace_card()
+{
+  __int64 *card_name; // rax
+  unsigned __int8 v2; // [rsp+Bh] [rbp-25h]
+  unsigned int v3; // [rsp+Ch] [rbp-24h] BYREF
+  char *v4; // [rsp+10h] [rbp-20h]
+  unsigned __int64 v5; // [rsp+18h] [rbp-18h]
+
+  v5 = __readfsqword(0x28u);
+  printf("Which card index to replace? ");
+  if ( (unsigned int)__isoc99_scanf("%d", &v3) == 1 )
+  {
+    if ( (int)--v3 > 2 )
+    {
+      puts("Not your card!");
+    }
+    else
+    {
+      v2 = draw_card();
+      v4 = &byte_40E8;
+      card_name = get_card_name(v2);
+      printf("Drew new card: %s (0x%X)\n", (const char *)card_name, v2);
+      set_card(v4, v3, v2);
+      puts("Card replaced!");
+    }
+  }
+  else
+  {
+    puts("Invalid input!");
+    while ( getchar() != 10 )
+      ;
+  }
+  return v5 - __readfsqword(0x28u);
+}
+```
+
