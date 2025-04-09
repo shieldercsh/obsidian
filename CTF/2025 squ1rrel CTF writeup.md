@@ -589,4 +589,4 @@ unsigned __int64 replace_card()
 }
 ```
 
-In `replace_card`, same `oob` occurs for same reason as `view_card`
+In `replace_card`, same `oob` occurs for same reason as `view_card`, so we can do `got overwrite`. Now, what is the plan?
