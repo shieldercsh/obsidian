@@ -260,9 +260,7 @@ constraints:
   [[rbp-0x70]] == NULL || [rbp-0x70] == NULL || [rbp-0x70] is a valid envp
 ```
 
-이걸 쓰고, r12를 0으로 만들어줬다. `FSB`로 `printf` 내부 스택 프레임의 `pop r12`와 ret 부분에 덮어줘서 해결했다.
-
-
+이걸 쓰고, r12를 0으로 만들어줬다. `FSB`로 `printf` 내부 스택 프레임의 `pop r12`와 ret 부분에 덮어줘서 해결했다. [Merry Christmas](https://shielder.tistory.com/4)문제제에서 사용한 기법이다.
 
 ### exploit.py
 
