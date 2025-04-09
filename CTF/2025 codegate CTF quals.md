@@ -362,7 +362,52 @@ print(long_to_bytes(c))
 ---
 ## rev/inital
 
-main만 분석하면 된다. 코드가 짧기 때문에 그냥 역연산해준다.
+```C
+__int64 __fastcall main(int a1, char **a2, char **a3)
+{
+  int i; // [rsp+4h] [rbp-3Ch]
+  int j; // [rsp+8h] [rbp-38h]
+  int k; // [rsp+Ch] [rbp-34h]
+  char s[31]; // [rsp+10h] [rbp-30h] BYREF
+  char v8; // [rsp+2Fh] [rbp-11h]
+  unsigned __int64 v9; // [rsp+38h] [rbp-8h]
+
+  v9 = __readfsqword(0x28u);
+  __isoc99_scanf("%32s", s);
+  if ( strlen(s) == 32 )
+  {
+    for ( i = 0; i <= 30; ++i )
+      s[i] ^= s[i + 1];
+    v8 ^= s[0];
+    for ( j = 0; j <= 31; ++j )
+      s[j] = sub_11A9(byte_4020[(unsigned __int8)s[j]], j & 6);
+    for ( k = 0; k <= 31; ++k )
+    {
+      if ( s[k] != byte_4120[k] )
+      {
+        puts("Wrong!");
+        return 0LL;
+      }
+    }
+    puts("Correct!");
+    return 0LL;
+  }
+  else
+  {
+    puts("Wrong length");
+    return 1LL;
+  }
+}
+```
+
+```C
+__int64 __fastcall sub_11A9(unsigned __int8 a1, char a2)
+{
+  return (unsigned __int8)((a1 << (8 - a2)) | ((int)a1 >> a2));
+}
+```
+
+`s`가 32바이트여야 한다. xor과, bit shift 
 
 ```python
 from pwn import *
