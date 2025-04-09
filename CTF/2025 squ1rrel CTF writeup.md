@@ -112,3 +112,60 @@ prison: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically lin
 
 `statically linked`. So, It has many gadgets like `pop rax, rdi, rsi, rdx` or `syscall` etc..
 
+```C
+__int64 __fastcall prison(__int64 a1, int a2, int a3, int a4, int a5, int a6)
+{
+  int v6; // edx
+  int v7; // ecx
+  int v8; // r8d
+  int v9; // r9d
+  __int64 result; // rax
+  int v11; // ecx
+  int v12; // r8d
+  int v13; // r9d
+  int v14; // esi
+  int v15; // edx
+  int v16; // ecx
+  int v17; // r8d
+  int v18; // r9d
+  _QWORD v19[7]; // [rsp+0h] [rbp-80h]
+  int v20; // [rsp+3Ch] [rbp-44h] BYREF
+  _BYTE v21[64]; // [rsp+40h] [rbp-40h] BYREF
+
+  v19[1] = "Empty Cell";
+  v19[2] = "Jay. L. Thyme";
+  v19[3] = "Jay. L. Thyme's Wife";
+  v19[4] = "Jay. L. Thyme's Wife's Boyfriend";
+  v19[5] = "Rob Banks";
+  printf(
+    (unsigned int)"They gave you the premium stay so at least you get to choose your cell (1-6): ",
+    a2,
+    a3,
+    a4,
+    a5,
+    a6);
+  if ( (unsigned int)_isoc99_scanf((unsigned int)"%d", (unsigned int)&v20, v6, v7, v8, v9, (char)"The Professor") == 1 )
+  {
+    while ( (unsigned int)getchar() != 10 )
+      ;
+    v14 = v20;
+    printf((unsigned int)"Cell #%d: Your cellmate is %s\n", v20, v19[v20 - 1], v11, v12, v13);
+    printf((unsigned int)"Now let's get the registry updated. What is your name: ", v14, v15, v16, v17, v18);
+    fgets(v21, 100LL, stdin);
+    puts("...");
+    sleep(3LL);
+    puts("...");
+    return puts("What did you expect. You're in here for life this is what it looks like for the rest.");
+  }
+  else
+  {
+    puts("Invalid input!");
+    do
+      result = getchar();
+    while ( (_DWORD)result != 10 );
+  }
+  return result;
+}
+```
+
+Since it doesn't check 
