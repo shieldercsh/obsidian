@@ -305,4 +305,4 @@ LABEL_15:
 }
 ```
 
-`main` play 
+In, `initialize_game` `main` functions as a game menu.
