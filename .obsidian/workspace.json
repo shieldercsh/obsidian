@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "c557ee051aa22d70",
+        "id": "07d67dde21080ab6",
         "type": "tabs",
         "children": [
           {
-            "id": "78e31b97b2eb1b2f",
+            "id": "4220a3dfe3269283",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "image/2025ssuctf.webp"
+                "file": "CTF/2025 codegate CTF.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "2025ssuctf"
+              "icon": "lucide-file",
+              "title": "2025 codegate CTF"
             }
           }
         ]
@@ -174,10 +176,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "78e31b97b2eb1b2f",
+  "active": "4220a3dfe3269283",
   "lastOpenFiles": [
-    "CTF/2025 SSU CTF.md",
     "image/2025ssuctf.webp",
+    "CTF/2025 SSU CTF.md",
     "image/2025ssuctf.webp.crdownload",
     "image/Pasted image 20250125182956.png",
     "CTF/2024 nite CTF.md",
