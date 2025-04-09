@@ -543,4 +543,8 @@ unsigned __int64 view_card()
 }
 ```
 
-In `view_card`, it doesn't check negative index of `v3`, so `oob` occurs. Also, since it prints info, we can leak pie, libc address. (libc : read `puts`'s got, pie : read `__dso_handle` which points itself)
+In `view_card`, it doesn't check negative index of `v3`, so `oob` occurs. Also, since it prints this info, we can leak pie, libc address. (libc : read `puts`'s got, pie : read `__dso_handle` which points itself)
+
+```C
+
+```
