@@ -213,3 +213,17 @@ p.interactive()
 ---
 # squ1rrel-casino
 
+```bash
+[*] '/mnt/d/squ1rrel/squ1rrel-casino/casino'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+
+Partial RELRO
+
