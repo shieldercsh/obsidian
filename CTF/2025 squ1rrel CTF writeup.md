@@ -227,3 +227,82 @@ p.interactive()
 
 Partial RELRO
 
+```C
+size_t initialize_game()
+{
+  size_t result; // rax
+
+  player = 100;
+  dword_40A4 = 0;
+  printf("Enter your name: ");
+  result = (size_t)fgets(byte_40A8, 64, stdin);
+  if ( result )
+  {
+    result = strcspn(byte_40A8, "\n");
+    byte_40A8[result] = 0;
+  }
+  return result;
+}
+```
+
+```C
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  unsigned int v3; // eax
+  int v5; // [rsp+Ch] [rbp-34h] BYREF
+  time_t timer; // [rsp+10h] [rbp-30h] BYREF
+  struct tm *v7; // [rsp+18h] [rbp-28h]
+  timeval tv; // [rsp+20h] [rbp-20h] BYREF
+  unsigned __int64 v9; // [rsp+38h] [rbp-8h]
+
+  v9 = __readfsqword(0x28u);
+  setbuf(_bss_start, 0LL);
+  setbuf(stdin, 0LL);
+  v3 = time(0LL);
+  srand(v3);
+  initialize_game();
+  while ( 1 )
+  {
+    while ( 1 )
+    {
+      puts("\n=== Squ1rrel Casino Menu ===");
+      puts("1. Play Blackjack");
+      puts("2. Show Balance");
+      puts("3. Exit");
+      printf("Choose an option: ");
+      if ( (unsigned int)__isoc99_scanf("%d", &v5) == 1 )
+        break;
+      puts("Invalid input!");
+      while ( getchar() != 10 )
+        ;
+    }
+    while ( getchar() != 10 )
+      ;
+    if ( v5 == 3 )
+      break;
+    if ( v5 > 3 )
+      goto LABEL_15;
+    if ( v5 == 1 )
+    {
+      play_blackjack();
+    }
+    else if ( v5 == 2 )
+    {
+      show_balance();
+    }
+    else
+    {
+LABEL_15:
+      puts("Invalid option!");
+    }
+  }
+  puts("Thanks for playing at the Squ1rrel Casino!");
+  gettimeofday(&tv, 0LL);
+  timer = tv.tv_sec;
+  v7 = localtime(&timer);
+  printf("But it's only %02d:%02d! Surely you can stay longer?\n", v7->tm_hour, v7->tm_min);
+  return 0;
+}
+```
+
+`main` play 
