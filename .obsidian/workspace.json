@@ -11,14 +11,12 @@
             "id": "78e31b97b2eb1b2f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "CTF/2025 SSU CTF.md",
-                "mode": "source",
-                "source": false
+                "file": "image/2025ssuctf.webp"
               },
-              "icon": "lucide-file",
-              "title": "2025 SSU CTF"
+              "icon": "lucide-image",
+              "title": "2025ssuctf"
             }
           }
         ]
@@ -178,8 +176,10 @@
   },
   "active": "78e31b97b2eb1b2f",
   "lastOpenFiles": [
-    "image/Pasted image 20250125182956.png",
     "CTF/2025 SSU CTF.md",
+    "image/2025ssuctf.webp",
+    "image/2025ssuctf.webp.crdownload",
+    "image/Pasted image 20250125182956.png",
     "CTF/2024 nite CTF.md",
     "FSOP/FSOPpayload.md",
     "FSOP/stdout.md",
@@ -213,8 +213,6 @@
     "image/Pasted image 20250125184125.png",
     "image/Pasted image 20250125183539.png",
     "image/Pasted image 20250125183214.png",
-    "image/Pasted image 20250125183042.png",
-    "image/Pasted image 20250125183020.png",
     "pwnable.kr",
     "image",
     "FSOP",
@@ -222,7 +220,6 @@
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
     "Dreamhack/my prob",
-    "Dreamhack/brainstorming",
-    "Dreamhack"
+    "Dreamhack/brainstorming"
   ]
 }
