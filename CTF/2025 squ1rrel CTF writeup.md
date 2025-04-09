@@ -589,3 +589,4 @@ unsigned __int64 replace_card()
 }
 ```
 
+In `replace_card`, `o`
