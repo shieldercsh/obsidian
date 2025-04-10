@@ -223,4 +223,4 @@ void *__fastcall userinfo(void *a1)
 }
 ```
 
-`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, 
+`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, It allocates the stack where `flag.txt` is stored. So we can manipulate this position.
