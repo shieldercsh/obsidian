@@ -6,4 +6,4 @@
 --- 
 # Extremely Lame Filters 1
 
-`elf.py` 3
+`elf.py` analyze input ELF file.
