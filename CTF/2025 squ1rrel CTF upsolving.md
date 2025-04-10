@@ -135,4 +135,5 @@ p.interactive()
     Stripped:   No
 ```
 
-Partial RELRO, No canary, No PIE. But Nevermind. I don't use those.
+Partial RELRO, No canary, No PIE. But Nevermind. I don't use these.
+
