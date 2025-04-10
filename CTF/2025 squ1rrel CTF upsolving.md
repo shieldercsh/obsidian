@@ -125,3 +125,14 @@ p.interactive()
 ---
 # squ1rrel-logon
 
+```bash
+[*] '/mnt/d/squ1rrel/squ1rrel-logon/terminal'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      No canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x3fe000)
+    Stripped:   No
+```
+
+Partial RELRO, No canary, No PIE. But Nevermind. I don't use those.
