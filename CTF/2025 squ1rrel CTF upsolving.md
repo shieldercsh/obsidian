@@ -186,4 +186,41 @@ void *__fastcall auth(void *a1)
 }
 ```
 
-`auth` read `flag.txt` content and write in stack. 
+`auth` read `flag.txt` content and write in stack. Then `userinfo_thread` operate mainly.
+
+```C
+void *__fastcall userinfo(void *a1)
+{
+  void *v1; // rsp
+  void *v2; // rsp
+  _QWORD v4[2]; // [rsp+0h] [rbp-30h] BYREF
+  unsigned __int64 v5; // [rsp+10h] [rbp-20h] BYREF
+  unsigned __int64 v6; // [rsp+18h] [rbp-18h] BYREF
+  char *v7; // [rsp+20h] [rbp-10h]
+  char *v8; // [rsp+28h] [rbp-8h]
+
+  v4[1] = a1;
+  puts("\x1B[1;36m[AUTH] User identification required\x1B[0m");
+  printf("First Name Length: ");
+  __isoc99_scanf("%ld%*c", &v6);
+  printf("Surname Length: ");
+  __isoc99_scanf("%ld%*c", &v5);
+  if ( v6 > 0x100000000LL || v5 > 0x100000000LL )
+  {
+    puts("Too long for our systems.");
+    exit(1);
+  }
+  v1 = alloca(16 * ((v6 + 23) / 0x10));
+  v8 = (char *)v4;
+  v2 = alloca(16 * ((v5 + 23) / 0x10));
+  v7 = (char *)v4;
+  printf("First Name: ");
+  readline(v8, v6);
+  printf("Surname: ");
+  readline(v7, v5);
+  printf("Authenticating Employee %s %s\n", v8, v7);
+  return 0LL;
+}
+```
+
+`alloca` function is like `malloc`, but it use stack space.
