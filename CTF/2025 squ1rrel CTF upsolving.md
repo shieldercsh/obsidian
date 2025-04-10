@@ -3,7 +3,7 @@
 2. Extremely Lame Filters 2
 3. squ1rrel-logon
 
-`If you want to get binary of ELF probs, DM me`
+If you want to get binary of ELF probs, DM me(guardianch)
 
 --- 
 # Extremely Lame Filters 1
@@ -41,4 +41,6 @@ dt = base64.b64encode(open('./ex_nofilter', 'rb').read())
 p.sendlineafter(b'!!', dt)
 p.interactive()
 ```
+
+---
 
