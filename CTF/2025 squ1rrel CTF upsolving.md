@@ -24,4 +24,4 @@ for section in elf.sections:
 elf.run()
 ```
 
-`fairy.py` check sections flag of input file. If there is EXECINSTR flag in `sh_flags`, program turns off.
+`fairy.py` check sections flag of input file. If there is EXECINSTR flag in `sh_flags`, program turns off. However, `sh_flags` doesn't influence 
