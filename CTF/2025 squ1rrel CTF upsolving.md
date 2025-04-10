@@ -93,4 +93,4 @@ First, load the bytes with RW permission, and load same position with RWX permis
 000000f0: 0103 0131 d231 f66a 3b58 0f05            ...1.1.j;X..
 ```
 
-This is my binary.
+This is my binary. `/bin/sh\x00` located in 0xe0, and my shellcode located in 0xe8.
