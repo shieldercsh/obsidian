@@ -223,4 +223,4 @@ void *__fastcall userinfo(void *a1)
 }
 ```
 
-`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, It allocates the stack where `flag.txt` is stored. So we can modulate the value of that stack position. After `userinfo` end, it get user input and compare with the value of that stack position. So, 
+`alloca` function is like `malloc`, but it use stack space. And don't you think that the name length limit of 0x100000000 is too long? If we input big number, It allocates the stack where `flag.txt` is stored. So we can modulate the value of that stack position. After `userinfo` end, it get user input and compare with the value of that stack position. We know what we need to input, right? If you want to offset(explained big num above)
