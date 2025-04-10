@@ -107,5 +107,5 @@ Program Headers:
                  0x0000000000000008 0x0000000000000008  RWE    0x200
 ```
 
-This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. program header 3 load bytes 0x8 to 
+This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. Program header 3 load bytes which located 0x8 to end of file.
 `/bin/sh\x00` located in 0xe0, and my shellcode located in 0xe8.
