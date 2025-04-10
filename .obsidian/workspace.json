@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2025 squ1rrel CTF upsolving.md",
+                "file": "About Me.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 squ1rrel CTF upsolving"
+              "title": "About Me"
             }
           }
         ]
@@ -178,9 +178,9 @@
   },
   "active": "4220a3dfe3269283",
   "lastOpenFiles": [
+    "CTF/2025 squ1rrel CTF upsolving.md",
     "CTF/2025 squ1rrel CTF writeup.md",
     "CTF/2025/2025 SSU CTF.md",
-    "CTF/2025 squ1rrel CTF upsolving.md",
     "CTF/2025/2025 codegate CTF quals.md",
     "CTF/2025/2025 iris CTF.md",
     "CTF/2025/2025 codegate CTF quals - 제출용.md",

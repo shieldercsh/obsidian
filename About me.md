@@ -47,5 +47,5 @@ Seoul National University 25, Energy Resources Engineering Major
 Mail : shieldercsh@gmail.com / whites0701@snu.ac.kr
 Github : https://github.com/shieldercsh
 Blog : https://shielder.tistory.com/
-Discord : shielder(guardianch)
+Discord : guardianch
 Dreamhack : shielder

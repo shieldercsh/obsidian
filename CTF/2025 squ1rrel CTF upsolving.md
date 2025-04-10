@@ -3,7 +3,7 @@
 2. Extremely Lame Filters 2
 3. squ1rrel-logon
 
-If you want to get binary or bytes of ELF probs, DM me(guardianch)
+If you want to get binary or bytes of ELF probs, DM me(Discord : guardianch)
 
 --- 
 # Extremely Lame Filters 1
