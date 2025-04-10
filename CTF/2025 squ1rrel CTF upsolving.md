@@ -71,4 +71,4 @@ for segment in elf.segments:
 elf.run()
 ```
 
-First, `e_type` should be `ET_EXEC`. It means ELF  
+First, `e_type` should be `ET_EXEC`. It means elf must not have any linking. 
