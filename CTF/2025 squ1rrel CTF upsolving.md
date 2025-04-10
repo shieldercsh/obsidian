@@ -137,3 +137,53 @@ p.interactive()
 
 Partial RELRO, No canary, No PIE. But Nevermind. I don't use these.
 
+```C
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  setbuf(stdout, 0LL);
+  setbuf(stdin, 0LL);
+  print_banner();
+  pthread_create(&userinfo_thread, 0LL, userinfo, 0LL);
+  pthread_create(&auth_thread, 0LL, auth, 0LL);
+  pthread_join(auth_thread, 0LL);
+  return 0;
+}
+```
+
+It use two threads.
+
+```C
+void *__fastcall auth(void *a1)
+{
+  char s1[256]; // [rsp+10h] [rbp-210h] BYREF
+  char buf[264]; // [rsp+110h] [rbp-110h] BYREF
+  int v4; // [rsp+218h] [rbp-8h]
+  int fd; // [rsp+21Ch] [rbp-4h]
+
+  fd = open("flag.txt", 0);
+  if ( fd < 0 )
+  {
+    puts("Error initializing authentication. Please contact support if on remote.");
+    exit(1);
+  }
+  v4 = read(fd, buf, 0x100uLL);
+  buf[v4 - 1] = 0;
+  close(fd);
+  pthread_join(userinfo_thread, 0LL);
+  printf("\x1B[1;36m[SYSTEM] Enter security token: \x1B[0m");
+  readline(s1, 0x100uLL);
+  if ( !strcmp(s1, buf) )
+  {
+    puts("\x1B[1;32m[ACCESS GRANTED] Welcome to the system\x1B[0m");
+    system("/bin/sh");
+  }
+  else
+  {
+    puts("\x1B[1;31m[ACCESS DENIED] Invalid security token\x1B[0m");
+    puts("\x1B[1;31m[SYSTEM] Session terminated\x1B[0m");
+  }
+  return 0LL;
+}
+```
+
+`auth` read `flag.txt` content and write in stack. 
