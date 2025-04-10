@@ -107,4 +107,4 @@ Program Headers:
                  0x0000000000000008 0x0000000000000008  RWE    0x200
 ```
 
-This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. Program header 3 which has RW permission load bytes located 0x8 to 0xfb(end of file), and Set `VirtualAddress` to 0x10008. Program header 4 which has RWX permission load only 8 bytes into the same position. Since bytes located 0x08 to 0x0f is `\x00`, it can pass the check, and change permission to RWX.
+This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. Program header 3 which has RW permission load bytes located in 0x8 to 0xfb(end of file), and Set `VirtualAddress` to 0x10008. Program header 4 which has RWX permission load only 8 bytes into the same position. Since bytes located in 0x08 to 0x0f is `\x00`, it can pass the check, and change permission to RWX. my shellcode starts at 0xe8, so set ``
