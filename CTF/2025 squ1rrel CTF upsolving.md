@@ -71,4 +71,4 @@ for segment in elf.segments:
 elf.run()
 ```
 
-First, `e_type` should be `ET_EXEC`. It means elf must not have any linking. 
+First, `e_type` should be `ET_EXEC`. It means elf must not have any linking. It is resolved by write shellcode and compile it. 
