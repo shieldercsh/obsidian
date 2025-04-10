@@ -71,3 +71,4 @@ for segment in elf.segments:
 elf.run()
 ```
 
+First, `e_type` should be `ET_EXEC`. It means ELF  
