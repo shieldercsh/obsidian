@@ -1,6 +1,8 @@
 
 1. Extremely Lame Filters 1
-2. jail!
-3. squ1rrel-casino
+2. Extremely Lame Filters 2
+3. squ1rrel-logon
 
 --- 
+# Extremely Lame Filters 1
+
