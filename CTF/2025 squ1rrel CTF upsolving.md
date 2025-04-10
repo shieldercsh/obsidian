@@ -71,4 +71,4 @@ for segment in elf.segments:
 elf.run()
 ```
 
-First, `e_type` should be `ET_EXEC`. It means elf must not have any linking. It is resolved by write shellcode and compile it. Second, it check segment's `p_flags`. `p_flags` affect executing of the program, so we can't use the
+First, `e_type` should be `ET_EXEC`. It means elf must not have any linking. It is resolved by write shellcode and compile it. Second, it check segment's `p_flags`. `p_flags` affect program execution, so we can't use method 
