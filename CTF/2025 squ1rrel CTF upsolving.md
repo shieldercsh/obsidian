@@ -72,3 +72,4 @@ elf.run()
 ```
 
 `e_type` should be `ET_EXEC`. It means elf must not have any linking. It is resolved by write shellcode and compile it. Second, it check segment's `p_flags`. `p_flags` affect program execution, so we can't use method used to solve `Extremely Lame Filters 1`. We need to know new trick haha.
+First, load the bytes with RW permission, and load same position with RWX permission, but very small length.
