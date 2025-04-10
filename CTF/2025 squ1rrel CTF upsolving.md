@@ -93,5 +93,19 @@ First, load the bytes with RW permission, and load same position with RWX permis
 000000f0: 0103 0131 d231 f66a 3b58 0f05            ...1.1.j;X..
 ```
 
-This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. So program headers 1, 2
+```
+Program Headers:
+  Type           Offset             VirtAddr           PhysAddr
+                 FileSiz            MemSiz              Flags  Align
+  <unknown>: 464 0x0000000000000000 0x00000001003e0002 0x00000000000100e8
+                 0x0000000000000000 0x0000000000000000   W     0x38004000000000
+  <unknown>: 400 0x0000000000000000 0x0000000000000000 0x0000000000000000
+                 0x0000000000000000 0x0000000000000000         0x0
+  LOAD           0x0000000000000008 0x0000000000010008 0x0000000000010008
+                 0x00000000000000f5 0x00000000000000f5  RW     0x0
+  LOAD           0x0000000000000008 0x0000000000010008 0x0000000000010008
+                 0x0000000000000008 0x0000000000000008  RWE    0x200
+```
+
+This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. program header 3 load bytes 0x8 to 
 `/bin/sh\x00` located in 0xe0, and my shellcode located in 0xe8.
