@@ -107,5 +107,4 @@ Program Headers:
                  0x0000000000000008 0x0000000000000008  RWE    0x200
 ```
 
-This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. Program header 3 which have RW permission load bytes located 0x8 to 0xfb(end of file).
-`/bin/sh\x00` located in 0xe0, and my shellcode located in 0xe8.
+This is my binary. I set `Number of program headers` to 4, and `Start of program headers` to 0. Therefore program headers 1, 2 is abnormal. Program header 3 which have RW permission load bytes located 0x8 to 0xfb(end of file), and Set `VirtualAddress` to 0x10008. Program header 4 which has
