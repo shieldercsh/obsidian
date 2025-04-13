@@ -71,3 +71,4 @@ void process_ping(const uint8_t* data, size_t data_length) {
 }
 ```
 
+In `process_ping`, There is `write` function which 
