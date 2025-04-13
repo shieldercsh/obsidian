@@ -32,4 +32,26 @@ int main() {
 }
 ```
 
-`save_file` is fake.
+`main` read data and send to `process_message`
+
+```C
+void process_message(const uint8_t* message, FILE* save_file) {
+	uint8_t protocol_version = message[0];
+	uint8_t op = message[1];
+	uint16_t data_length = ntohs(*(uint16_t*)(message+2));
+	uint8_t data[MAX_DATA_SIZE];
+	if (data_length > MAX_DATA_SIZE + CRC_LENGTH) {
+		return;
+	}
+        uint16_t data_no_footer_length = data_length - CRC_LENGTH;
+	if (op == OP_PING) {
+		process_ping(message+HEADER_LENGTH, data_no_footer_length);
+	}
+	if (op == OP_SAVE) {
+		//uint8_t data[MAX_DATA_SIZE];
+		memcpy(data, message+HEADER_LENGTH, data_no_footer_length);
+		process_save(data, data_no_footer_length);
+	}
+}
+```
+
