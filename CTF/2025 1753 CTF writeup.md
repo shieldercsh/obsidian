@@ -32,7 +32,7 @@ int main() {
 }
 ```
 
-`main` read data and send to `process_message`
+`main` read data and send to `process_message`.
 
 ```C
 void process_message(const uint8_t* message, FILE* save_file) {
@@ -43,7 +43,7 @@ void process_message(const uint8_t* message, FILE* save_file) {
 	if (data_length > MAX_DATA_SIZE + CRC_LENGTH) {
 		return;
 	}
-        uint16_t data_no_footer_length = data_length - CRC_LENGTH;
+	uint16_t data_no_footer_length = data_length - CRC_LENGTH;
 	if (op == OP_PING) {
 		process_ping(message+HEADER_LENGTH, data_no_footer_length);
 	}
@@ -55,4 +55,4 @@ void process_message(const uint8_t* message, FILE* save_file) {
 }
 ```
 
-we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions. `data_no_footer_length` can underflowed. if `data_length` is less than 4, `data_no_footer_length` become very big number because it's t
+we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions. `data_no_footer_length` can underflowed. if `data_length` is less than 4, `data_no_footer_length` become very big number because its type is `unsigned`.
