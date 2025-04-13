@@ -87,4 +87,5 @@ void process_ping(const uint8_t* data, size_t data_length) {
 }
 ```
 
-In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`.
+In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`. With `AAW` vuln, we can do `rop`.
+However, In my environment which is `UBUNTU `
