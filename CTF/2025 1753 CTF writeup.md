@@ -55,4 +55,4 @@ void process_message(const uint8_t* message, FILE* save_file) {
 }
 ```
 
-we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions.
+we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions. `data_no_footer_length` can underflowed.
