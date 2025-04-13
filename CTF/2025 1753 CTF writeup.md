@@ -71,7 +71,7 @@ void process_message(const uint8_t* message, FILE* save_file) {
 ```
 
 we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions. `data_no_footer_length` can underflowed. if `data_length` is less than 4, `data_no_footer_length` become very big number because its type is `unsigned`.
-`process_save` isn
+`process_save` isn't important function. More important than that is the
 
 ```C
 void process_ping(const uint8_t* data, size_t data_length) {
