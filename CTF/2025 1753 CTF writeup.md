@@ -88,4 +88,4 @@ void process_ping(const uint8_t* data, size_t data_length) {
 ```
 
 In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`. With `AAW` vuln, we can do `rop`.
-However, in my environment which is `Ubuntu 24.04.2 LTS`, `memcpy` doesn't work. Because `memcpy` try to write at unallocated address - beyond the allocated stack page. But the funny thing is, it works on remote. I can be checked to print length about `process_ping`'s output. In local, less data printed,
+However, in my environment which is `Ubuntu 24.04.2 LTS`, `memcpy` doesn't work. Because `memcpy` try to write at unallocated address - beyond the allocated stack page. But the funny thing is, it works on remote. I can be checked to print length about `process_ping`'s output. In local, less data printed, but on remote, 65552(0x10 + 0xfffc + 0x4) - full length of text when I input 
