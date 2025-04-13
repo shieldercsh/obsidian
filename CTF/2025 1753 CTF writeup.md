@@ -32,3 +32,4 @@ int main() {
 }
 ```
 
+`save_file` is fake.
