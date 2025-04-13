@@ -16,3 +16,19 @@ I didn't solve the first two problems because they seemed too easy.(and they hav
 ```
 
 Partial RELRO
+
+```C
+int main() {
+        save_file = fopen("save.dat", "ab+");
+        uint8_t message[1500];
+        while (true) {
+                ssize_t bytes_read = read(STDIN_FILENO, message, 1500);
+                if (bytes_read == 0 || bytes_read == -1) {
+                        break;
+                }
+                process_message(message, save_file);
+        }
+	fclose(save_file);
+}
+```
+
