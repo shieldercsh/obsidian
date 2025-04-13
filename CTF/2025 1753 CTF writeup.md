@@ -72,3 +72,11 @@ void process_ping(const uint8_t* data, size_t data_length) {
 ```
 
 In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`.
+
+```C
+void process_save(uint8_t* data, size_t data_length) {
+	process_content(data, data_length);
+	fwrite(&data_length, sizeof(data_length), 1, save_file);
+	fwrite(data, 1, data_length, save_file);
+}
+```
