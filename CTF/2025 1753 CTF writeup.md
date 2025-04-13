@@ -35,6 +35,21 @@ int main() {
 `main` read data and send to `process_message`.
 
 ```C
+void process_content(uint8_t* data, size_t data_length) {
+	for (size_t i = 0; i < data_length; i++) {
+		if (data[i] == 0) {
+			break;
+		}
+		data[i] = data[i] + 42;
+	}
+}
+
+void process_save(uint8_t* data, size_t data_length) {
+	process_content(data, data_length);
+	fwrite(&data_length, sizeof(data_length), 1, save_file);
+	fwrite(data, 1, data_length, save_file);
+}
+
 void process_message(const uint8_t* message, FILE* save_file) {
 	uint8_t protocol_version = message[0];
 	uint8_t op = message[1];
@@ -56,6 +71,7 @@ void process_message(const uint8_t* message, FILE* save_file) {
 ```
 
 we can choose two options : `process_ping` and `process_save`, and there is vuln applyed both functions. `data_no_footer_length` can underflowed. if `data_length` is less than 4, `data_no_footer_length` become very big number because its type is `unsigned`.
+`process_save` isn
 
 ```C
 void process_ping(const uint8_t* data, size_t data_length) {
@@ -72,11 +88,3 @@ void process_ping(const uint8_t* data, size_t data_length) {
 ```
 
 In `process_ping`, There is `write` function allowed leak everything. I leak `canary` and `libc_base`.
-
-```C
-void process_save(uint8_t* data, size_t data_length) {
-	process_content(data, data_length);
-	fwrite(&data_length, sizeof(data_length), 1, save_file);
-	fwrite(data, 1, data_length, save_file);
-}
-```
