@@ -4,35 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "f6569361efca76c3",
+        "id": "850c4c5dfe554393",
         "type": "tabs",
         "children": [
           {
-            "id": "f9d8d95587879fa6",
+            "id": "ced508ee9b3cfe68",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20250420233911.png"
+                "file": "About Me.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250420233911"
-            }
-          },
-          {
-            "id": "b06582eb70f8f80c",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted image 20250420233512.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted image 20250420233512"
+              "icon": "lucide-file",
+              "title": "About Me"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -189,10 +178,10 @@
   },
   "active": "e4847daf8b231e93",
   "lastOpenFiles": [
-    "Pasted image 20250420233911.png",
+    "image/Pasted image 20250420233911.png",
+    "image/Pasted image 20250420233512.png",
+    "image/Pasted image 20250420233118.png",
     "통실/과제3 - 4장.md",
-    "Pasted image 20250420233512.png",
-    "Pasted image 20250420233118.png",
     "통실/과제2 - 2장.md",
     "통실/과제1 - 3장.md",
     "CTF/2025/2025 codegate CTF quals.md",

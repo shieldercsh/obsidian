@@ -1,3 +1,7 @@
+---
+share_link: https://share.note.sx/auz6b5ox#Kvab++/pYWhKDbGdkvmt8qz49ZcAkYvcP5W8JrnNULY
+share_updated: 2025-04-20T23:40:46+09:00
+---
 # PROFILE
 
 NAME : 조수호 / shielder
