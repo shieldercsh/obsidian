@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About Me.md",
+                "file": "통실/과제3 - 4장.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "About Me"
+              "title": "과제3 - 4장"
             }
           }
         ]
@@ -178,6 +178,7 @@
   },
   "active": "e4847daf8b231e93",
   "lastOpenFiles": [
+    "About Me.md",
     "image/Pasted image 20250420233911.png",
     "image/Pasted image 20250420233512.png",
     "image/Pasted image 20250420233118.png",
@@ -185,7 +186,6 @@
     "통실/과제2 - 2장.md",
     "통실/과제1 - 3장.md",
     "CTF/2025/2025 codegate CTF quals.md",
-    "About Me.md",
     "CTF/2025/2025 1753CTF writeup.md",
     "CTF/2025/2025 squ1rrel CTF upsolving.md",
     "CTF/2025/2025 squ1rrel CTF writeup.md",
