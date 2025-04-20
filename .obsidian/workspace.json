@@ -11,17 +11,28 @@
             "id": "f9d8d95587879fa6",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "통실/과제3 - 4장.md",
-                "mode": "source",
-                "source": false
+                "file": "Pasted image 20250420233911.png"
               },
-              "icon": "lucide-file",
-              "title": "과제3 - 4장"
+              "icon": "lucide-image",
+              "title": "Pasted image 20250420233911"
+            }
+          },
+          {
+            "id": "b06582eb70f8f80c",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "Pasted image 20250420233512.png"
+              },
+              "icon": "lucide-image",
+              "title": "Pasted image 20250420233512"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -176,12 +187,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f9d8d95587879fa6",
+  "active": "e4847daf8b231e93",
   "lastOpenFiles": [
+    "Pasted image 20250420233911.png",
+    "통실/과제3 - 4장.md",
     "Pasted image 20250420233512.png",
     "Pasted image 20250420233118.png",
     "통실/과제2 - 2장.md",
-    "통실/과제3 - 4장.md",
     "통실/과제1 - 3장.md",
     "CTF/2025/2025 codegate CTF quals.md",
     "About Me.md",
@@ -218,8 +230,6 @@
     "image/Pasted image 20250405221632.png",
     "통실",
     "image/Pasted image 20250213193901.png",
-    "image/Pasted image 20250125184125.png",
-    "image/Pasted image 20250125183539.png",
     "pwnable.kr",
     "image",
     "FSOP",
