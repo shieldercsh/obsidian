@@ -25,12 +25,14 @@
             "id": "cbde9bf9e2d1a1ae",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.8.10"
+                "file": "Dreamhack/writeup/pwn/yisf_hospital.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.10"
+              "icon": "lucide-file",
+              "title": "yisf_hospital"
             }
           }
         ],
@@ -191,6 +193,13 @@
   },
   "active": "cbde9bf9e2d1a1ae",
   "lastOpenFiles": [
+    "Dreamhack/writeup/pwn/void.md",
+    "Dreamhack/writeup/pwn/ultra_c.md",
+    "Dreamhack/writeup/pwn/sandrop.md",
+    "Dreamhack/writeup/pwn/ROT-253.md",
+    "Dreamhack/writeup/pwn/pop rdi.md",
+    "Dreamhack/writeup/pwn/Pet Pals.md",
+    "Dreamhack/writeup/pwn/Period.md",
     "CTF/2025/2025 1753CTF writeup.md",
     "통실/과제3 - 4장.md",
     "About Me.md",
@@ -214,13 +223,7 @@
     "CTF/2024/2024 Backdoor CTF.md",
     "CTF/2024/2024 0xl4ugh CTF.md",
     "CTF/2024/2024 WaRP CTF/r_jh0213's hip.md",
-    "CTF/2024/2024 WaRP CTF/crosssssstack.md",
-    "CTF/2024/2024 WaRP CTF/GoOutside.md",
     "CTF/2024/2024 WaRP CTF",
-    "CTF/2024/2024 JBU CTF/pwn7 - one_chance.md",
-    "CTF/2024/2024 JBU CTF/pwn6 - control base.md",
-    "CTF/2024/2024 JBU CTF/pwn5 - Real-time Canary.md",
-    "CTF/2024/2024 JBU CTF/pwn4 - Ace Fishing.md",
     "CTF/2024/2024 JBU CTF",
     "CTF/2024",
     "image/2025ssuctf.webp",
