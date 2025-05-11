@@ -1,14 +1,14 @@
 {
   "main": {
-    "id": "c83d816f75789ea0",
+    "id": "6d92af97603d6134",
     "type": "split",
     "children": [
       {
-        "id": "37eddc650b948d0b",
+        "id": "401d24f75f4acdb2",
         "type": "tabs",
         "children": [
           {
-            "id": "ff342cdf94b1a65b",
+            "id": "12bdb66081187441",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "905827aa7468c733",
+    "id": "a8c04379f98d99d1",
     "type": "split",
     "children": [
       {
-        "id": "f44f87738b4e8169",
+        "id": "167b5796eae0780f",
         "type": "tabs",
         "children": [
           {
-            "id": "9c106babb38f349b",
+            "id": "af2d349dbb2cbad1",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +48,7 @@
             }
           },
           {
-            "id": "770080421a5e4dec",
+            "id": "b83def853cfdde0a",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "0999be52d73e5bfd",
+            "id": "bedfd2cd1fc8b98a",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -81,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "ab20b31f8f116311",
+    "id": "da0f0a2a1f19de65",
     "type": "split",
     "children": [
       {
-        "id": "ac7edd97ce1a87ef",
+        "id": "e11b9cf44a1b37c9",
         "type": "tabs",
         "children": [
           {
-            "id": "2f3aa006217a2448",
+            "id": "b988e7c820e6919d",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "About me.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Welcome"
+              "title": "Backlinks for About me"
             }
           },
           {
-            "id": "b3acd215c372d89a",
+            "id": "005cc7a3fa9afcfa",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
+                "file": "About me.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Welcome"
+              "title": "Outgoing links from About me"
             }
           },
           {
-            "id": "b36ebdca323d1d76",
+            "id": "d23cb5c02af94b42",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,18 +137,18 @@
             }
           },
           {
-            "id": "a15cd10a548da2ef",
+            "id": "467225cd6a191fa9",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md",
+                "file": "About me.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Welcome"
+              "title": "Outline of About me"
             }
           }
         ]
@@ -169,53 +169,6 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "ff342cdf94b1a65b",
-  "lastOpenFiles": [
-    "hi guys.md",
-    "About me.md",
-    "통실/과제1 - 3장.md",
-    "통실/과제3 - 4장.md",
-    "통실/과제2 - 2장.md",
-    "통실",
-    "pwnable.kr/rand.md",
-    "pwnable.kr/passcode.md",
-    "pwnable.kr",
-    "knights/LOB 라업.md",
-    "knights",
-    "image/Pasted image 20250420233911.png",
-    "image/Pasted image 20250420233118.png",
-    "image/Pasted image 20250420233512.png",
-    "image/Pasted image 20250405221916.png",
-    "image/Pasted image 20250405222338.png",
-    "image/Pasted image 20250125182956.png",
-    "image/Pasted image 20250405222332.png",
-    "image/Pasted image 20250125184125.png",
-    "image/Pasted image 20250405221632.png",
-    "image/Pasted image 20250125183020.png",
-    "image",
-    "FSOP/FSOPpayload.md",
-    "FSOP/FSOP.md",
-    "FSOP",
-    "Dreamhack/writeup/pwn/yisf_hospital.md",
-    "Dreamhack/writeup/pwn/void.md",
-    "Dreamhack/writeup/pwn/ultra_c.md",
-    "Dreamhack/writeup/pwn/shiftalloc.md",
-    "Dreamhack/writeup/pwn/sandrop.md",
-    "Dreamhack/writeup/pwn/ROT-253.md",
-    "Dreamhack/writeup/pwn/Period.md",
-    "Dreamhack/writeup/pwn/pop rdi.md",
-    "Dreamhack/writeup/pwn/Pet Pals.md",
-    "Dreamhack/writeup/pwn/operator.md",
-    "Dreamhack/writeup/pwn/PAC-MAN.md",
-    "Dreamhack/writeup/pwn/ODS 1.md",
-    "Dreamhack/writeup/pwn/oob.md",
-    "Dreamhack/writeup/pwn/note.md",
-    "Dreamhack/writeup/pwn/nbase.md",
-    "Dreamhack/writeup/pwn/Flip and Probe 2.md",
-    "Dreamhack/writeup/pwn",
-    "Dreamhack/writeup/crypto",
-    "Dreamhack/my prob",
-    "Dreamhack/writeup",
-    "Dreamhack"
-  ]
+  "active": "12bdb66081187441",
+  "lastOpenFiles": []
 }
