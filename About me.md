@@ -6,7 +6,7 @@ share_updated: 2025-04-20T23:40:46+09:00
 
 NAME : 조수호 / shielder
 FIELD : PWN
-	Programming Language : C, C++, Python, Shell script, Java, JavaScript 
+Programming Language : C, C++, Python, Shell script, Java, JavaScript 
 
 Gyeonggi Science High School 40th
 Seoul National University 25, Energy Resources Engineering Major
