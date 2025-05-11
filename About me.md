@@ -47,7 +47,7 @@ Seoul National University 25, Energy Resources Engineering Major
 ---
 # Social
 
-Mail : whites0701@snu.ac.kr  
+Mail : whites0701@snu.ac.kr / shielder@gmail.com
 Github : https://github.com/shieldercsh
 Blog : https://shielder.tistory.com/
 Discord : guardianch
