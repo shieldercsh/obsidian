@@ -6,7 +6,7 @@ share_updated: 2025-04-20T23:40:46+09:00
 
 NAME : 조수호 / shielder
 FIELD : PWN
-
+Programming Language : 
 
 Gyeonggi Science High School 40th
 Seoul National University 25, Energy Resources Engineering Major
@@ -16,10 +16,11 @@ Seoul National University 25, Energy Resources Engineering Major
 
 ### Competition
 
-- 2023 Whitehat Contest Finalist
-- 2024 CCE Finalist
-- 2024 JBU CTF 1st place
+- 2025 Codegate CTF Finalist
 - 2025 SSU CTF 4th place
+- 2024 JBU CTF 1st place
+- 2024 CCE Finalist
+- 2023 Whitehat Contest Finalist
 ### Authored Problems
 
 #### Wargame
