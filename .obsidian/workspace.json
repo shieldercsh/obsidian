@@ -11,10 +11,14 @@
             "id": "ff342cdf94b1a65b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "About me.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "About me"
             }
           }
         ]
@@ -165,7 +169,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9c106babb38f349b",
+  "active": "ff342cdf94b1a65b",
   "lastOpenFiles": [
     "hi guys.md",
     "About me.md",
