@@ -35,6 +35,9 @@ Seoul National University 25, Energy Resources Engineering Major
 ---
 # Research
 
+### Project
+
+
 ### Publications
 
 - Development of an automatic inhibition zone detection model for disk diffusion method using CNN (2024). DOI: [10.6109/jkiice.2024.28.10.1162](https://doi.org/10.6109/jkiice.2024.28.10.1162)
@@ -47,7 +50,7 @@ Seoul National University 25, Energy Resources Engineering Major
 ---
 # Social
 
-Mail : whites0701@snu.ac.kr / shielder@gmail.com
+Mail : whites0701@snu.ac.kr / shielder@gmail.com(Personal)
 Github : https://github.com/shieldercsh
 Blog : https://shielder.tistory.com/
 Discord : guardianch
