@@ -21,13 +21,11 @@ Seoul National University 25, Energy Resources Engineering Major
 - 2024 JBU CTF 1st place
 - 2024 CCE Finalist
 - 2023 Whitehat Contest Finalist
+
 ### Authored Problems
 
-#### Wargame
 - [send_safe](https://dreamhack.io/wargame/challenges/1174)
 - [random_calculator](https://dreamhack.io/wargame/challenges/1408)
-
-#### CTF
 - 2024 WaRP CTF Organizer
 	- [crosssssstack](https://dreamhack.io/wargame/challenges/1727)
 	- [GoOutside](https://dreamhack.io/wargame/challenges/1729)
