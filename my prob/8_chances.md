@@ -16,7 +16,8 @@
    `string.punctuation + string.whitespace + string.digits`
    을 포함하면 안 됩니다.
 
-
+`test` 기능을 자세히 보겠습니다.
+우선 `chance >= 8`
 ## ex.py
 
 ```python
@@ -83,4 +84,4 @@ print(realpw)
 print(real(realpw))
 ```
 
-8등분하는 방법은 여러 가지입니다. 예를 들어 `LEFT`와 `REVERSE` 함수만으로도 
+8등분하는 방법은 여러 가지입니다. 예를 들어 `LEFT`와 `REVERSE` 함수만으로도 비슷한 논리를 이용하여 해결할 수 있습니다.
