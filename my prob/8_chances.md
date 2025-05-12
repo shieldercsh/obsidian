@@ -10,14 +10,15 @@
 주요 기능을 정리해보겠습니다.
 1. `reset` : `chance`를 8로 초기화합니다.
 2. `test` : 입력한 쿼리를 실행시켜줍니다. 이 때 쿼리에
-   `['union', 'insert', 'sleep', 'concat', 'like', 'set', '@', '!', '%', '_', '\t','\n','\r','\v','\f', '/', '*', '#']`
+   `['union', 'update', 'sleep', 'concat', 'like', 'set', '@', '!', '%', '_', '\t','\n','\r','\v','\f', '/', '*', '#']`
    을 포함하면 안 됩니다.
 3. `real` : `username`과 `password`를 입력받고 이것이 `admin`의 정보와 일치하면 `flag`를 줍니다. 이 때 `username`과 `password`는
    `string.punctuation + string.whitespace + string.digits`
    을 포함하면 안 됩니다.
 
 `test` 기능을 자세히 보겠습니다.
-`chance >= 8`이면 `admin`의 `password`를 교체합니다. 그리고 `test` 실행마다 `chance`가 1씩 증가하기 때문에 한 번 정해진 `password`는 8번의 퀴리동안 유지됩니다.
+`chance >= 8`이면 `admin`의 `password`를 교체합니다. 그리고 `test` 실행마다 `chance`가 1씩 증가하기 때문에 한 번 정해진 `password`는 8번의 쿼리 동안 유지됩니다.
+
 ## ex.py
 
 ```python
