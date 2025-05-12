@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "my prob/send_safe.md",
+                "file": "my prob/8_chances.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "send_safe"
+              "title": "8_chances"
             }
           }
         ]
@@ -171,6 +171,8 @@
   },
   "active": "12bdb66081187441",
   "lastOpenFiles": [
+    "my prob/send_safe.md",
+    "my prob/8_chances.md",
     "About me.md"
   ]
 }
