@@ -83,4 +83,4 @@ print(realpw)
 print(real(realpw))
 ```
 
-8등분하느 
+8등분하는 방법은 여러 가지입니다. 예를 들어 `LEFT`와 `REVERSE` 함수만으로도 
