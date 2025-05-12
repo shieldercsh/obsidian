@@ -11,8 +11,10 @@
 1. `reset` : `chance`를 8로 초기화합니다.
 2. `test` : 입력한 쿼리를 실행시켜줍니다. 이 때 쿼리에
    `['union', 'insert', 'sleep', 'concat', 'like', 'set', '@', '!', '%', '_', '\t','\n','\r','\v','\f', '/', '*', '#']`
-   를 포함하면 안 됩니다.
-3. `real` : `username`과 `password`
+   을 포함하면 안 됩니다.
+3. `real` : `username`과 `password`를 입력받고 이것이 `admin`의 정보와 일치하면 `flag`를 줍니다. 이 때 `username`과 `password`는
+   `string.punctuation + string.whitespace + string.digits`
+   을 포함하면 안 됩니다.
 
 실제 DSA와 몇 가지 차이점이 존재합니다
 
