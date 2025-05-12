@@ -18,6 +18,7 @@
 
 `test` 기능을 자세히 보겠습니다.
 `chance >= 8`이면 `admin`의 `password`를 교체합니다. 그리고 `test` 실행마다 `chance`가 1씩 증가하기 때문에 한 번 정해진 `password`는 8번의 쿼리 동안 유지됩니다. 쿼리 실행 결과의 요소가 1개이고, 그 `value`가 `int` 형이라면 출력해줍니다.
+`password` 초기화 과정에서 알 수 있는 점은 길이가 38인 점, `string.ascii_letters`로 이루어져 있다는 점입니다.
 ## ex.py
 
 ```python
