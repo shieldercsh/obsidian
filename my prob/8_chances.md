@@ -17,7 +17,7 @@
    을 포함하면 안 됩니다.
 
 `test` 기능을 자세히 보겠습니다.
-우선 `chance >= 8`
+`chance >= 8`이면 `admin`의 `password`를 교체합니다. 그리고 `test` 실행마다 `chance`가
 ## ex.py
 
 ```python
