@@ -7,69 +7,9 @@
 
 # Writeup
 
-####  chall.py
-
-```python
-from Crypto.Util.number import *
-import random
-
-class DSA:
-    def __init__(self):
-        while True:
-            self.q = getPrime(160)
-            r = random.randrange(1 << 863, 1 << 864)
-            self.p = self.q * r + 1
-            if self.p.bit_length() != 1024 or isPrime(self.p) != True:
-                continue
-            h = random.randrange(2, self.p - 1)
-            self.g = pow(h, r, self.p)
-            if self.g == 1:
-                continue
-            self.x = random.randrange(1, self.q)
-            self.y = pow(self.g, self.x, self.p)
-            break
-
-    def sign(self, h):
-        k = random.randrange(1, self.q)
-        r = pow(self.g, k, self.p)
-        s = inverse(k, self.q) * (h + self.x * r) % self.q
-        return (r, s)
-
-    def verify(self, h, sig):
-        r, s = sig
-        if s == 0:
-            return False
-        s_inv = inverse(s, self.q)
-        e1 = h * s_inv % self.q
-        e2 = r * s_inv % self.q
-        r_ = pow(self.g, e1, self.p) * pow(self.y, e2, self.p) % self.p
-        if r_ == r:
-            return True
-        else:
-            return False
-
-flag = "hspace{}"
-
-dsa = DSA()
-h0 = random.randrange(1, dsa.q)
-r, s = dsa.sign(h0)
-print(f"h = {h0}")
-print(f"p = {dsa.p}")
-print(f"q = {dsa.q}")
-print(f"g = {dsa.g}")
-print(f"y = {dsa.y}")
-print(f"r = {r}")
-print(f"s = {s}")
-
-h = int(input("h = "))
-r = int(input("r = "))
-s = int(input("s = "))
-
-if dsa.verify(h, [r, s]) and (h0 - h) % dsa.q != 0:
-    print(flag)
-else:
-    print("I knew DSA was safe.")
-```
+주요 기능을 정리해보겠습니다.
+1. `reset` : `chance`를 8로 초기화합니다.
+2. 
 
 실제 DSA와 몇 가지 차이점이 존재합니다
 
