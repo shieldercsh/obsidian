@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About me.md",
+                "file": "my prob/send_safe.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "About me"
+              "title": "send_safe"
             }
           }
         ]
@@ -170,5 +170,7 @@
     }
   },
   "active": "12bdb66081187441",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "About me.md"
+  ]
 }
