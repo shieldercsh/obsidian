@@ -7,7 +7,7 @@
    - Chapter8
    - Chapter9
    - Chapter10
-1. 마무리
+2. 마무리
 
 ### 피드백
 
