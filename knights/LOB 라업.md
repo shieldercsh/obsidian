@@ -1,8 +1,8 @@
 ### 조수호(shielder)
 
 ### 목차
-1. Chapter6
-2. 
+1. Write-up (6-10)
+   - Chapter1
 
 ### 피드백
 
