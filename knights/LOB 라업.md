@@ -30,7 +30,7 @@ Crisis_at_the_Vault@hsapce-io:~$ checksec prob
     Stripped:   No
 ```
 
-`Partial RELRO` 상태입니다. 카나리가 있고, `
+`Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
 ```C
