@@ -132,7 +132,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 후략
 ```
 
-
+위의 코드와 비교해보면 `v12`가 `page5`와 같음을 알 수 있습니다. `v12`는 `rbp-0xa0`에 정의되어 있으므로3
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
