@@ -137,6 +137,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 - 익스플로잇 설계
 카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 2번 메뉴로 `page5`(4번 인덱스)에 `0x98 + 1`(카나리의 첫 바이트는 `\x00`이기 때문에 1을 더합니다.)만큼 바이트를 입력한 후 1번 메뉴로 출력시켜 카나리를 알아냅니다.
 비슷한 방법으로 `0xa8` 만큼 바이트를 입력한 후 출력시켜 `libc_base`를 알아낼 수 있습니다. `main` 함수 진행 중에 `ret` 값과 `backtrace`는 다음과 같습니다.
+
 ```
 pwndbg> x/2gx $rbp
 0x7fffffffe320: 0x0000000000000001      0x00007ffff7db3d90
@@ -185,7 +186,7 @@ p.sendlineafter(b'> ', b'3')
 p.interactive()
 ```
 
-필자는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다.
+필자는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다. `onegadget`을 사용하여도 무방하지만, `vm`에 `onegadget`이 안 깔려있다보니 인텐이 아닌 것 같아 
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
