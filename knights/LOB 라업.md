@@ -147,7 +147,7 @@ pwndbg> backtrace
 #3  0x00000000004010b5 in _start ()
 ```
 하지만 `pwndbg`는 `libc_start_call_main` 심볼을 찾지 못하기 때문에 `offset`을 직접 찾아줘야 합니다. `vmmap` 명령어를 통해 `gdb`상에서 `libc_base`를 찾을 수 있고, 두 값을 빼주면 `offset`을 구할 수 있습니다(`0x7ffff7db3d90 - 0x7ffff7d8a000 = 0x29d90`). `bof` 크기가 넉넉하기 때문에 `system('/bin/sh')`을 호출하는 방향으로 익스하겠습니다.
-(RO)
+(ROPgadget 사용 방법은 전 포스팅 Chapter4에 소개되어 있으므로 생략하겠습니다.)
 
 - 익스플로잇
 
