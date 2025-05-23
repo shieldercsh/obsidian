@@ -183,7 +183,7 @@ p.interactive()
 필자는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다. `one_gadget`을 사용하여도 무방하지만, `vm`에 `one_gadget`이 안 깔려있는 것을 보아 인텐이 아닌 것 같아 해당 방법으로 풀지는 않았습니다.
 
 --- 
-### Chapter7
+### Chapter 7
 
 - 보호기법 분석
 ```bash
@@ -197,7 +197,17 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
-`Partial RELRO`상태입니다. `PIE`가 꺼져 .있습니다.
+`Partial RELRO`상태입니다. `PIE`가 꺼져 있습니다.
+
+- 코드분석
+- 익스플로잇 설계
+- 익스플로잇
+
+---
+### Chapter 8
+
+- 보호기법 부
+
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
