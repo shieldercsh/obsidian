@@ -1,14 +1,19 @@
 ### 조수호(shielder)
 
 ### 목차
-1. Write-up (6-10)
+1. 서론
+2. Write-up (6-10)
    - Chapter6
    - Chapter7
    - Chapter8
    - Chapter9
    - Chapter10
-2. 피드백
-3. 마무리
+3. 피드백
+4. 마무리
+
+---
+
+# 1. ㅅ
 
 안녕하세요, HSPACE 나이츠에서 활동중인 조수호(shielder)입니다. 
 ### 피드백
