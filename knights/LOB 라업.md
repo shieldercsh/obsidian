@@ -29,6 +29,7 @@ Crisis_at_the_Vault@hsapce-io:~$ checksec prob
     Stripped:   No
 ```
 
+`Partial RELRO`카나리가 있고, 
 
 - 코드 분석
 ```C
