@@ -18,7 +18,6 @@
 ### Chapter 6
 
 - 보호기법 분석
-
 ```bash
 Crisis_at_the_Vault@hsapce-io:~$ checksec prob
 [*] '/home/Crisis_at_the_Vault/prob'
@@ -192,6 +191,17 @@ p.interactive()
 ### Chapter7
 
 - 보호기법 분석
+```bash
+[*] '/home/Wired_at_the_Vault/got'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x400000)
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
 
 ## 피드백
 
