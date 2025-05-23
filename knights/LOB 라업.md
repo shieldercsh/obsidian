@@ -2,11 +2,11 @@
 
 ### 목차
 1. Write-up (6-10)
-   - Chapter6
-   - Chapter7
-   - Chapter8
-   - Chapter9
-   - Chapter10
+   - Chapter 6
+   - Chapter 7
+   - Chapter 8
+   - Chapter 9
+   - Chapter 10
 2. 피드백
 3. 마무리
 
@@ -15,7 +15,7 @@
 ---
 ## Write-up
 
-### Chapter6
+### Chapter 6
 
 - 보호기법 분석
 
@@ -190,6 +190,9 @@ p.interactive()
 
 --- 
 ### Chapter7
+
+- 보호기법 분석
+
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
