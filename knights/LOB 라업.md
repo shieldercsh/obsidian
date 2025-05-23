@@ -89,6 +89,50 @@ int main(){
 
 2번 메뉴에서 `0x100` 바이트만큼 쓸 수 있습니다. 그런데 `page1, page2, page3, page4, page5, hidden`을 보니 `0x100` 바이트보다 적은 길이를 가지고 있어보입니다. `scp` 명령어로 파일을 꺼내 `ida`로 이어서 분석하겠습니다.
 
+```C
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  int v4; // [rsp+8h] [rbp-308h] BYREF
+  unsigned int v5; // [rsp+Ch] [rbp-304h] BYREF
+  char *s[6]; // [rsp+10h] [rbp-300h]
+  char v7[64]; // [rsp+40h] [rbp-2D0h] BYREF
+  char v8[96]; // [rsp+80h] [rbp-290h] BYREF
+  char v9[112]; // [rsp+E0h] [rbp-230h] BYREF
+  char v10[144]; // [rsp+150h] [rbp-1C0h] BYREF
+  char v11[144]; // [rsp+1E0h] [rbp-130h] BYREF
+  char v12[152]; // [rsp+270h] [rbp-A0h] BYREF
+  unsigned __int64 v13; // [rsp+308h] [rbp-8h]
+
+  v13 = __readfsqword(0x28u);
+  setbuf(stdin, 0LL);
+  setbuf(stdout, 0LL);
+  v5 = 0;
+  strcpy(
+    v10,
+    "As soon as I arrived here, I locked the door tightly.\n"
+    "Catching my breath, it feels like a miracle that I managed to escape safely.");
+  strcpy(v8, "Looking around, there isn't much food left.\nTo survive, I'll have to go out again soon.");
+  strcpy(
+    v11,
+    "I checked my weapons and packed the necessary supplies in my bag.\n"
+    "According to rumors I heard outside, there's a vaccine at a nearby lab.");
+  strcpy(v9, "As I headed out, I could hear the zombies' cries.\nMy heart was pounding wildly, but I moved quietly.");
+  strcpy(
+    v12,
+    "At that moment, a zombie suddenly attacked me.\n"
+    "As I checked the bite wound on my arm, I realized that the vaccine at the lab was now my last hope.");
+  strcpy(v7, "Failed, failed, failed, failed, failed, faile... itchy, tasty");
+  s[0] = v10;
+  s[1] = v8;
+  s[2] = v11;
+  s[3] = v9;
+  s[4] = v12;
+  s[5] = v7;
+
+후략
+```
+
+
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
