@@ -197,7 +197,7 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
-`Partial RELRO`상태입니다. `PIE`가 꺼져 있습니다.
+`Partial RELRO`상태입니다. `PIE`가 꺼져 .있습니다.
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
