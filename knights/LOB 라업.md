@@ -146,7 +146,7 @@ pwndbg> backtrace
 #2  0x00007ffff7db3e40 in __libc_start_main_impl (main=0x4011aa <main>, argc=1, argv=0x7fffffffe438, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffe428) at ../csu/libc-start.c:392
 #3  0x00000000004010b5 in _start ()
 ```
-하지만 `libc_start_call_main`은 심볼이 어
+하지만 `libc_start_call_main`은 심볼이 없어서 `offset`을 직접 찾아줘야 합니다. `vmmap` 명령어를 통해 `gdb`상에서 `libc_base`를 찾을 수 있고, 두 값을 빼주면 `offset`
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
