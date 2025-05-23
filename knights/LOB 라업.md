@@ -200,6 +200,56 @@ p.interactive()
 `Partial RELRO`상태입니다. `PIE`가 꺼져 있습니다.
 
 - 코드 분석
+```C
+#include <stdio.h>
+/*
+    HSpace Lord of the BOF
+    - got
+*/
+
+unsigned long long wire[100];
+
+
+void startup(){
+    puts("Hope the car starts!");
+    char wish[0x100];
+    read(0, wish, 0x200);
+}
+
+void menu(){
+    puts("1. Re-map ecu");
+    puts("2. Start a car");
+    puts("3. Die XD");
+}
+
+int main(int argc, char *argv[]){
+    setbuf(stdout, 0);
+    setbuf(stdin, 0);
+    puts("Kill switch enabled");
+    puts("The car won't start if the kill switch is on");
+    while(1){
+        int select;
+        menu();
+        printf("> ");
+        scanf("%d", &select);
+        getchar();
+        if (select == 1){
+            printf("number : ");
+            scanf("%d", &select);
+            getchar();
+            printf("value : ");
+            scanf("%llu", &wire[select]);
+        }else if (select == 2){
+            startup();
+        }else{
+            puts("Grrrrr....!!!");
+            return 1;
+        }
+    }
+}
+```
+모든 메뉴를 무한 번 실행 가능합니다. 1버
+
 - 익스플로잇 설계
 - 익스플로잇
 
@@ -231,4 +281,4 @@ p.interactive()
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
 심지어 5장에 canary있는데 태그에 안 적혀있음
-7장 got overwrite???ㅌ
+7장 got overwrite???
