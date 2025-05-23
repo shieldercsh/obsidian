@@ -135,8 +135,18 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 위의 코드와 비교해보면 `v12`가 `page5`와 같음을 알 수 있습니다. `v12`는 `rbp-0xa0`에 정의되어 있으므로 `bof`가 발생합니다.
 
 - 익스 계획
-카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 2번 메뉴로 `page5`에 `0x98 + 1`(카나리의 첫 바이트는 `\x00`이기 때문에 1을 더합니다.)만큼 바이트를 입력한 후 1번 메뉴로 출력시켜 카나리를 알아냅니다. 비슷한 방법으로 `0xa8` 만큼 바이트를 입력한 후 출력시켜 `libc_base`를 알아낼 수 있습니다.
-`main` 함수 진행 중에 `ret` 값과 `backtrace`는 다음ㄱ
+카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 2번 메뉴로 `page5`에 `0x98 + 1`(카나리의 첫 바이트는 `\x00`이기 때문에 1을 더합니다.)만큼 바이트를 입력한 후 1번 메뉴로 출력시켜 카나리를 알아냅니다.
+비슷한 방법으로 `0xa8` 만큼 바이트를 입력한 후 출력시켜 `libc_base`를 알아낼 수 있습니다. `main` 함수 진행 중에 `ret` 값과 `backtrace`는 다음과 같습니다.
+```
+pwndbg> x/2gx $rbp
+0x7fffffffe320: 0x0000000000000001      0x00007ffff7db3d90
+pwndbg> backtrace
+#0  0x00000000004011d8 in main ()
+#1  0x00007ffff7db3d90 in __libc_start_call_main (main=main@entry=0x4011aa <main>, argc=argc@entry=1, argv=argv@entry=0x7fffffffe438) at ../sysdeps/nptl/libc_start_call_main.h:58
+#2  0x00007ffff7db3e40 in __libc_start_main_impl (main=0x4011aa <main>, argc=1, argv=0x7fffffffe438, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffe428) at ../csu/libc-start.c:392
+#3  0x00000000004010b5 in _start ()
+```
+
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
