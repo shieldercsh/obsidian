@@ -87,7 +87,7 @@ int main(){
     return 0;
 ```
 
-2번 메뉴에서 `0x100` 바이트만큼 쓸 수 있습니다. 그런데 `page1, page2, page3, page4, page5, hidden`을 보니 `0x100` 바이트보다 적은 길이를 가지고 있어보입니다. `scp` 명령어로 파일을 꺼내 `ida`로 이어서 분석하겠습니다.
+모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴에서 `diary`의 내용을 출력할 수 있습니다. 2번 메뉴에서 `0x100` 바이트만큼 쓸 수 있습니다. 그런데 `page1, page2, page3, page4, page5, hidden`을 보니 `0x100` 바이트보다 적은 길이를 가지고 있어보입니다. `scp` 명령어로 파일을 꺼내 `ida`로 이어서 분석하겠습니다.
 
 ```C
 int __fastcall main(int argc, const char **argv, const char **envp)
@@ -135,7 +135,7 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 위의 코드와 비교해보면 `v12`가 `page5`와 같음을 알 수 있습니다. `v12`는 `rbp-0xa0`에 정의되어 있으므로 `bof`가 발생합니다.
 
 - 익스 계획
-카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 기능을 뭏
+카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 따라서 처음에 `page5`에
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
