@@ -18,6 +18,7 @@
 ### Chapter6
 
 - 보호기법 분석
+
 ```bash
 Crisis_at_the_Vault@hsapce-io:~$ checksec prob
 [*] '/home/Crisis_at_the_Vault/prob'
@@ -29,7 +30,7 @@ Crisis_at_the_Vault@hsapce-io:~$ checksec prob
     Stripped:   No
 ```
 
-`Partial RELRO`카나리가 있고, 
+`Partial RELRO` 상태입니다. 카나리가 있고, `
 
 - 코드 분석
 ```C
