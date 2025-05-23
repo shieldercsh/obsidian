@@ -197,7 +197,7 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
-`Partial RELRO` 상태입니다. `PIE`가 꺼져 있습니다.
+`Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
 ```C
@@ -248,9 +248,11 @@ int main(int argc, char *argv[]){
     }
 }
 ```
-모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴는 `wire` 배열에 접근하여 값을 쓰는 기능을 합니다. 이 때 `select`에 대한 검사가 없기 때문에 `oob` 취약점이 발생합니다. 그리고 `wire` 배열이 `bss`에 위치해있는 점, ``Partial RELRO``
+모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴는 `wire` 배열에 접근하여 값을 쓰는 기능을 합니다. 이 때 `select`에 대한 검사가 없기 때문에 `oob` 취약점이 발생합니다. 그리고 `wire` 배열이 `bss`에 위치해있는 점, `Partial RELRO`인 점을 종합하면 `got overwrite`가 가능합니다. 2번 메뉴는 `startup` 함수를 실행합니다. `startup` 함수에서는 `bof`가 발생합니다.
 
 - 익스플로잇 설계
+카나리가 이
+
 - 익스플로잇
 
 ---
