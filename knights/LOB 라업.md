@@ -496,7 +496,7 @@ int main(void)
 `main`에서 `bof` 취약점이 발생합니다. 그런데 `loop` 검사가 있기 때문에 `main`은 단 한 번만 호출할 수 있습니다. `gadget` 함수에서 유용한 가젯을 제공합니다.
 
 - 익스플로잇 설계
-`libc_base`를 알아내고 `system('/bin/sh')`를 실행시키기 위해서는 한 번의 `read`
+`libc_base`를 알아내고 `system('/bin/sh')`를 실행시키기 위해서는 한 번의 `read`만으로는 부족합니다. 따라서 스택 피보팅을 이용
 
 - 익스플로잇
 
