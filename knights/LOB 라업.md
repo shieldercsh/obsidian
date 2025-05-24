@@ -547,6 +547,7 @@ p.interactive()
 - 익스플로잇 설계
 - 익스플로잇
 
+---
 ## 피드백
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
@@ -559,26 +560,9 @@ Dump of assembler code for function main:
    0x00000000004011f4 <+4>:     push   rbp
    0x00000000004011f5 <+5>:     mov    rbp,rsp
    0x00000000004011f8 <+8>:     sub    rsp,0x30
-   0x00000000004011fc <+12>:    mov    eax,0x0
-   0x0000000000401201 <+17>:    call   0x401196 <init>
-   0x0000000000401206 <+22>:    lea    rax,[rip+0xdfb]        # 0x402008
-   0x000000000040120d <+29>:    mov    rdi,rax
-   0x0000000000401210 <+32>:    call   0x401070 <puts@plt>
-   0x0000000000401215 <+37>:    lea    rax,[rip+0xdfc]        # 0x402018
-   0x000000000040121c <+44>:    mov    rdi,rax
-   0x000000000040121f <+47>:    call   0x401070 <puts@plt>
-   0x0000000000401224 <+52>:    lea    rax,[rip+0xe15]        # 0x402040
-   0x000000000040122b <+59>:    mov    rdi,rax
-   0x000000000040122e <+62>:    call   0x401070 <puts@plt>
-   0x0000000000401233 <+67>:    mov    eax,DWORD PTR [rip+0x2df3]        # 0x40402c <loop>
-   0x0000000000401239 <+73>:    test   eax,eax
-   0x000000000040123b <+75>:    je     0x401256 <main+102>
-   0x000000000040123d <+77>:    lea    rax,[rip+0xe55]        # 0x402099
-   0x0000000000401244 <+84>:    mov    rdi,rax
-   0x0000000000401247 <+87>:    call   0x401070 <puts@plt>
-   0x000000000040124c <+92>:    mov    edi,0xffffffff
-   0x0000000000401251 <+97>:    call   0x4010a0 <exit@plt>
-   0x0000000000401256 <+102>:   mov    DWORD PTR [rip+0x2dcc],0x1        # 0x40402c <loop>
+
+   중략
+
    0x0000000000401260 <+112>:   lea    rax,[rbp-0x30]
    0x0000000000401264 <+116>:   mov    edx,0x70
    0x0000000000401269 <+121>:   mov    rsi,rax
