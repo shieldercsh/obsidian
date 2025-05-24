@@ -289,7 +289,21 @@ p.interactive()
 ### Chapter 8
 
 - 보호기법 분석
+```bash
+[*] '/home/Awakening_in_the_Dark/fsb'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x400000)
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+`Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
+
 - 코드 분석
+
 - 익스플로잇 설계
 - 익스플로잇
 
