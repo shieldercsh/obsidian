@@ -440,7 +440,59 @@ p.interactive()
 ### Chapter 9
 
 - 보호기법 분석
+```bash
+[*] '/home/On_the_Edge_of_Time/pivot'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      No canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x400000)
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+카나리가 없고, `PIE`가 꺼져 있습니다.
+
 - 코드 분석
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int loop = 0;
+
+void init(){
+        setvbuf(stdin, 0, 2, 0);
+        setvbuf(stdout, 0, 2, 0);
+}
+
+void gadget() {
+    asm("pop %rdi; ret");
+    asm("pop %rsi; pop %r15; ret");
+    asm("pop %rdx; ret");
+}
+
+
+int main(void)
+{
+    init();
+    char buf[0x30];
+
+    printf("Hello, Sir\n");
+    printf("This laboratory is currently closed.\n");
+    printf("Please leave a message, and I will forward it to the person in charge of the laboratory.\n");
+
+    if (loop)
+    {
+        puts("Goobye, Sir");
+        exit(-1);
+    }
+    loop = 1;
+
+    read(0, buf, 0x70);
+    return 0;
+}
+```
 - 익스플로잇 설계
 - 익스플로잇
 
@@ -456,3 +508,4 @@ p.interactive()
 
 5장과 6장이 매우 유사한데 둘 다 넣을 필요가 있나
 심지어 5장에 canary있는데 태그에 안 적혀있음
+9장 loop 체크가 밑에 있어야 스택 피보팅 의도와 어울릴 듯
