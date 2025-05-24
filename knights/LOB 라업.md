@@ -414,6 +414,7 @@ Dump of assembler code for function main:
 End of assembler dump.
 ```
 `init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 주소에서 8을 빼면 `exitst_or_not`의 주소가 됩니다.
+`PIE`가 꺼져 있으므로 `open_emergency_medicine`의 주소를 알기 때문에, `fsb`로 `exitst_or_not`에 `open_emergency_medicine`의 
 
 - 익스플로잇
 
