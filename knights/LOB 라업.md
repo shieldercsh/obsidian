@@ -180,7 +180,7 @@ write(4, payload)
 p.sendlineafter(b'> ', b'3')
 p.interactive()
 ```
-필자는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다. `one_gadget`을 사용하여도 무방하지만, `vm`에 `one_gadget`이 안 깔려있는 것을 보아 인텐이 아닌 것 같아 해당 방법으로 풀지는 않았습니다.
+저는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다. `one_gadget`을 사용하여도 무방하지만, `vm`에 `one_gadget`이 안 깔려있는 것을 보아 인텐이 아닌 것 같아 해당 방법으로 풀지는 않았습니다.
 
 --- 
 ### Chapter 7
@@ -416,7 +416,6 @@ End of assembler dump.
 `init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 주소에서 8을 빼면 `exitst_or_not`의 주소가 됩니다. 구하려고 하는 것들을 전부 구했으므로 `fsb`와 2번 메뉴를 이용해 `open_emergency_medicine`를 실행시켜 `flag`를 읽을 수 있습니다.
 
 - 익스플로잇
-
 ```python
 from pwn import *
 context.arch = 'amd64'
@@ -435,7 +434,6 @@ fsb(payload)
 p.sendlineafter(b'> ', b'2')
 p.interactive()
 ```
-
 `pwntools` 라이브러리에서 `fmtstr_payload`라는 좋은 함수를 제공하고 있습니다. 하지만 CTF나 실제 환경에서는 `payload`를 직접 작성해야 하는 경우가 많기 때문에 함수를 이용하는 것보단 직접 생각하여 짜는 것을 추천드립니다.
 
 ---

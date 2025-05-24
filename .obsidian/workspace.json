@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "edf8aa5d091d95aa",
+        "id": "ade401d9f7bf68c4",
         "type": "tabs",
         "children": [
           {
-            "id": "bdbb60651803afa0",
+            "id": "238edf19686a35df",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -167,8 +167,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bdbb60651803afa0",
+  "active": "238edf19686a35df",
   "lastOpenFiles": [
+    "knights/LOB 라업.md",
     "FSOP/FSOPpayload.md",
     "About me.md",
     "통실/과제4 - 6장.md",
@@ -183,7 +184,6 @@
     "my prob/random_calculator.md",
     "my prob/8_chances.md",
     "my prob",
-    "knights/LOB 라업.md",
     "knights",
     "image/Pasted image 20250420233911.png",
     "image/Pasted image 20250420233512.png",
