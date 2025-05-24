@@ -398,40 +398,22 @@ Dump of assembler code for function main:
    0x00000000004013ba <+35>:    call   0x401304 <init>
    0x00000000004013bf <+40>:    lea    rax,[rip+0xffffffffffffff24]        # 0x4012ea <exist>
    0x00000000004013c6 <+47>:    mov    QWORD PTR [rbp-0x118],rax
-   0x00000000004013cd <+54>:    lea    rax,[rip+0xcb1]        # 0x402085
-   0x00000000004013d4 <+61>:    mov    rdi,rax
-   0x00000000004013d7 <+64>:    call   0x4010d0 <puts@plt>
-   0x00000000004013dc <+69>:    lea    rax,[rip+0xcba]        # 0x40209d
-   0x00000000004013e3 <+76>:    mov    rdi,rax
-   0x00000000004013e6 <+79>:    call   0x4010d0 <puts@plt>
-   0x00000000004013eb <+84>:    mov    eax,0x0
-   0x00000000004013f0 <+89>:    call   0x40134b <menu>
-   0x00000000004013f5 <+94>:    lea    rax,[rbp-0x11c]
-   0x00000000004013fc <+101>:   mov    rsi,rax
-   0x00000000004013ff <+104>:   lea    rax,[rip+0xca9]        # 0x4020af
-   0x0000000000401406 <+111>:   mov    rdi,rax
-   0x0000000000401409 <+114>:   mov    eax,0x0
-   0x000000000040140e <+119>:   call   0x401150 <__isoc99_scanf@plt>
-   0x0000000000401413 <+124>:   mov    eax,DWORD PTR [rbp-0x11c]
-   0x0000000000401419 <+130>:   cmp    eax,0x3
-   0x000000000040141c <+133>:   je     0x401519 <main+386>
-   0x0000000000401422 <+139>:   cmp    eax,0x3
-   0x0000000000401425 <+142>:   jg     0x40153e <main+423>
-   0x000000000040142b <+148>:   cmp    eax,0x1
-   0x000000000040142e <+151>:   je     0x40143e <main+167>
-   0x0000000000401430 <+153>:   cmp    eax,0x2
-   0x0000000000401433 <+156>:   je     0x4014ee <main+343>
-   0x0000000000401439 <+162>:   jmp    0x40153e <main+423>
+   
+   중략
+   
    0x000000000040143e <+167>:   lea    rax,[rbp-0x110]
    0x0000000000401445 <+174>:   mov    edx,0x100
    0x000000000040144a <+179>:   mov    esi,0x0
    0x000000000040144f <+184>:   mov    rdi,rax
    0x0000000000401452 <+187>:   call   0x401100 <memset@plt>
+   
    중략
+   
    0x000000000040155a <+451>:   leave
    0x000000000040155b <+452>:   ret
 End of assembler dump.
 ```
+`init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `r`
 
 - 익스플로잇
 
