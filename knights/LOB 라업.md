@@ -381,7 +381,7 @@ int main(){
 모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴에서 `printf(buf)` 코드가 있으므로 `fsb` 취약점이 발생합니다. 2번 메뉴에서 `(*(void (*)()) exitst_or_not)();`을 실행시켜줍니다. 3번 메뉴에서 `main` 함수를 종료시킵니다. `open_emergency_medicine`를 실행하면 `flag`를 읽을 수 있습니다. `flag`에 다음 챕터로 넘어갈 때 사용할 비밀번호가 있다고 유추할 수 있습니다.
 
 - 익스플로잇 설계
-`fsb` 취약점이 존재하면 다양한 방법으로 익스가 가능합니다. 이 문제는 `printf`의 출력을 참고하여`open_emergency_medicine`을 이용하는 방법, `main`의 `RET`을 조작하는 방법이 있고, `printf`의 출력을 이용하지 않고 쉘을 따는 방법이 있습니다. 세 번째 방법은 꽤나 복잡한 과정을 거치기에 이 글에서는 소개하지 않겠습니다만, 레이팅이 높은 CTF에서도 `Medium` 난이도의 문제로 종종 출제되는 기법이기 때문에 관심이 있으시다면 익혀두시는 것을 추천합니다. 여기서는 출제자의 의도를 고려하여 `open_emergency_medicine`을 이용하는 방법을 선택하겠습니다.
+`fsb` 취약점이 존재하면 다양한 방법으로 익스가 가능합니다. 이 문제는 `printf`의 출력을 참고하여`open_emergency_medicine`을 이용하는 방법, `main`의 `RET`을 조작하는 방법이 있고, `printf`의 출력을 이용하지 않고 쉘을 따는 방법이 있습니다. 세 번째 방법은 꽤나 복잡한 과정을 거치기에 이 글에서는 소개하지 않겠습니다만, 레이팅이 높은 CTF에서도 `Medium` 난이도의 문제로 종종 출제되는 기법이기 때문에 관심이 있으시다면 익혀두시는 것을 추천합니다([Merry Christmas](https://shielder.tistory.com/4)문제를 참고하시면 . 여기서는 출제자의 의도를 고려하여 `open_emergency_medicine`을 이용하는 방법을 선택하겠습니다.
 `fsb`가 발생하는 코드에서 `printf`가 `rdi`만 사용하므로 `rsi, rdx, r8, r9, r10, rsp, rsp + 8, rsp + 0x10...` 순서로 참조 가능합니다. 이 때 `rsi`가 `buf`의 주소를 가리키므로 `%p(혹은 %1$p)`로 `buf`의 주소를 알아낼 수 있습니다.
 `exitst_or_not`을 `open_emergency_medicine`의 주소로 변경한 후 2번 메뉴로 실행시켜줄 것입니다. 이를 위해서 `exitst_or_not`의 주소를 알아야 합니다. `buf`의 주소를 알기 때문에 `exitst_or_not`과 `buf`의 `offset`만 알아내면 됩니다.
 ```bash
