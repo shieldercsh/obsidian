@@ -436,6 +436,8 @@ p.sendlineafter(b'> ', b'2')
 p.interactive()
 ```
 
+`pwntools` 라이브러리에서 `fmtstr_payload`라는 좋은 함수를 제공하고 있지만, CTF에서는 `payload`를 직접 작성하는 경우가 더 많고 유용하기 때문에 
+
 ---
 ### Chapter 9
 
