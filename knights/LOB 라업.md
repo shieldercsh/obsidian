@@ -413,7 +413,7 @@ Dump of assembler code for function main:
    0x000000000040155b <+452>:   ret
 End of assembler dump.
 ```
-`init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `r`
+`init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 
 
 - 익스플로잇
 
