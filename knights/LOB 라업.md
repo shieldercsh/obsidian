@@ -384,8 +384,53 @@ int main(){
 `fsb` 취약점이 존재하면 다양한 방법으로 익스가 가능합니다. 이 문제는 `printf`의 출력을 참고하여`open_emergency_medicine`을 이용하는 방법, `main`의 `RET`을 조작하는 방법이 있고, `printf`의 출력을 이용하지 않고 쉘을 따는 방법이 있습니다. 세 번째 방법은 꽤나 복잡한 과정을 거치기에 이 글에서는 소개하지 않겠습니다만, 레이팅이 높은 CTF에서도 `Medium` 난이도의 문제로 종종 출제되는 기법이기 때문에 관심이 있으시다면 익혀두시는 것을 추천합니다. 여기서는 출제자의 의도를 고려하여 `open_emergency_medicine`을 이용하는 방법을 선택하겠습니다.
 `fsb`가 발생하는 코드에서 `printf`가 `rdi`만 사용하므로 `rsi, rdx, r8, r9, r10, rsp, rsp + 8, rsp + 0x10...` 순서로 참조 가능합니다. 이 때 `rsi`가 `buf`의 주소를 가리키므로 `%p(혹은 %1$p)`로 `buf`의 주소를 알아낼 수 있습니다.
 `exitst_or_not`을 `open_emergency_medicine`의 주소로 변경한 후 2번 메뉴로 실행시켜줄 것입니다. `fsb`로 스택의 어딘가에 값을 쓰는 것이므로 `exitst_or_not`의 주소를 알아야 합니다. `buf`의 주소를 알기 때문에 `exitst_or_not`과 `buf`의 `offset`만 알아내면 됩니다.
-```nasm
-
+```bash
+pwndbg> disass main
+Dump of assembler code for function main:
+   0x0000000000401397 <+0>:     endbr64
+   0x000000000040139b <+4>:     push   rbp
+   0x000000000040139c <+5>:     mov    rbp,rsp
+   0x000000000040139f <+8>:     sub    rsp,0x120
+   0x00000000004013a6 <+15>:    mov    rax,QWORD PTR fs:0x28
+   0x00000000004013af <+24>:    mov    QWORD PTR [rbp-0x8],rax
+   0x00000000004013b3 <+28>:    xor    eax,eax
+   0x00000000004013b5 <+30>:    mov    eax,0x0
+   0x00000000004013ba <+35>:    call   0x401304 <init>
+   0x00000000004013bf <+40>:    lea    rax,[rip+0xffffffffffffff24]        # 0x4012ea <exist>
+   0x00000000004013c6 <+47>:    mov    QWORD PTR [rbp-0x118],rax
+   0x00000000004013cd <+54>:    lea    rax,[rip+0xcb1]        # 0x402085
+   0x00000000004013d4 <+61>:    mov    rdi,rax
+   0x00000000004013d7 <+64>:    call   0x4010d0 <puts@plt>
+   0x00000000004013dc <+69>:    lea    rax,[rip+0xcba]        # 0x40209d
+   0x00000000004013e3 <+76>:    mov    rdi,rax
+   0x00000000004013e6 <+79>:    call   0x4010d0 <puts@plt>
+   0x00000000004013eb <+84>:    mov    eax,0x0
+   0x00000000004013f0 <+89>:    call   0x40134b <menu>
+   0x00000000004013f5 <+94>:    lea    rax,[rbp-0x11c]
+   0x00000000004013fc <+101>:   mov    rsi,rax
+   0x00000000004013ff <+104>:   lea    rax,[rip+0xca9]        # 0x4020af
+   0x0000000000401406 <+111>:   mov    rdi,rax
+   0x0000000000401409 <+114>:   mov    eax,0x0
+   0x000000000040140e <+119>:   call   0x401150 <__isoc99_scanf@plt>
+   0x0000000000401413 <+124>:   mov    eax,DWORD PTR [rbp-0x11c]
+   0x0000000000401419 <+130>:   cmp    eax,0x3
+   0x000000000040141c <+133>:   je     0x401519 <main+386>
+   0x0000000000401422 <+139>:   cmp    eax,0x3
+   0x0000000000401425 <+142>:   jg     0x40153e <main+423>
+   0x000000000040142b <+148>:   cmp    eax,0x1
+   0x000000000040142e <+151>:   je     0x40143e <main+167>
+   0x0000000000401430 <+153>:   cmp    eax,0x2
+   0x0000000000401433 <+156>:   je     0x4014ee <main+343>
+   0x0000000000401439 <+162>:   jmp    0x40153e <main+423>
+   0x000000000040143e <+167>:   lea    rax,[rbp-0x110]
+   0x0000000000401445 <+174>:   mov    edx,0x100
+   0x000000000040144a <+179>:   mov    esi,0x0
+   0x000000000040144f <+184>:   mov    rdi,rax
+   0x0000000000401452 <+187>:   call   0x401100 <memset@plt>
+   중략
+   0x000000000040155a <+451>:   leave
+   0x000000000040155b <+452>:   ret
+End of assembler dump.
 ```
 
 - 익스플로잇
