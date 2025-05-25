@@ -779,4 +779,4 @@ Chapter 10에서 `libc got overwrite`를 사용하지 않고 풀 수 있는 방�
    0x0000000000001714 <+332>:   mov    rdi,rax
    0x0000000000001717 <+335>:   call   0x1315 <check_passwd>
 ```
-`main`에서 `case 0`의 `chk_pw = check_passwd(password, 0);` 코드를 gdb에서 어셈블리어로 보면 위와 같습니다.
+`main`에서 `case 0`의 `chk_pw = check_passwd(password, 0);` 코드를 `gdb`에서 어셈블리어로 보면 위와 같습니다. `password`가 `rbp-0x50`에 정의되어 있음을 알 수 있습니다. 그런데 `check_passwd`에서 `0x64`만큼 입력받기 때문에 `bof`가 발생합니다. 카나리가 있고 `PIE`
