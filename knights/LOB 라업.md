@@ -602,9 +602,11 @@ The_Cure_Within_Reach@hsapce-io:~$ checksec /lib/x86_64-linux-gnu/libc.so.6
     SHSTK:      Enabled
     IBT:        Enabled
 ```
+
 이 문제를 해결할 때 `libc`를 사용할 것이므로 `libc`의 보호 기법도 살펴보겠습니다. `libc`의 가장 큰 특징은 `Partial RELRO` 상태라는 것입니다. `libc`에 `Full RELRO`를 적용하면 `got` 영역이 쓰기 불가능해지기 때문에 초기화 과정에서 프로그램이 오동작할 수 있다는 호환성 문제가 있습니다. `Full RELRO`는 모든 `got` 엔트리를 프로그램 시작 시 재배치하기 때문에 프로그램 시작 시간이 증가하는데, `libc`는 거의 모든 프로세스가 사용하는 중요한 라이브러리이므로, 이 성능 페널티는 시스템 전체에 영향을 미칠 수 있습니다. 이러한 이유뿐만 아니라 다양한 이유로 `libc`는 보통 `Partial RELRO` 상태입니다.
 
 - 코드 분석
+
 ```C
 #include <stdio.h>
 #include <string.h>
@@ -777,11 +779,14 @@ get_vaccine:
     return 0;
 }
 ```
+
 `check_id` 함수의 반환값에 따라 실행되는 코드가 결정됩니다. `case 3`의 `printf(id_number);`에서 `0x20`의 길이를 가지는 `payload`를 실행시킬 수 있는 `fsb` 취약점이 발생합니다. `case 0`과 `case 2`에서 호출되는 `check_passwd` 함수의 `fprintf(access_log, passwd);`에서 `0x64`의 길이를 가지는 `payload`를 실행시킬 수 있는 `fsb` 취약점이 발생합니다. `count == 3`이면 프로그램을 종료시키므로 `fsb`를 이용할 수 있는 기회는 세 번입니다.
 
 - 익스플로잇 설계
+
 `fsb` 결과물을 출력해주기 때문에 카나리, `libc base`, `pie base` 등 알고 싶은 값은 모두 알 수 있습니다. 그럼 쉘을 어떻게 딸지 생각해야 합니다. 여기서는 `libc got overwrite`를 사용하겠습니다.
 `fsb` 작동 후에 `chk_pw == -1`이라면 `puts(password);`가 실행됩니다.
+
 ```bash
 pwndbg> disass puts
 Dump of assembler code for function __GI__IO_puts:
@@ -798,9 +803,11 @@ Address range 0x7ffff7e0ae50 to 0x7ffff7e0afe9:
    
    후략
 ```
+
 `puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. `ida`로 `libc` 파일을 확인해보면 `libc`의 `strlen got`을 참조하여 호출하고 있음을 알 수 있습니다. `rdi`가 `puts` 실행 후에 `strlen`을 실행할 때까지 다른 값으로 바뀌지 않으므로, `rdi`는 여전히 `&password`입니다. 따라서 `password`에서 `/bin/sh;`를 적어놓고, `strlen got`을 `system`으로 변조하면 쉘이 따질 것입니다. `chk_pw == -1`을 만족시키는 방법은 `check_passwd` 함수에서 `passwd`에 특정 문자열이 아닌 문자열을 입력하면 됩니다. 어짜피 `fsb payload`를 입력할 것이므로 걱정하지 않아도 될 부분입니다.
 
 - 익스플로잇
+
 ```python
 from pwn import *
 
@@ -825,6 +832,7 @@ p.sendafter(b': ', b'Lord Of Buffer overflow')
 p.sendafter(b': ', payload)
 p.interactive()
 ```
+
 `%n`으로 4바이트를 입력하려고 한다는 것은 곧 굉장히 긴 길이의의 공백을 출력하는 것입니다. 이는 굉장히 오래 걸릴 수 있으므로 `%hn`을 이용하여 2바이트씩 입력하는 것을 추천드립니다. 
 
 ---
@@ -833,6 +841,7 @@ p.interactive()
 Chapter 5와 Chapter 6이 매우 유사하기 때문에 두 챕터 모두 있을 필요는 없다는 생각이 들었습니다. 심지어 Chapter 5에 카나리가 있는데 태그에 안 적혀있는 것을 보아 출제자 간 소통의 오류가 있었던 것 같습니다.
 
 Chapter 9에서 사실 `Return to Main`으로 해결 가능합니다.
+
 ```bash
 pwndbg> disass main
 Dump of assembler code for function main:
@@ -852,16 +861,19 @@ Dump of assembler code for function main:
    0x000000000040127b <+139>:   leave
    0x000000000040127c <+140>:   ret
 ```
+
  `loop` 체크가 `read` 위쪽에 있기 때문에 `0x401260`으로 넘어가면 됩니다. 스택 피보팅을 사용하지 않을 경우 실질적으로 사용할 수 있는 `payload`의 길이가 `0x38`로 약간 짧긴 하지만  `main`으로 여러 번 돌아가면 충분히 쉘을 딸 수 있습니다. 여전히 `sfp`를 신경 써야 하는 것은 같지만 이미 짜여져 있는 코드로 돌아가는 것이고, `Return to Main`이 더 직관적이므로 입문자 입장에서는 조금 더 쉬운 풀이가 될 것 같습니다. 저의 풀이처럼 `main`을 다시 사용하지 않고 `bss` 영역에 전체 `payload`를 짜는 것을 의도하였다면, `loop` 체크가 `read` 밑에 있어야 의도와 어울릴 것 같습니다.
 
 Chapter 10에서 `libc got overwrite`를 사용하지 않고 풀 수 있는 방법이 두 가지 있습니다. 첫 번째는 `fsb`를 이용하여 `main` 함수 스택 프레임의 `RET`을 조작하는 것입니다. `one_gadget`을 사용하여도 좋고, `system('/bin/sh')`를 호출하는 체이닝을 짜도 좋습니다. `fsb`를 세 번이나 주어주고, `fprintf`에서 길이 `0x64`짜리 `fsb payload`를 실행시켜주므로 체이닝을 설계하기 충분할 것으로 생각됩니다. 충분한 길이를 입력받고 출력해주는 `fsb`가 세 번이나 주어진다면 보통 항상 간단하게 풀 수 있는 방법이 존재합니다. `libc got overwrite`를 의도했다면, `fsb` 횟수를 두 번으로 줄이고 `read` 크기를 줄였다면 좋았을 것 같습니다.
 두 번째는 `bof`를 이용하여 스택 피보팅으로 해결하는 것입니다.
+
 ```bash
    0x000000000000170b <+323>:   lea    rax,[rbp-0x50]
    0x000000000000170f <+327>:   mov    esi,0x0
    0x0000000000001714 <+332>:   mov    rdi,rax
    0x0000000000001717 <+335>:   call   0x1315 <check_passwd>
 ```
+
 `main`에서 `case 0`의 `chk_pw = check_passwd(password, 0);` 코드를 `gdb`에서 어셈블리어로 보면 위와 같습니다. `password`가 `rbp-0x50`에 정의되어 있음을 알 수 있습니다. 그런데 `check_passwd`에서 `0x64`만큼 입력받기 때문에 `bof`가 발생합니다. 카나리가 있고 `PIE`가 켜져 있다지만, 출력 가능한 `fsb`로 알아낼 수 없는 정보는 없습니다. `libc got overwrite`보다 훨씬 직관적이기 때문에 저도 태그를 참고하지 않았다면 이 방법으로 풀었을 것입니다. `fsb payload` 길이를 넉넉하게 주려다가 실수한 것 같습니다.
 
 ---
