@@ -1,6 +1,7 @@
 ### 조수호(shielder)
 
 ### 목차
+
 1. Write-up (6-10)
    - Chapter 6
    - Chapter 7
@@ -18,6 +19,7 @@
 ### Chapter 6
 
 - 보호기법 분석
+
 ```bash
 Crisis_at_the_Vault@hsapce-io:~$ checksec prob
 [*] '/home/Crisis_at_the_Vault/prob'
@@ -28,9 +30,11 @@ Crisis_at_the_Vault@hsapce-io:~$ checksec prob
     PIE:        No PIE (0x400000)
     Stripped:   No
 ```
+
 `Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
+
 ```C
 #include <stdio.h>
 
@@ -84,6 +88,7 @@ int main(){
     puts("Ok let's go!");
     return 0;
 ```
+
 모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴에서 `diary`의 내용을 출력할 수 있습니다. 2번 메뉴에서 `0x100` 바이트만큼 쓸 수 있습니다. 그런데 `page1, page2, page3, page4, page5, hidden`을 보니 `0x100` 바이트보다 적은 길이의 문자열을 담고 있어보입니다. `scp` 명령어로 파일을 꺼내 `ida`로 이어서 분석하겠습니다.
 
 ```C
@@ -128,11 +133,14 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 
 후략
 ```
+
 위의 코드와 비교해보면 `v12`가 `page5`와 같음을 알 수 있습니다. `v12`는 `rbp-0xa0`에 정의되어 있으므로 `bof`가 발생합니다.
 
 - 익스플로잇 설계
+
 카나리가 있고, 마스터 카나리를 조작하는 문제는 아니므로 카나리를 알아내야 합니다. 2번 메뉴로 `page5`(4번 인덱스)에 `0x98 + 1`(카나리의 첫 바이트는 `\x00`이기 때문에 1을 더합니다.)만큼 바이트를 입력한 후 1번 메뉴로 출력시켜 카나리를 알아냅니다.
 비슷한 방법으로 `0xa8` 만큼 바이트를 입력한 후 출력시켜 `libc_base`를 알아낼 수 있습니다. `main` 함수 진행 중에 `ret` 값과 `backtrace`는 다음과 같습니다.
+
 ```
 pwndbg> x/2gx $rbp
 0x7fffffffe320: 0x0000000000000001      0x00007ffff7db3d90
@@ -142,10 +150,12 @@ pwndbg> backtrace
 #2  0x00007ffff7db3e40 in __libc_start_main_impl (main=0x4011aa <main>, argc=1, argv=0x7fffffffe438, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>, stack_end=0x7fffffffe428) at ../csu/libc-start.c:392
 #3  0x00000000004010b5 in _start ()
 ```
+
 하지만 `pwndbg`는 `libc_start_call_main` 심볼을 찾지 못하기 때문에 `offset`을 직접 찾아줘야 합니다. `vmmap` 명령어를 통해 `gdb`상에서 `libc_base`를 찾을 수 있고, 두 값을 빼주면 `offset`을 구할 수 있습니다(`0x7ffff7db3d90 - 0x7ffff7d8a000 = 0x29d90`). `bof` 크기가 넉넉하기 때문에 `system('/bin/sh')`을 호출하는 방향으로 익스하겠습니다.
 (ROPgadget 사용 방법은 전 포스팅 Chapter4에 소개되어 있으므로 생략하겠습니다.)
 
 - 익스플로잇
+
 ```python
 from pwn import *
 
