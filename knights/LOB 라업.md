@@ -773,3 +773,9 @@ Dump of assembler code for function main:
 
 Chapter 10에서 `libc got overwrite`를 사용하지 않고 풀 수 있는 방법이 두 가지 있습니다. 첫 번째는 `fsb`를 이용하여 `main` 함수 스택 프레임의 `RET`을 조작하는 것입니다. `one_gadget`을 사용하여도 좋고, `system('/bin/sh')`를 호출하는 체이닝을 짜도 좋습니다. `fsb`를 세 번이나 주어주고, `fprintf`에서 길이 `0x64`짜리 `fsb payload`를 실행시켜주므로 체이닝을 짜기 충분할 것으로 생각됩니다. 충분한 길이를 입력받고 출력해주는 `fsb`가 세 번이나 주어진다면 보통 항상 간단하게 풀 수 있는 방법이 존재합니다. `libc got overwrite`를 의도했다면, `fsb` 횟수를 두 번으로 줄이고 `read` 크기를 줄였다면 좋았을 것 같습니다.
 두 번째는 `bof`를 이용하여 스택 피보팅으로 해결하는 것입니다.
+```bash
+0x000000000000170b <+323>:   lea    rax,[rbp-0x50]
+0x000000000000170f <+327>:   mov    esi,0x0
+0x0000000000001714 <+332>:   mov    rdi,rax
+0x0000000000001717 <+335>:   call   0x1315 <check_passwd>
+```
