@@ -742,7 +742,7 @@ get_vaccine:
     return 0;
 }
 ```
-`check_id` 함수의 반환값에 따라 실행되는 코드가 결정됩니다. 
+`check_id` 함수의 반환값에 따라 실행되는 코드가 결정됩니다. `case 3`의 `printf(id_number);`에서 `fsb` 취약점이 발생합니다. `check_passwd`의 `fprintf(access_log, passwd);`에서 `fsb` 취약점이 발생합니다.
 
 - 익스플로잇 설계
 - 익스플로잇
