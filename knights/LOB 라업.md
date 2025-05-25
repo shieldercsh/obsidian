@@ -790,6 +790,7 @@ p.sendafter(b': ', b'Lord Of Buffer overflow')
 p.sendafter(b': ', payload)
 p.interactive()
 ```
+`%n`으로 4바이트를 입력하려고 한다는 것은 곧 4바이트만큼 공백을 출력하는 것입니다. 이는 굉장히 오래 걸릴 수 있으므로 `%hn`을 이용하여 2바이트씩 입력하 
 
 ---
 ## 피드백
