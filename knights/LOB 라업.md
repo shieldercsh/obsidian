@@ -746,7 +746,24 @@ get_vaccine:
 
 - 익스플로잇 설계
 `fsb` 결과물을 출력해주기 때문에 카나리, `libc base`, `pie base` 등 알고 싶은 값은 모두 알 수 있습니다. 그럼 쉘을 어떻게 딸지 생각해야 합니다. 여기서는 `libc got overwrite`를 사용하겠습니다.
-`fsb` 작동 후에 
+`fsb` 작동 후에 항상 `puts`가 작동합니다.
+```bash
+pwndbg> disass puts
+Dump of assembler code for function __GI__IO_puts:
+Address range 0x7ffff7e0ae50 to 0x7ffff7e0afe9:
+   0x00007ffff7e0ae50 <+0>:     endbr64
+   0x00007ffff7e0ae54 <+4>:     push   r14
+   0x00007ffff7e0ae56 <+6>:     push   r13
+   0x00007ffff7e0ae58 <+8>:     push   r12
+   0x00007ffff7e0ae5a <+10>:    mov    r12,rdi
+   0x00007ffff7e0ae5d <+13>:    push   rbp
+   0x00007ffff7e0ae5e <+14>:    push   rbx
+   0x00007ffff7e0ae5f <+15>:    sub    rsp,0x10
+   0x00007ffff7e0ae63 <+19>:    call   0x7ffff7db2490 <*ABS*+0xa86a0@plt>
+   
+   후략
+```
+`puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. 
 
 - 익스플로잇
 ```python
