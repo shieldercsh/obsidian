@@ -567,7 +567,7 @@ The_Cure_Within_Reach@hsapce-io:~$ checksec /lib/x86_64-linux-gnu/libc.so.6
     SHSTK:      Enabled
     IBT:        Enabled
 ```
-이 문제를 해결할 때 `libc`를 사용할 것이므로 `libc`의 보호 기법도 살펴보겠습니다. `libc`의 가장 큰 특징은 `Partial RELRO` 상태라는 것입니다. 
+이 문제를 해결할 때 `libc`를 사용할 것이므로 `libc`의 보호 기법도 살펴보겠습니다. `libc`의 가장 큰 특징은 `Partial RELRO` 상태라는 것입니다. 여기에는 몇 가지 이유가 있는데, `libc`에 `Full RELRO`를 적용하면 `got` 영역이  쓰기 불가능해지기 때문에 **레거시 프로그램이 오동작할 수 있습니다**.
 
 - 코드 분석
 ```C
