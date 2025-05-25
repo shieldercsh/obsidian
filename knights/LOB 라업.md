@@ -574,8 +574,9 @@ p.interactive()
 ---
 ## 피드백
 
-Chapter 5와 Chapter 6이 매우 유사하기 때문에 두 챕터 모두 있을 필요는 없다는 생각이 들었습니다. 심지어 Chapter 5에 카나리가 있는데 태그에 안 적혀있는 것을 보아 출제자 간 소
-9장 loop 체크가 밑에 있어야 스택 피보팅 의도와 어울릴 듯
+Chapter 5와 Chapter 6이 매우 유사하기 때문에 두 챕터 모두 있을 필요는 없다는 생각이 들었습니다. 심지어 Chapter 5에 카나리가 있는데 태그에 안 적혀있는 것을 보아 출제자 간 소통의 오류가 있었던 것 같습니다.
+
+Chapter 9에서 사실 스택 피보팅 없이 `Return to Main`으로 해결 가능합니다.
 ```bash
 pwndbg> disass main
 Dump of assembler code for function main:
@@ -595,3 +596,5 @@ Dump of assembler code for function main:
    0x000000000040127b <+139>:   leave
    0x000000000040127c <+140>:   ret
 ```
+ `loop` 체크가 `read` 위쪽에 있기 때문에 `0x401260`
+ loop 체크가 밑에 있어야 스택 피보팅 의도와 어울릴 듯
