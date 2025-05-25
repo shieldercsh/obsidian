@@ -745,7 +745,7 @@ get_vaccine:
 `check_id` 함수의 반환값에 따라 실행되는 코드가 결정됩니다. `case 3`의 `printf(id_number);`에서 `0x20`의 길이를 가지는 `payload`를 실행시킬 수 있는 `fsb` 취약점이 발생합니다. `case 0`과 `case 2`에서 호출되는 `check_passwd` 함수의 `fprintf(access_log, passwd);`에서 `0x64`의 길이를 가지는 `payload`를 실행시킬 수 있는 `fsb` 취약점이 발생합니다. `count == 3`이면 프로그램을 종료시키므로 `fsb`를 이용할 수 있는 기회는 세 번입니다.
 
 - 익스플로잇 설계
-`fsb` 결과물을 출력해주기 때문에 카나리, `libc base`, `pie base` 등 알고 싶은 값은 모두 알 수 있습니다.
+`fsb` 결과물을 출력해주기 때문에 카나리, `libc base`, `pie base` 등 알고 싶은 값은 모두 알 수 있습니다. 그럼 쉘을 어떻게 
 
 - 익스플로잇
 ```python
