@@ -763,8 +763,7 @@ Address range 0x7ffff7e0ae50 to 0x7ffff7e0afe9:
    
    후략
 ```
-`puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. `ida`로 `libc` 파일을 확인해보면 `libc`의 `strlen got`을 참조하여 호출하고 있음을 알 수 있습니다. `rdi`가 `puts` 실행 후에 `strlen`을 실행할 때까지 다른 값으로 바뀌지 않으므로, `rdi`는 여전히 `&password`입니다. 따라서 `password`에서 `/bin/sh;`를 적어놓고, `strlen got`을 `system`으로 변조하면 쉘이 따질 것입니다. `chk_pw == -1`을 만족시키는 방법은 
-
+`puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. `ida`로 `libc` 파일을 확인해보면 `libc`의 `strlen got`을 참조하여 호출하고 있음을 알 수 있습니다. `rdi`가 `puts` 실행 후에 `strlen`을 실행할 때까지 다른 값으로 바뀌지 않으므로, `rdi`는 여전히 `&password`입니다. 따라서 `password`에서 `/bin/sh;`를 적어놓고, `strlen got`을 `system`으로 변조하면 쉘이 따질 것입니다. `chk_pw == -1`을 만족시키는 방법은 `check_passwd` 함수에서 `passwd`에 특정 문자열이 아닌 문자열을 입력하면 됩니다. 어짜피 `fsb payload`를 입력할 것이므로 걱정하지 않아도 될 부분입니다.
 
 - 익스플로잇
 ```python
