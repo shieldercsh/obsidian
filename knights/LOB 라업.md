@@ -763,7 +763,7 @@ Address range 0x7ffff7e0ae50 to 0x7ffff7e0afe9:
    
    후략
 ```
-`puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. 
+`puts`에서 `*ABS*+0xa86a0@plt`를 참조하여 다른 함수를 호출합니다. `ida`로 `libc` 파일을 확인해보면 
 
 - 익스플로잇
 ```python
