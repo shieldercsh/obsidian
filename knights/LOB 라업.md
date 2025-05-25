@@ -543,6 +543,19 @@ p.interactive()
 ### Chapter 10
 
 - 보호기법 분석
+```bash
+[*] '/home/The_Cure_Within_Reach/final'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+`final` 파일은 모든 보호 기법이 적용되어 있습니다.
+
 - 코드 분석
 ```C
 #include <stdio.h>
