@@ -746,6 +746,7 @@ get_vaccine:
 
 - 익스플로잇 설계
 `fsb` 결과물을 출력해주기 때문에 카나리, `libc base`, `pie base` 등 알고 싶은 값은 모두 알 수 있습니다. 그럼 쉘을 어떻게 딸지 생각해야 합니다. 여기서는 `libc got overwrite`를 사용하겠습니다.
+`fsb` 작동 후에 
 
 - 익스플로잇
 ```python
