@@ -556,6 +556,19 @@ p.interactive()
 ```
 `final` 파일은 모든 보호 기법이 적용되어 있습니다.
 
+```bash
+The_Cure_Within_Reach@hsapce-io:~$ checksec /lib/x86_64-linux-gnu/libc.so.6
+[*] '/lib/x86_64-linux-gnu/libc.so.6'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+```
+이 문제를 해결할 때 `libc`를 사용할 것이므로 `libc`의 보호 기법도 살펴보겠습니다. `libc`의 가장 큰 특징은 `Partial RELRO` 상태라는 것입니다. 
+
 - 코드 분석
 ```C
 #include <stdio.h>
