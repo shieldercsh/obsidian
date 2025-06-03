@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "knights/LOB 라업.md",
+                "file": "통실/과제5 - 8장.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "LOB 라업"
+              "title": "과제5 - 8장"
             }
           }
         ]
@@ -158,6 +158,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "obsidian-git:Open Git source control": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -169,6 +170,7 @@
   "active": "238edf19686a35df",
   "lastOpenFiles": [
     "knights/LOB 라업.md",
+    "통실/과제5 - 8장.md",
     "FSOP/FSOPpayload.md",
     "About me.md",
     "통실/과제4 - 6장.md",
@@ -209,7 +211,6 @@
     "Dreamhack/writeup/pwn/PAC-MAN.md",
     "Dreamhack/writeup/pwn/operator.md",
     "Dreamhack/writeup/pwn/oob.md",
-    "Dreamhack/writeup/pwn/ODS 1.md",
     "Dreamhack/writeup/pwn",
     "Dreamhack/writeup/crypto",
     "Dreamhack/writeup",
