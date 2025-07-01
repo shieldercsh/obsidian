@@ -167,10 +167,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3912c5b9fd8de3ee",
+  "active": "16cc5e275117f2a0",
   "lastOpenFiles": [
-    "FSOP/FSOPpayload.md",
     "Dreamhack/writeup/pwn/stacknote.md",
+    "Untitled.md",
+    "FSOP/FSOPpayload.md",
     "FSOP/FSOP.md",
     "knights/LOB 라업.md",
     "Dreamhack/writeup/pwn/note.md",
@@ -203,7 +204,6 @@
     "pwnable.kr",
     "my prob/send_safe.md",
     "my prob/random_calculator.md",
-    "my prob/8_chances.md",
     "my prob",
     "knights",
     "image/Pasted image 20250420233911.png",
