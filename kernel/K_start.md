@@ -1,3 +1,2 @@
 보호기법
-kaslr, kpti O
-smep, smap X
+kaslr, kpti, smep, smap O
