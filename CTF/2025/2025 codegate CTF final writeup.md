@@ -330,8 +330,7 @@ top_chunk
 [2] info1(size : 0x20)
 [1] info2(size : 0x40)
 [1] info1(size : 0x20) <- invisible
-[0] info2(size : 0x40) <- freed(unsorted bin)
-[0, 2] info2(size : 0x40) <- invisible
+[0, 2] info2(size : 0x40)
 top_chunk
 ```
 
