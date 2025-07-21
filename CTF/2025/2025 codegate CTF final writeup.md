@@ -321,16 +321,17 @@ top_chunk
 top_chunk
 ```
 
-2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다.
+2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다. 여기서 힙이 겹치는데 정확한 주소가 궁금하다면 직접 디
 
 ```
 [0] data_chunk(size : 0x10010)
 [0] info1(size : 0x20)
 [2] data_chunk(size : 0x10010)
+[2] info1(size : 0x20)
 [1] info2(size : 0x40)
-[0] info2(size : 0x20 + 0x40) <- freed(unsorted bin)
 [1] info1(size : 0x20) <- invisible
-[0] info2(size : 0x40) <- invisible
+[0] info2(size : 0x40) <- freed(unsorted bin)
+[2] info2(size : 0x40) <- invisible
 top_chunk
 ```
 
