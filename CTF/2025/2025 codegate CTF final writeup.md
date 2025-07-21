@@ -290,10 +290,12 @@ top_chunk
 0번 인덱스에 `clear_data` 처리한다.
 
 ```
-[0] : data_chunk(size : 0x10010)
-[0] : info1(size : 0x20)
-[0] : info2(size : 0x10050) -> freed (+0x40 : [1] data_chunk)
-[1] : info1(size : 0x20)
-[1] : info2(size : 0x40)
+[0] data_chunk(size : 0x10010)
+[0] info1(size : 0x20)
+[0] info2(size : 0x10050) -> freed (+0x40 : [1] data_chunk)
+[1] info1(size : 0x20)
+[1] info2(size : 0x40)
 top_chunk
 ```
+
+2번 인덱스에 `recv_data`로 `0x10010`짜리 청크를 할당한다.
