@@ -345,3 +345,5 @@ top_chunk
 [0, 2] info2(size : 0x40) <- invisible
 top_chunk
 ```
+
+0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있으므로 
