@@ -236,7 +236,7 @@ __int64 __fastcall get_info(int a1, __int64 a2)
 }
 ```
 
-`set_info`에서는 첫 번째 청크(`info1`으로 칭하겠다.) 안에 두 번째 청크(`info2`으로 칭하겠다.) `recv_data`를 거친 인덱스여야 한다. 주소를 넣는 방식으로 저장을 하고, `get_info`에서는 `info1`에 적혀있는 `info2`의 주소를 참조하여 데이터를 읽고 보낸다.
+`set_info`에서는 첫 번째 청크(`info1`으로 칭하겠다.) 안에 두 번째 청크(`info2`으로 칭하겠다.). 주소를 넣는 방식으로 저장을 한다. `recv_data`를 거친 인덱스여야 하고, `info1`이 이미 있다면 두 번째 청크만 새로 할당한다. `get_info`에서는 `info1`에 적혀있는 `info2`의 주소를 참조하여 데이터를 읽고 보낸다.
 
 ```C
 __int64 __fastcall clear_data(int a1, __int64 a2)
@@ -321,4 +321,4 @@ top_chunk
 top_chunk
 ```
 
-0번 인덱스에 
+0번 인덱스에 `set_`
