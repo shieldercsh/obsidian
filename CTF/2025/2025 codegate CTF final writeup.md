@@ -335,4 +335,4 @@ top_chunk
 top_chunk
 ```
 
-0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있고 `heap_base`를 구했으므로 모든 청크의 사이즈 조절도 가능하고, `heap_base`를 아는 상태이다. `[1] info1`에 적혀 있는 주소를 `[2] data_chunk`로 변조하고 1번 인덱스에 `clea`
+0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있고 `heap_base`를 구했으므로 모든 청크의 사이즈 조절도 가능하고, `heap_base`를 아는 상태이다. `recv_data`로 `[1] info1`에 적혀 있는 주소를 `[2] data_chunk`로 변조하고, 1번 인덱스에 `clear_data`를 취하면, 청크가 `unsorted bin`에 들어가서 `libc` 주소가 나온다.
