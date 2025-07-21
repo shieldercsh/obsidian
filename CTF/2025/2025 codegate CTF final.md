@@ -1,1 +1,1 @@
-2025.07.10에 열린 codegate 
+2025.07.10에 열린 codegate CTF final에서 8등을 
