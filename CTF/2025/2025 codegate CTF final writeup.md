@@ -166,4 +166,4 @@ __int64 __fastcall recv_data(int a1, __int64 a2)
 ```
 
 `recv_data`에서는 `0x10008` 크기를 가진(실제로는 `0x10010`) 힙에 데이터를 입력받아 저장한다.
-`if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )` 여기서 `oob`가 발생한다. `*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)` 계산 후 `(unsigned int)`를 씌우므로, `0xFFFF`를 넘는 양수와 음수를 더하면 조건문을 통과할 수 있다. `recv_raw`는 `recv`로 구성되어 있으며 `recv`의 세 번째 이ㄴ
+`if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )` 여기서 `oob`가 발생한다. `*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)` 계산 후 `(unsigned int)`를 씌우므로, `0xFFFF`를 넘는 양수와 음수를 더하면 조건문을 통과할 수 있다. `recv_raw`는 `recv`로 구성되어 있으며 `recv`의 세 번째 인자는 `size_t` 형이므로 `int`에서는 음수여도 `recv`에서는 양수로 취급된다. 따라서 `startpoint`를 크게 하고 `size`를 음수로 보내면 
