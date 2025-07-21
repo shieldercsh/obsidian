@@ -272,6 +272,7 @@ __int64 __fastcall clear_data(int a1, __int64 a2)
 [1] data_chunk(size : 0x10010)
 [1] info1(size : 0x20)
 [1] info2(size : 0x40)
+[2] data_chunk(size : 0x10010)
 top_chunk
 ```
 
@@ -284,6 +285,7 @@ top_chunk
 ([1] data_chunk(size : 0x10010))
 [1] info1(size : 0x20)
 [1] info2(size : 0x40)
+[2] data_chunk(size : 0x10010)
 top_chunk
 ```
 
