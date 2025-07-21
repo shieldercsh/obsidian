@@ -131,3 +131,10 @@ void __fastcall __noreturn handle_packet(int a1)
 }
 ```
 
+입력은 함수 내부까지 포함하여 12바이트로 구성된다.
+
+```C
+struct input{
+  uint16_t 
+};
+```
