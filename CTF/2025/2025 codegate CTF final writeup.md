@@ -135,6 +135,9 @@ void __fastcall __noreturn handle_packet(int a1)
 
 ```C
 struct input{
-  uint16_t 
+  uint16_t cmd;
+  uint16_t index;
+  uint32_t startpoint;
+  uint32_t size;
 };
 ```
