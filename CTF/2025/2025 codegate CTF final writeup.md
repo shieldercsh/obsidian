@@ -310,3 +310,13 @@ top_chunk
 ```
 
 2번 인덱스에 `recv_data`로 `0x10010`짜리 청크를 할당한다.
+
+```
+[0] data_chunk(size : 0x10010)
+[0] info1(size : 0x20)
+[2] data_ch(size : 0x40 + 0x10010 + 0x20 + 0x40) <- freed
+[1] data_chunk(size : 0x10010) <- invisible
+[1] info1(size : 0x20) <- invisible
+[1] info2(size : 0x40) <- invisible
+top_chunk
+```
