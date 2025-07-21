@@ -315,7 +315,7 @@ top_chunk
 [0] data_chunk(size : 0x10010)
 [0] info1(size : 0x20)
 [2] data_chunk(size : 0x10010)
-[0] info1(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
+[0] info2(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
 [1] info1(size : 0x20) <- invisible
 [1] info2(size : 0x40) <- invisible & freed(tcache bin)
 top_chunk
@@ -327,8 +327,11 @@ top_chunk
 [0] data_chunk(size : 0x10010)
 [0] info1(size : 0x20)
 [2] data_chunk(size : 0x10010)
-[2] data_chunk(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
+[1] info2(size : 0x40)
+[0] info2(size : 0x20 + 0x40) <- freed(unsorted bin)
 [1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible & freed(tcache bin)
+[0] info2(size : 0x40) <- invisible
 top_chunk
 ```
+
+2ㅂ
