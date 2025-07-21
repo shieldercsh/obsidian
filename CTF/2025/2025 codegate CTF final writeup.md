@@ -141,3 +141,28 @@ struct input{
 ```
 
 입력은 함수 내부까지 포함하여 12바이트로 구성된다. 아래의 구조체로 정리할 수 있다. `send_raw`와 `recv_raw`는 부모와 자식 간의 통신을 구현한 함수이다.
+
+```c
+__int64 __fastcall recv_data(int a1, __int64 a2)
+{
+  _BYTE v3[6]; // [rsp+1Ah] [rbp-16h]
+  unsigned int v4; // [rsp+1Ch] [rbp-14h]
+
+  *(_DWORD *)&v3[2] = recv_raw(a1, (void *)(a2 + 4), 8u);
+  if ( *(_DWORD *)&v3[2] )
+    return *(unsigned int *)&v3[2];
+  *(_DWORD *)v3 = *(unsigned __int16 *)(a2 + 2);
+  if ( !recvbuf[*(unsigned __int16 *)v3] )
+    recvbuf[*(unsigned __int16 *)v3] = malloc(0x10008uLL);
+  *(_QWORD *)(a2 + 16) = recvbuf[*(unsigned __int16 *)v3];
+  if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )
+    return *(unsigned int *)&v3[2];
+  v4 = recv_raw(a1, (void *)(*(unsigned int *)(a2 + 4) + *(_QWORD *)(a2 + 16)), *(_DWORD *)(a2 + 8));
+  if ( v4 )
+    return v4;
+  else
+    return 0LL;
+}
+```
+
+`recv_data`에서는 `0x10008` 크기를 가진(실제로는 `0x10010`) 힙에 데이터를 입력받아 저장한다.
