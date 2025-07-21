@@ -64,3 +64,70 @@ int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
 ```
 
 `while` 안에서 `fork`를 수행 중이므로 원하는 만큼 자식 프로세스를 연결할 수 있다. `fork`는 부모 프로세스의 메모리를 그대로 복사하므로 익스에 활용할 부분이 많다. 하지만 뒤에서 설명하겠듯이 힙 레이아웃이 더럽기 때문에 힙 외의 부분을 고려하고 싶지 않아 풀이에 사용하지는 않았다. 자식 프로세스가 연결되면 `handle_packet`으로 넘어간다.
+
+```C
+void __fastcall __noreturn handle_packet(int a1)
+{
+  unsigned __int16 v1; // [rsp+10h] [rbp-20h]
+  _BYTE v2[21]; // [rsp+1Bh] [rbp-15h] BYREF
+
+  *(_QWORD *)&v2[13] = __readfsqword(0x28u);
+  prctl(1, 9LL);
+  strcpy(v2, "Enter data: ");
+  while ( 1 )
+  {
+    while ( 1 )
+    {
+      send_raw(a1, v2, 0xCu);
+      flush(a1);
+      memset(&packet, 0, 0x18uLL);
+      if ( !(unsigned int)recv_raw(a1, &packet, 4u) )
+        break;
+      printf("Recv error");
+      flush(a1);
+    }
+    v1 = word_4062;
+    if ( (unsigned __int16)word_4062 > 2u )
+      break;
+    if ( packet == 4096 )
+    {
+      if ( (unsigned int)get_info(a1, (__int64)&packet) )
+        puts("get error");
+    }
+    else if ( (unsigned __int16)packet <= 0x1000u )
+    {
+      if ( packet == 256 )
+      {
+        if ( (unsigned int)set_info(a1, (__int64)&packet) )
+          puts("set error");
+        else
+          *(_BYTE *)(**(_QWORD **)&info[8 * v1] + *(unsigned int *)(*(_QWORD *)&info[8 * v1] + 8LL)) = 0;
+      }
+      else if ( (unsigned __int16)packet <= 0x100u )
+      {
+        if ( packet == 1 )
+        {
+          if ( (unsigned int)recv_data(a1, (__int64)&packet) )
+          {
+            puts("write error");
+          }
+          else
+          {
+            *(_BYTE *)((unsigned int)(dword_4064 + dword_4068) + qword_4070) = 0;
+            *(_DWORD *)(recvbuf[v1] + 0x10000LL) = dword_4064;
+            *(_DWORD *)(recvbuf[v1] + 0x10004LL) = dword_4068;
+          }
+        }
+        else if ( packet == 16 )
+        {
+          if ( (unsigned int)clear_data(a1, (__int64)&packet) )
+            puts("clear error");
+        }
+      }
+    }
+  }
+  printf("Index error");
+  exit(-1);
+}
+```
+
