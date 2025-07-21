@@ -218,4 +218,27 @@ __int64 __fastcall get_info(int a1, __int64 a2)
 }
 ```
 
-`set_info`에서는 첫 번째 청크 안에 두 번째 청크 주소를 넣는 방식으로 저장을 한다. `get_info`에서는 첫 번째 청크에 적혀있는 주소를 참조하여 데이터를 읽고 보낸다.
+`set_info`에서는 첫 번째 청크(`info1`으로 칭하겠다.) 안에 두 번째 청크(`info2`으로 칭하겠다.) 주소를 넣는 방식으로 저장을 한다. `get_info`에서는 `info1`에 적혀있는 `info2`의 주소를 참조하여 데이터를 읽고 보낸다.
+
+```C
+__int64 __fastcall clear_data(int a1, __int64 a2)
+{
+  _BYTE v3[6]; // [rsp+1Ah] [rbp-6h]
+
+  *(_DWORD *)&v3[2] = recv_raw(a1, (void *)(a2 + 4), 8u);
+  if ( *(_DWORD *)&v3[2] )
+    return *(unsigned int *)&v3[2];
+  *(_DWORD *)v3 = *(unsigned __int16 *)(a2 + 2);
+  if ( !recvbuf[*(unsigned __int16 *)v3] )
+    return *(unsigned int *)&v3[2];
+  memset((void *)recvbuf[*(unsigned __int16 *)v3], 0, 0x10008uLL);
+  if ( *(_QWORD *)&info[8 * *(unsigned __int16 *)v3] )
+  {
+    free(**(void ***)&info[8 * *(unsigned __int16 *)v3]);
+    memset(*(void **)&info[8 * *(unsigned __int16 *)v3], 0, 0x10uLL);
+  }
+  return 0LL;
+}
+```
+
+`clear_data`에서는 `info2`는 해제하고, `info1`과 
