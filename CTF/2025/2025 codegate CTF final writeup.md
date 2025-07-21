@@ -263,4 +263,8 @@ __int64 __fastcall clear_data(int a1, __int64 a2)
 
 ### 익스 계획
 
-청크를 아 
+청크를 아래 순서로 할당한다. (`[i]`는 `i`번째 인덱스에 할당하는 것이다.)
+
+`[0] : data_chunk`
+`[0] : info1`
+`[0] : info2`
