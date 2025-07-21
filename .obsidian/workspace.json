@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CTF/2025/2025 codegate CTF final.md",
+                "file": "CTF/2025/2025 codegate CTF final writeup.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 codegate CTF final"
+              "title": "2025 codegate CTF final writeup"
             }
           }
         ]
@@ -170,7 +170,7 @@
   "active": "d81ceb6ac06d75fa",
   "lastOpenFiles": [
     "Untitled.md",
-    "CTF/2025/2025 codegate CTF final.md",
+    "CTF/2025/2025 codegate CTF final writeup.md",
     "FSOP/FSOPpayload.md",
     "school",
     "FSOP/FSOP.md",
