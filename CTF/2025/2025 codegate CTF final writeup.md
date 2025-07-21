@@ -166,3 +166,4 @@ __int64 __fastcall recv_data(int a1, __int64 a2)
 ```
 
 `recv_data`에서는 `0x10008` 크기를 가진(실제로는 `0x10010`) 힙에 데이터를 입력받아 저장한다.
+`if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )` 여기서 `oob`가 발생한다. `*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)`
