@@ -265,9 +265,14 @@ __int64 __fastcall clear_data(int a1, __int64 a2)
 
 청크를 아래 순서로 할당한다. (`[i]`는 `i`번째 인덱스에 할당하는 것이다.)
 
-`[0] : data_chunk(size : 0x10010)`
-`[0] : info1(size : 0x10)`
-`[0] : info2(size : 0x30)`
-`[1] : data_chunk(size : 0x10010)`
-`top_chunk`
+```
+[0] : data_chunk(size : 0x10010)
+[0] : info1(size : 0x10)
+[0] : info2(size : 0x30)
+[1] : data_chunk(size : 0x10010)
+[1] : info1(size : 0x10)
+[1] : info2(size : 0x30)
+top_chunk
+```
 
+`heap overflow` 취약점을 이용해 `size`
