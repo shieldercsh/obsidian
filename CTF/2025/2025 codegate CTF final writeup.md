@@ -321,7 +321,7 @@ top_chunk
 top_chunk
 ```
 
-2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다. 여기서 힙이 겹치는데 정확한 주소가 궁금하다면 직접 디
+2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다. 여기서 힙이 겹치는데 정확한 주소가 궁금하다면 직접 디버깅하는 걸 추천한다. 0번 인덱스에 `set_info` 처리하면 최종 힙 레이아웃이 아래와 같다.
 
 ```
 [0] data_chunk(size : 0x10010)
@@ -331,20 +331,8 @@ top_chunk
 [1] info2(size : 0x40)
 [1] info1(size : 0x20) <- invisible
 [0] info2(size : 0x40) <- freed(unsorted bin)
-[2] info2(size : 0x40) <- invisible
-top_chunk
-```
-
-2번 인덱스에 `set_info` 처리하면 최종 힙 레이아웃이 아래와 같다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[2] data_chunk(size : 0x10010)
-[1] info2(size : 0x40)
-[1, 2] info1(size : 0x20) <- invisible
 [0, 2] info2(size : 0x40) <- invisible
 top_chunk
 ```
 
-0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있고 `heap_base`를 구했으므로 청크의 사이즈 조절도 가능하고, 
+0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있고 `heap_base`를 구했으므로 모든 청크의 사이즈 조절도 가능하고, `heap_base`를 아는 상태이다. 
