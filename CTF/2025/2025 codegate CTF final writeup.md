@@ -321,7 +321,7 @@ top_chunk
 top_chunk
 ```
 
-0번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, 이 때는 `unsorted bin`의 제일 위에서 `0x40` 잘라서 준다.
+2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다.
 
 ```
 [0] data_chunk(size : 0x10010)
