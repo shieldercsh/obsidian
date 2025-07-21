@@ -267,12 +267,24 @@ __int64 __fastcall clear_data(int a1, __int64 a2)
 
 ```
 [0] : data_chunk(size : 0x10010)
-[0] : info1(size : 0x10)
-[0] : info2(size : 0x30)
+[0] : info1(size : 0x20)
+[0] : info2(size : 0x40)
 [1] : data_chunk(size : 0x10010)
-[1] : info1(size : 0x10)
-[1] : info2(size : 0x30)
+[1] : info1(size : 0x20)
+[1] : info2(size : 0x40)
 top_chunk
 ```
 
-`heap overflow` 취약점을 이용해 `size`
+`heap overflow` 취약점을 이용해 `size`를 아래와 같이 바꿔준다.
+
+```
+[0] : data_chunk(size : 0x10010)
+[0] : info1(size : 0x20)
+[0] : info2(size : 0x10050)
+([1] : data_chunk(size : 0x10010))
+[1] : info1(size : 0x20)
+[1] : info2(size : 0x40)
+top_chunk
+```
+
+0번 인덱스에
