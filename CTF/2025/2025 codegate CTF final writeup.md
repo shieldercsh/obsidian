@@ -236,7 +236,7 @@ __int64 __fastcall get_info(int a1, __int64 a2)
 }
 ```
 
-`set_info`에서는 첫 번째 청크(`info1`으로 칭하겠다.) 안에 두 번째 청크(`info2`으로 칭하겠다.). 주소를 넣는 방식으로 저장을 한다. `recv_data`를 거친 인덱스여야 하고, `info1`이 이미 있다면 두 번째 청크만 새로 할당한다. `get_info`에서는 `info1`에 적혀있는 `info2`의 주소를 참조하여 데이터를 읽고 보낸다.
+`set_info`에서는 첫 번째 청크(`info1`으로 칭하겠다.) 안에 두 번째 청크(`info2`으로 칭하겠다.). 주소를 넣는 방식으로 저장을 한다. `recv_data`를 거친 인덱스여야 하고, `info1`이 이미 있다면 `info2`만 새로 할당한다. `get_info`에서는 `info1`에 적혀있는 `info2`의 주소를 참조하여 데이터를 읽고 보낸다.
 
 ```C
 __int64 __fastcall clear_data(int a1, __int64 a2)
@@ -305,7 +305,7 @@ top_chunk
 [0] info2(size : 0x40 + 0x10010 + 0x20 + 0x40) <- freed(unsorted bin)
 [1] data_chunk(size : 0x10010) <- invisible
 [1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible
+[1] info2(size : 0x40) <- invisible & freed(tcache bin)
 top_chunk
 ```
 
@@ -317,8 +317,8 @@ top_chunk
 [2] data_chunk(size : 0x10010)
 [2] data_chunk(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
 [1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible
+[1] info2(size : 0x40) <- invisible & freed(tcache bin)
 top_chunk
 ```
 
-0번 인덱스에 `set_`
+0번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 해당 주소가 먼저 할당된다.
