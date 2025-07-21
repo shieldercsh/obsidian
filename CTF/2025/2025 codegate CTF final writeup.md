@@ -285,6 +285,18 @@ top_chunk
 top_chunk
 ```
 
+새로운 청크를 아래와 같이 할당한다.
+
+```
+[0] data_chunk(size : 0x10010)
+[0] info1(size : 0x20)
+[0] info2(size : 0x40 + 0x10010 + 0x20 + 0x40)
+[1] data_chunk(size : 0x10010) <- invisible
+[1] info1(size : 0x20) <- invisible
+[1] info2(size : 0x40) <- invisible
+top_chunk
+```
+
 0번 인덱스에 `clear_data` 처리한다.
 
 ```
