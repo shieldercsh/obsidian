@@ -166,7 +166,7 @@ __int64 __fastcall recv_data(int a1, __int64 a2)
 ```
 
 `recv_data`에서는 `0x10008` 크기를 가진(실제로는 `0x10010`) 힙에 데이터를 입력받아 저장한다.
-`if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )` 여기서 `oob`가 발생한다. `*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)` 계산 후 `(unsigned int)`를 씌우므로, `0xFFFF`를 넘는 양수와 음수를 더하면 조건문을 통과할 수 있다. `recv_raw`는 `recv`로 구성되어 있으며 `recv`의 세 번째 인자는 `size_t` 형이므로 `int`에서는 음수여도 `recv`에서는 양수로 취급된다. 따라서 `startpoint`를 크게 하고 `size`를 음수로 보내면 할당된 청크 이후로의 힙을 원하는 값으로 쓸 수 있다. `recv`는 쓰기 불가능한 영역을 만나면 `panic`을 일으키지 않고 그냥 종료되므로 힙 청크 끝까지 쓸만큼을 계산해서 그 길이만큼 데이터를 보내면 된다.
+`if ( (unsigned int)(*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)) > 0xFFFF )` 여기서 `oob`가 발생한다. `*(_DWORD *)(a2 + 4) + *(_DWORD *)(a2 + 8)` 계산 후 `(unsigned int)`를 씌우므로, `0xFFFF`를 넘는 양수와 음수를 더하면 조건문을 통과할 수 있다. `recv_raw`는 `recv`로 구성되어 있으며 `recv`의 세 번째 인자는 `size_t` 형이므로 `int`에서는 음수여도 `recv`에서는 양수로 취급된다. 따라서 `startpoint`를 크게 하고 `size`를 음수로 보내면 할당된 청크 이후로의 힙을 원하는 값으로 쓸 수 있다. `recv`는 쓰기 불가능한 영역을 만나면 `panic`을 일으키지 않고 그냥 함수가 종료되므로 힙 청크 끝까지 쓸만큼을 계산해서 그 길이만큼 데이터를 보내면 된다.
 
 ```C
 __int64 __fastcall set_info(int a1, __int64 a2)
@@ -197,6 +197,25 @@ __int64 __fastcall set_info(int a1, __int64 a2)
   *(_DWORD *)(*(_QWORD *)&info[8 * v4] + 8LL) = *(_DWORD *)(a2 + 8);
   return 0LL;
 }
+
+__int64 __fastcall get_info(int a1, __int64 a2)
+{
+  __int64 result; // rax
+  unsigned __int16 v3; // [rsp+1Ah] [rbp-6h]
+  unsigned int v4; // [rsp+1Ch] [rbp-4h]
+
+  v4 = recv_raw(a1, (void *)(a2 + 4), 8u);
+  if ( v4 )
+    return v4;
+  v3 = *(_WORD *)(a2 + 2);
+  if ( !recvbuf[v3] )
+    return 1LL;
+  LODWORD(result) = !*((_QWORD *)&info + v3) || !**((_QWORD **)&info + v3);
+  if ( (_DWORD)result )
+    return (unsigned int)result;
+  send_raw(a1, **((const void ***)&info + v3), 0x30u);
+  return 0LL;
+}
 ```
 
-`set_info`에서는 첫 번째 청크 안에 두 번째 청크 주소를 넣는 방식으로 저장을 한
+`set_info`에서는 첫 번째 청크 안에 두 번째 청크 주소를 넣는 방식으로 저장을 한다. `get_info`에서는 첫 번째 청크에 적혀있는 주소를 참조하여 데이터를 읽고 보낸다.
