@@ -131,8 +131,6 @@ void __fastcall __noreturn handle_packet(int a1)
 }
 ```
 
-입력은 함수 내부까지 포함하여 12바이트로 구성된다. 아래의 구조체로 정리할 수 있다.
-
 ```C
 struct input{
   uint16_t cmd;
@@ -142,4 +140,4 @@ struct input{
 };
 ```
 
-`send_raw`와 `recv_raw`는 부모와 자식 간의 통신을 구현한 함수이다.
+입력은 함수 내부까지 포함하여 12바이트로 구성된다. 아래의 구조체로 정리할 수 있다. `send_raw`와 `recv_raw`는 부모와 자식 간의 통신을 구현한 함수이다.
