@@ -334,4 +334,14 @@ top_chunk
 top_chunk
 ```
 
-2ㅂ
+2번 인덱스에 `set_info` 처리하면 최종 힙 레이아웃이 아래와 같다.
+
+```
+[0] data_chunk(size : 0x10010)
+[0] info1(size : 0x20)
+[2] data_chunk(size : 0x10010)
+[1] info2(size : 0x40)
+[1, 2] info1(size : 0x20) <- invisible
+[0, 2] info2(size : 0x40) <- invisible
+top_chunk
+```
