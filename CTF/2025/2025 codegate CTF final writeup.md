@@ -315,10 +315,20 @@ top_chunk
 [0] data_chunk(size : 0x10010)
 [0] info1(size : 0x20)
 [2] data_chunk(size : 0x10010)
-[2] data_chunk(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
+[0] info1(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
 [1] info1(size : 0x20) <- invisible
 [1] info2(size : 0x40) <- invisible & freed(tcache bin)
 top_chunk
 ```
 
-0번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 해당 주소가 먼저 할당된다.
+0번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, 이 때는 `unsorted bin`의 제일 위에서 `0x40` 잘라서 준다.
+
+```
+[0] data_chunk(size : 0x10010)
+[0] info1(size : 0x20)
+[2] data_chunk(size : 0x10010)
+[2] data_chunk(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
+[1] info1(size : 0x20) <- invisible
+[1] info2(size : 0x40) <- invisible & freed(tcache bin)
+top_chunk
+```
