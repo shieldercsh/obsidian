@@ -6,83 +6,110 @@
 
 정연산 어셈 해석
 ```
+0x0 : reg[0] = 1
+0x3 : reg[1] = 2
+0x6 : reg[1] <<= 8
+0x9 : reg[0] |= reg[1]
+0xc : reg[4] = a1[reg[0]]
+0xf : reg[5] = 64
+0x12 : flag = (reg[4] == reg[5])
+0x15 :
+    if self.flag != 0 :
+        if 0 != 0 : pc = 66
+        else : pc = 0x2042
+    else : pc += 4
+jump
+0x19 : reg[3] = reg[4]
+0x1c : flag = (reg[3] == reg[5])
+0x1f :
+    if self.flag != 0 :
+        if 0 != 0 : pc = 66
+        else : pc = 0x2042
+    else : pc += 4
+jump
+0x23 : reg[0] = 0
+0x26 : reg[1] = 0
+0x29 : reg[1] <<= 8
+0x2c : reg[0] |= reg[1]
+0x2f : reg[0] += reg[3]
+0x32 : reg[1] = 170
+0x35 : a1[reg[0]] = reg[1]
+0x38 : reg[0] = 1
+0x3b : reg[3] += reg[0]
+0x3e :
+    if 0 != 0 : pc = 28
+    else : pc = 0x201c
+jump // input 64 만들기 0xaa 입력함
+0x42 : reg[3] = 0
+0x45 : flag = (reg[3] == reg[5])
+0x48 :
+    if self.flag != 0 :
+        if 0 != 0 : pc = 211
+        else : pc = 0x20d3
+    else : pc += 4
+jump
+0x4c : reg[0] = 0
+0x4f : reg[1] = 0
+0x52 : reg[1] <<= 8
+0x55 : reg[0] |= reg[1]
+0x58 : reg[0] += reg[3] // idx
+0x5b : reg[6] = a1[reg[0]]  // input[idx]
+0x5e : reg[0] = 13
+0x61 : reg[1] = reg[3] // idx
+0x64 : reg[0] *= reg[1] // 13 * idx
+0x67 : reg[1] = 7
+0x6a : reg[0] += reg[1] // (13 * idx) + 7
+0x6d : reg[1] = 255
+0x70 : reg[0] &= reg[1] // ((13 * idx) + 7) & 0xff
+0x73 : reg[2] = reg[0]
+0x76 : reg[0] = reg[3]
+0x79 : reg[1] = 7
+0x7c : reg[0] %= reg[1] // (idx % 7)
+0x7f : reg[1] = 1
+0x82 : reg[0] += reg[1] // (idx % 7) + 1
+0x85 : reg[1] = reg[0]
+0x88 : reg[0] = reg[6]
+0x8b : reg[0] = f1(reg[0], reg[1]) // f1(input[idx], (idx % 7) + 1)
+0x8e : reg[0] ^= reg[2] // f1(input[idx], (idx % 7) + 1) ^ (((13 * idx) + 7) & 0xff)
+0x91 : reg[1] = 42
+0x94 : reg[0] += reg[1] // (f1(input[idx], (idx % 7) + 1) ^ (((13 * idx) + 7) & 0xff)) + 42
+0x97 : reg[1] = 255
+0x9a : reg[0] &= reg[1] // ((f1(input[idx], (idx % 7) + 1) ^ (((13 * idx) + 7) & 0xff)) + 42) & 0xff
+0x9d : reg[1] = 0
+0xa0 : reg[2] = 1
+0xa3 : reg[2] <<= 8
+0xa6 : reg[1] |= reg[2]
+0xa9 : reg[1] += reg[3]
+0xac : reg[1] = a1[reg[1]]
+0xaf : flag = (reg[0] == reg[1])
+0xb2 :
+    if self.flag == 0 :
+        if 0 != 0 : pc = 192
+        else : pc = 0x20c0
+    else : pc += 4
+jump
+0xb6 : reg[0] = 1
+0xb9 : reg[3] += reg[0]
+0xbc :
+    if 0 != 0 : pc = 69
+    else : pc = 0x2045
+jump
+0xc0 : reg[0] = 0
+0xc3 : reg[1] = 0
+0xc6 : reg[2] = 2
+0xc9 : reg[2] <<= 8
+0xcc : reg[1] |= reg[2]
+0xcf : a1[reg[1]] = reg[0]
+0xd2 : 0, what?
+0xd3 : reg[0] = 1
+0xd6 : reg[1] = 0
+0xd9 : reg[2] = 2
+0xdc : reg[2] <<= 8
+0xdf : reg[1] |= reg[2]
+0xe2 : a1[reg[1]] = reg[0]
 ```
 
-### 익스 계획
-
-청크를 아래 순서로 할당한다. (`[i]`는 `i`번째 인덱스에 할당하는 것이다.)
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[0] info2(size : 0x40)
-[1] data_chunk(size : 0x10010)
-[1] info1(size : 0x20)
-[1] info2(size : 0x40)
-top_chunk
-```
-
-`heap overflow` 취약점을 이용해 `size`를 아래와 같이 바꿔준다. `top_chunk`의 `size`도 항상 생각해서 넣어준다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[0] info2(size : 0x40 + 0x10010 + 0x20 + 0x40)
-([1] data_chunk(size : 0x10010))
-top_chunk
-```
-
-새로운 청크를 아래와 같이 할당한다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[0] info2(size : 0x40 + 0x10010 + 0x20 + 0x40)
-[1] data_chunk(size : 0x10010) <- invisible
-[1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible
-top_chunk
-```
-
-0번 인덱스에 `clear_data` 처리하고, 1번 인덱스에 `clear_data` 처리한다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[0] info2(size : 0x40 + 0x10010 + 0x20 + 0x40) <- freed(unsorted bin)
-[1] data_chunk(size : 0x10010) <- invisible
-[1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible & freed(tcache bin)
-top_chunk
-```
-
-2번 인덱스에 `recv_data`로 `0x10010`짜리 청크를 할당한다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[2] data_chunk(size : 0x10010)
-[0] info2(size : 0x40 + 0x20 + 0x40) <- freed(unsorted bin)
-[1] info1(size : 0x20) <- invisible
-[1] info2(size : 0x40) <- invisible & freed(tcache bin)
-top_chunk
-```
-
-2번 인덱스에 `set_info` 처리하여 `info2`를 새로 할당받는다. 이 때 1번 인덱스에 `clear_data` 처리했기 때문에 `[2] info2` 청크는 해당 주소가 `tcache bin`에 있어서 먼저 할당된다. 그 다음 1번 인덱스에 `set_info` 처리하는데, `[2] info1`과 `[1] info2` 청크는 `unsorted bin`의 제일 위에서 잘라서 준다. 여기서 힙이 겹치는데 정확한 주소가 궁금하다면 직접 디버깅하는 걸 추천한다. 0번 인덱스에 `set_info` 처리하면 최종 힙 레이아웃이 아래와 같다.
-
-```
-[0] data_chunk(size : 0x10010)
-[0] info1(size : 0x20)
-[2] data_chunk(size : 0x10010)
-[2] info1(size : 0x20)
-[1] info2(size : 0x40)
-[1] info1(size : 0x20) <- invisible
-[0, 2] info2(size : 0x40)
-top_chunk
-```
-
-0번과 2번이 같은 힙을 가리키도록 만들었다. 0번의 `info2`를 해제하고 2번으로 읽으면 `heap_base`를 얻을 수 있다. `[0] data_chunk`가 모든 청크 중 최상위에 있고 `heap_base`를 구했으므로 모든 청크의 사이즈 조절도 가능하고, `heap_base`를 아는 상태이다. `recv_data`로 `[0] info1`, `[2] info1`에 적혀 있는 주소를 `[2] data_chunk`로 변조하고, 0번 인덱스에 `clear_data`를 취하면, 청크가 `unsorted bin`에 들어가기 때문에 2번 인덱스에서 `libc_base`를 딸 수 있다. 위의 두 예시처럼 자유자재로 `aar`, `aaw`이 가능하므로 `ROP`해준다.(여차하면 1번 인덱스를 사용해도 된다. 위 계획은 1번 인덱스도 사용 가능하다.) 우리에게 출력되게 하는 `fd`도 스택에 있으므로 읽어준 다음 리다이렉션으로 `flag`를 읽어준다.
-대회 중에는 코드를 예쁘게 짜고 깊게 고민할 시간이 없어 중간에 불필요한 동작이 있을 수 있다. 양해 바란다.
+`input` 배열을 `0x40` 길이로 만들고 정해진 알고리즘을 적용하여 한 글자씩 비교하는 모습이다.
 ### ex.py
 
 ```python
