@@ -145,6 +145,6 @@ qemu-system-x86_64 \
 ```
 `smep, smap, kaslr, pti`가 걸려있다.
 
-### 익스 계획
+### 익스
 
-전형적인 `note chall`이다. `free`에 `UAF` 취약점이 있고, `read, write` 기능이 모두 있다. `msg_msg` 스프레이로 힙 주소를 따고 `pipe_buffer` 스프레이로 `_text` 주소를 따고 `fake_ops overwrite` 해주면 된다.
+전형적인 `note chall`이다. `free`에 `UAF` 취약점이 있고, `read, write` 기능이 모두 있다. `msg_msg` 스프레이로 힙 주소를 따고 `pipe_buffer` 스프레이로 `_text` 주소를 따고 `fake_ops overwrite -> commit_creds("init_cred")` 해주면 된다.
