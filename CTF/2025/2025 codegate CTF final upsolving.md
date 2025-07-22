@@ -143,3 +143,8 @@ qemu-system-x86_64 \
   -monitor /dev/null \
   -no-reboot
 ```
+`smep, smap, kaslr, pti`가 걸려있다.
+
+### 익스 계획
+
+전형적인 `note chall`이다. `free`에 `UAF` 취약점이 있고, `read, write` 기능ㅇ ㅣ모
