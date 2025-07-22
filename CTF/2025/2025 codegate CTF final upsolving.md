@@ -128,7 +128,7 @@ for i in range(len(ans)):
 print(flag)
 ```
 
-# bkernel
+# Pwn / bkernel
 
 ### 보호기법
 
