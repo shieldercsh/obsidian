@@ -165,7 +165,7 @@ libc_hidden_def (_IO_wdoallocbuf)
 
 \_IO\_WDOALLOCATE (fp)를 실행시키고자 한다.
 
-if (fp->\_wid\e_data->\_IO\_buf\_base) 를 만족하지 않아야 한다.
+if (fp->\_wide_data->\_IO\_buf\_base) 를 만족하지 않아야 한다.
 
 if (!(fp->\_flags & \_IO\_UNBUFFERED)) 을 만족해야 한다. ( (fp->\_flags & \_IO\_UNBUFFERED) == 0 )
 
