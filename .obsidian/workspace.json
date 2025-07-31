@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Dreamhack/writeup/pwn/nbase.md",
+                "file": "Dreamhack/writeup/pwn/note.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "nbase"
+              "title": "note"
             }
           }
         ]
@@ -169,27 +169,29 @@
   },
   "active": "d81ceb6ac06d75fa",
   "lastOpenFiles": [
-    "Dreamhack/writeup/pwn/note.md",
     "Dreamhack/writeup/pwn/nbase.md",
+    "Dreamhack/writeup/pwn/msg_msg.md",
     "Dreamhack/writeup/pwn/Mili.md",
+    "Dreamhack/writeup/pwn/kapomarket.md",
+    "Dreamhack/writeup/pwn/kapocasino.md",
+    "Dreamhack/writeup/pwn/Flip and Probe 2.md",
+    "Dreamhack/writeup/pwn/IhrVertra.md",
+    "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
+    "Dreamhack/writeup/pwn/Chat with Me.md",
+    "Dreamhack/writeup/pwn/cats-and-dogs.md",
+    "Dreamhack/writeup/pwn/bytechanger.md",
+    "Dreamhack/writeup/pwn/note.md",
+    "Dreamhack/writeup/pwn/oob.md",
     "FSOP/FSOPpayload.md",
     "FSOP/FSOP.md",
     "CTF/2025/2025 codegate CTF final upsolving.md",
     "CTF/2025/2025 codegate CTF final writeup.md",
     "Untitled.md",
     "school",
-    "Dreamhack/writeup/pwn/cats-and-dogs.md",
     "kernel/K_start.md",
     "Dreamhack/writeup/pwn/stacknote.md",
     "kernel",
     "knights/LOB 라업.md",
-    "Dreamhack/writeup/pwn/kapomarket.md",
-    "Dreamhack/writeup/pwn/Flip and Probe 2.md",
-    "Dreamhack/writeup/pwn/kapocasino.md",
-    "Dreamhack/writeup/pwn/IhrVertra.md",
-    "Dreamhack/writeup/pwn/bytechanger.md",
-    "Dreamhack/writeup/pwn/Chat with Me.md",
-    "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
     "school/통실/과제6 - 9장.md",
     "school/통실/과제5 - 8장.md",
     "school/통실/과제4 - 6장.md",
@@ -202,8 +204,6 @@
     "image/Pasted image 20250604011223.png",
     "school/통실/과제1 - 3장.md",
     "school/통실/과제2 - 2장.md",
-    "school/통실/과제3 - 4장.md",
-    "About me.md",
     "school/통실",
     "pwnable.kr",
     "my prob",
