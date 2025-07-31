@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "Dreamhack/writeup/pwn/nbase.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
+              "title": "nbase"
             }
           }
         ]
@@ -169,8 +169,11 @@
   },
   "active": "d81ceb6ac06d75fa",
   "lastOpenFiles": [
-    "FSOP/FSOP.md",
+    "Dreamhack/writeup/pwn/note.md",
+    "Dreamhack/writeup/pwn/nbase.md",
+    "Dreamhack/writeup/pwn/Mili.md",
     "FSOP/FSOPpayload.md",
+    "FSOP/FSOP.md",
     "CTF/2025/2025 codegate CTF final upsolving.md",
     "CTF/2025/2025 codegate CTF final writeup.md",
     "Untitled.md",
@@ -180,9 +183,6 @@
     "Dreamhack/writeup/pwn/stacknote.md",
     "kernel",
     "knights/LOB 라업.md",
-    "Dreamhack/writeup/pwn/note.md",
-    "Dreamhack/writeup/pwn/nbase.md",
-    "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
     "Dreamhack/writeup/pwn/Flip and Probe 2.md",
     "Dreamhack/writeup/pwn/kapocasino.md",
