@@ -128,7 +128,7 @@ void create(){
 
 1번 메뉴에서 코드의 흐름을 보시면, `free` -> `malloc` -> `condition check` -> `substitution` 로 이루어져 있습니다. 이 때 `condition check`를 실패하면, 대입이 이루어지지 않아 `UAF`가 발생합니다.
 
-이 문제에 `edit` 함수가 없기 때문에 `tcache poisoning`을 위해 다른 방법을 강구해야 합니다. 이 문제의 제목에서 `house of botcake` 기법을 떠올릴 수 있습니다. 설명은 `how2heap`의 poc 코드[house_of_botcake.c](https://github.com/shellphish/how2heap/blob/master/glibc_2.35/house_of_botcake.c]로 대체하겠습니다. `house of botcake`를 위해서는 두 가지 크기의 청크를 할당받을 수 있어야 합니다. 이 문제에서 청크의 크기를 아래와 같이 설정하고 있습니다.
+이 문제에 `edit` 함수가 없기 때문에 `tcache poisoning`을 위해 다른 방법을 강구해야 합니다. 이 문제의 제목에서 [`house of botcake`](https://github.com/shellphish/how2heap/blob/master/glibc_2.35/house_of_botcake.c) 기법을 떠올릴 수 있습니다. 기법에 대한 설명은 `how2heap`의 poc 코드(house_of_botcake.c)로 대체하겠습니다. `house of botcake`를 위해서는 두 가지 크기의 청크를 할당받을 수 있어야 합니다. 이 문제에서 청크의 크기를 아래와 같이 설정하고 있습니다.
 
 ```c
 
