@@ -386,4 +386,4 @@ int main(int argc, char* argv[]){
 }
 ```
 
-`sandbox`에서의 `seccomp` 설정으로 `nanosleep` 함수만 허용하고 있다.
+`sandbox`에서의 `seccomp` 설정으로 `nanosleep` 함수만 허용하고 있다. 그 후 `stub`에 저장된 쉘 코드를 실행한 후 유저가 입력한 쉘 코드를 입력한다.
