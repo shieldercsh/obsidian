@@ -74,3 +74,4 @@ int adopt()
 }
 ```
 
+`adopt` 함수에서 이름의 길이 변수인 `v1`이 `signed __int64` 임을 알 수 있다.
