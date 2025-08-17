@@ -605,4 +605,25 @@ unsigned __int64 copy()
 }
 ```
 
-`check` 함수에서 `y, Y`를 입력하지 않는 경우 `puts`의 반환 값을 넘긴다. 그런데 `puts`는 출력에 실행한 경우 음이 아닌 정수를 반환하므로 `v2, v3`이 얼마든 조건문을 통과할 수 있다. 따라서 `oob`가 발생한다. Chain이 3개고 72%7!=0이며 memcpy의 n이 3바이트이므로 3*3=9>7이라서 모든 data에 접근 가능하다.
+`check` 함수에서 `y, Y`를 입력하지 않는 경우 `puts`의 반환 값을 넘긴다. 그런데 `puts`는 출력에 실행한 경우 음이 아닌 정수를 반환하므로 `v2, v3`이 얼마든 조건문을 통과할 수 있다. 따라서 `oob`가 발생한다. Chain이 3개고 `72%7!=0`이며 memcpy의 n이 3바이트이므로 `3*3=9>7`이라서 모든 data에 접근 가능하다. 
+
+```c
+__int64 view()
+{
+  int i; // [rsp+0h] [rbp-10h]
+  int j; // [rsp+4h] [rbp-Ch]
+
+  for ( i = 0; i <= 34; ++i )
+  {
+    system("clear");
+    for ( j = 0; qword_50F0[j]; ++j )
+      qword_50F0[j]();
+    usleep(40000u);
+  }
+  dword_50E0[0] = 0;
+  system("clear");
+  return sub_1C24();
+}
+```
+
+`view` 함수에서 
