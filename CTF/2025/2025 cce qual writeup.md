@@ -660,4 +660,4 @@ unsigned __int64 edit()
 }
 ```
 
-`edit`에서 `chain 0, destination 0`에 `sh\x00`을 적는다. 함수 포인터 3번에 `copy`, 함수 포인터 4번에 `system` 함수 주소를 입력하고 ``
+`edit`에서 `chain 0, destination 0`에 `sh\x00`을 적는다. 함수 포인터 3번에 `copy`, 함수 포인터 4번에 `system` 함수 주소를 입력하고 `view`를 실행한다. 그럼 3번에 있던 `copy`가 실행되는데, 이 때 `chain 0, destination 0`을 입력하면 `rdi`가 위에서 설정한 그 주소로 바뀐다. 어셈블리어로 보면 알 수 있듯 `c`
