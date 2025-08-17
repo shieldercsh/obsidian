@@ -101,3 +101,21 @@ int adopt()
 ```
 
 `adopt` 함수에서 이름의 길이 변수인 `v1`이 `signed __int64` 임을 알 수 있다. 따라서 음수를 입력하면 조건문을 통과한다. 그런데 `input` 함수에서는 `rsi`를 `unsigned __int64`로 해석하고 있으므로 `heap overflow`가 발생한다.
+
+```C
+int perform_ritual()
+{
+  if ( pet )
+    return (*((__int64 (__fastcall **)(void *))pet + 4))(pet);
+  else
+    return puts("Adopt first.");
+}
+```
+
+`perform_ritual` 함수에서 `heap`에 있는 함수 포인터를 참조하여 실행하는 부분이 있으므로 이를 `win` 함수로 덮어 쉘을 딴다.
+
+### ex.py
+
+```
+
+```
