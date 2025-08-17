@@ -626,4 +626,4 @@ __int64 view()
 }
 ```
 
-`view` 함수에서 
+`view` 함수에서 미리 채워져 있던 함수 포인터의 실행으로 정해진 메모리의 값을 출력하는데, 위의 `oob memcpy` 취약점을 이용하여 `pie base`, `libc base`
