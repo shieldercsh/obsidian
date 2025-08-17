@@ -15,3 +15,62 @@
 
 # Heapappy
 
+```bash
+[*] '/mnt/d/cce/qual/Heapappy/prob'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x400000)
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+
+PIE가 꺼져 있고 Partial RELRO이다.
+
+```C
+unsigned __int64 prompt()
+{
+  unsigned __int64 v1; // [rsp+0h] [rbp-40h]
+  char nptr[40]; // [rsp+10h] [rbp-30h] BYREF
+  unsigned __int64 v3; // [rsp+38h] [rbp-8h]
+
+  v3 = __readfsqword(0x28u);
+  v1 = 0LL;
+  printf("Choice: ");
+  while ( v1 <= 0x1E && fread(&nptr[v1], 1uLL, 1uLL, stdin) == 1 )
+  {
+    if ( nptr[v1] == 10 )
+    {
+      nptr[v1] = 0;
+      break;
+    }
+    ++v1;
+  }
+  nptr[v1] = 0;
+  return strtoul(nptr, 0LL, 10);
+}
+
+int adopt()
+{
+  __int64 v1; // [rsp+0h] [rbp-10h]
+
+  if ( pet )
+    return puts("Already adopted.");
+  pet = malloc(0x28uLL);
+  if ( !pet )
+    exit(1);
+  memset(pet, 0, 0x28uLL);
+  *((_DWORD *)pet + 6) = 0;
+  *((_QWORD *)pet + 4) = act_tutorial;
+  printf("Name length: ");
+  v1 = prompt();
+  if ( v1 > 24 )
+    return puts("Name too long.");
+  printf("Name bytes: ");
+  input((__int64)pet, v1);
+  return puts("Adopted.");
+}
+```
+
