@@ -52,6 +52,32 @@ unsigned __int64 prompt()
   return strtoul(nptr, 0LL, 10);
 }
 
+unsigned __int64 __fastcall input(__int64 a1, unsigned __int64 a2)
+{
+  char ptr; // [rsp+17h] [rbp-19h] BYREF
+  unsigned __int64 i; // [rsp+18h] [rbp-18h]
+  size_t v5; // [rsp+20h] [rbp-10h]
+  unsigned __int64 v6; // [rsp+28h] [rbp-8h]
+
+  v6 = __readfsqword(0x28u);
+  for ( i = 0LL; ; ++i )
+  {
+    if ( i >= a2 )
+      return i;
+    v5 = fread(&ptr, 1uLL, 1uLL, stdin);
+    if ( v5 != 1 )
+      break;
+    if ( ptr == 10 )
+      return i;
+    *(_BYTE *)(i + a1) = ptr;
+  }
+  if ( feof(stdin) )
+    fwrite("ERROR: Reached EOF\n", 1uLL, 0x13uLL, stderr);
+  else
+    fwrite("ERROR: fread failed\n", 1uLL, 0x14uLL, stderr);
+  return i;
+}
+
 int adopt()
 {
   __int64 v1; // [rsp+0h] [rbp-10h]
@@ -74,4 +100,4 @@ int adopt()
 }
 ```
 
-`adopt` 함수에서 이름의 길이 변수인 `v1`이 `signed __int64` 임을 알 수 있다.
+`adopt` 함수에서 이름의 길이 변수인 `v1`이 `signed __int64` 임을 알 수 있다. 따라서 음수를 입력하면 조건문을 통과한다. 그런데 `input` 함수에서는 `rsi`를 `unsigned __int64`로 해석하고 있으므로 `heap overflow`가 발생한다.
