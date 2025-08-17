@@ -542,3 +542,8 @@ for i in range(50):
     if '}' in flag : exit(0)
 """
 ```
+
+---
+
+# Chain
+
