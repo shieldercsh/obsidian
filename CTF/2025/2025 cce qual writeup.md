@@ -547,3 +547,62 @@ for i in range(50):
 
 # Chain
 
+```bash
+[*] '/mnt/d/cce/qual/Chain/prob'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+```
+
+특징은 없다.
+
+```c
+int __fastcall check(unsigned int a1, unsigned int a2)
+{
+  char v3; // [rsp+17h] [rbp-9h] BYREF
+  unsigned __int64 v4; // [rsp+18h] [rbp-8h]
+
+  v4 = __readfsqword(0x28u);
+  printf("from_idx: %d, to_idx: %d\n", a1, a2);
+  printf("continue? (y/n): ");
+  __isoc99_scanf(" %c", &v3);
+  if ( v3 != 'y' && v3 != 'Y' )
+    return puts("end copy");
+  if ( a1 < 8 && a2 < 8 )
+    return 0;
+  puts("invalid origin or destination");
+  return -1;
+}
+
+unsigned __int64 copy()
+{
+  unsigned int v1; // [rsp+Ch] [rbp-14h] BYREF
+  signed int v2; // [rsp+10h] [rbp-10h] BYREF
+  signed int v3; // [rsp+14h] [rbp-Ch] BYREF
+  unsigned __int64 v4; // [rsp+18h] [rbp-8h]
+
+  v4 = __readfsqword(0x28u);
+  printf("chain idx: ");
+  __isoc99_scanf("%d", &v1);
+  if ( v1 <= 2 )
+  {
+    printf("origin: ");
+    __isoc99_scanf("%d", &v2);
+    printf("destination: ");
+    __isoc99_scanf("%d", &v3);
+    if ( check(v2, v3) >= 0 )
+      memcpy((char *)&dword_50E0[18 * v1 + 36] + 7 * v3, (char *)&dword_50E0[18 * v1 + 36] + 7 * v2, 3uLL);
+  }
+  else
+  {
+    puts("invalid chain idx");
+  }
+  return v4 - __readfsqword(0x28u);
+}
+```
+
+`check`
