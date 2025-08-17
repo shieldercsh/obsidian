@@ -386,4 +386,5 @@ int main(int argc, char* argv[]){
 }
 ```
 
-`sandbox`에서의 `seccomp` 설정으로 `nanosleep` 함수만 허용하고 있다. 그 후 `stub`에 저장된 쉘 코드를 실행한 후 유저가 입력한 쉘 코드를 입력한다.
+`flag`가 `sandbox`에서의 `seccomp` 설정으로 `nanosleep` 함수만 허용하고 있다. 그 후 `stub`에 저장된 쉘코드를 실행한 후 유저가 입력한 쉘 코드를 입력한다. `stub`에 저장된 쉘코드는 `rsp, rip`를 제외한 모든 레지스터를 0으로 초기화한다.
+flag를 얻기 위해 해야하는
