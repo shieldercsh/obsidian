@@ -322,3 +322,5 @@ p.interactive()
 ---
 
 # Artisan
+
+문제에서 c 
