@@ -776,3 +776,154 @@ qemu-system-x86_64 \
 
 nopti, nokaslr, nosmep, nosmap이다. `ret2usr`를 할 수 있는 환경이다.
 
+```c
+__int64 __fastcall capsule_ioctl(__int64 a1, unsigned int a2, __int64 a3)
+{
+  __int64 v5; // rdi
+  __int64 v6; // rax
+  __int64 v7; // rbx
+  __int64 v8; // r13
+  __int64 v9; // rdx
+  unsigned int v10; // r12d
+  __int64 *v11; // rax
+  unsigned int v12; // ebp
+  _DWORD *v13; // rax
+  unsigned int v14; // ebx
+  _DWORD *v15; // rdx
+  unsigned int v16; // ebx
+  __int64 v17; // rax
+  __int64 v18; // rcx
+  __int64 v20; // rbx
+  __int64 v21; // rdi
+  __int64 v22; // rax
+  __int64 v23; // rdx
+  __int64 v24; // rcx
+  __int64 v25; // rbx
+  __int64 v26; // rbp
+  unsigned __int64 v27; // r12
+  __int64 v28; // rdi
+  __int64 v29; // rax
+  __int64 v30; // rdx
+  __int64 v31; // [rsp+0h] [rbp-48h] BYREF
+  unsigned __int64 v32; // [rsp+8h] [rbp-40h]
+  __int64 v33; // [rsp+10h] [rbp-38h]
+  __int64 v34; // [rsp+18h] [rbp-30h]
+  unsigned __int64 v35; // [rsp+20h] [rbp-28h]
+
+  v35 = __readgsqword((unsigned int)&_ref_stack_chk_guard);
+  v31 = 0LL;
+  v32 = 0LL;
+  v33 = 0LL;
+  v34 = 0LL;
+  if ( copy_from_user(&v31, a3, 32LL) || (_DWORD)v34 != 0xCAFEBABE || (unsigned int)v31 > 0x1FF )
+    return -22LL;
+  mutex_lock(&mutex_h);
+  if ( a2 == 0x3000 )
+  {
+    v26 = (int)v31;
+    v27 = v32;
+    v28 = capsule[(int)v31];
+    if ( v32 <= 0x100 && v28 )
+    {
+      v29 = copy_from_user(v28, v33, v32);
+      if ( v29 )
+      {
+        v7 = -14LL;
+      }
+      else
+      {
+        if ( BYTE4(qword_E28[2 * v26]) )
+        {
+          v30 = capsule[v26];
+          if ( v27 )
+          {
+            do
+            {
+              *(_BYTE *)(v30 + v29) ^= (unsigned int)(1640531527 * (v26 + 57005)) >> (8 * (v29 & 3));
+              ++v29;
+            }
+            while ( v27 != v29 );
+          }
+        }
+        v7 = 0LL;
+        ++LODWORD(qword_E28[2 * v26]);
+      }
+      goto LABEL_18;
+    }
+    goto LABEL_17;
+  }
+  if ( a2 > 0x3000 )
+  {
+    if ( a2 == 0x4000 )
+    {
+      v8 = (int)v31;
+      v9 = capsule[(int)v31];
+      v10 = v31;
+      if ( v9 )
+      {
+        v11 = capsule;
+        v12 = 0;
+        do
+          v12 -= (*v11++ == 0) - 1;
+        while ( &misc_deregister != (__int64 (__fastcall **)(_QWORD))v11 );
+        v13 = (_DWORD *)capsule[(int)v31];
+        v14 = 0;
+        v15 = (_DWORD *)(v9 + 256);
+        do
+        {
+          v16 = *v13++ + v14;
+          v14 = 1640531527 * v16;
+        }
+        while ( v15 != v13 );
+        v17 = ktime_get(&mutex_h, a3, v15, &misc_deregister);
+        v18 = v14;
+        v7 = 0LL;
+        printk(&unk_518, v10, v12, v18, LODWORD(qword_E28[2 * v8]), (v17 - metadata[2 * v8]) / 1000000);
+        goto LABEL_18;
+      }
+    }
+    goto LABEL_17;
+  }
+  if ( a2 == 0x1000 )
+  {
+    v20 = (int)v31;
+    if ( !capsule[(int)v31] )
+    {
+      v21 = kmem_cache_note;
+      v22 = kmem_cache_alloc_noprof(kmem_cache_note, 0xDC0LL);
+      capsule[v20] = v22;
+      if ( v22 )
+      {
+        v25 = 2 * v20;
+        metadata[v25] = ktime_get(v21, 0xDC0LL, v23, v24);
+        LODWORD(qword_E28[v25]) = 1;
+        BYTE4(qword_E28[v25]) = 0;
+        v7 = 0LL;
+      }
+      else
+      {
+        v7 = -12LL;
+      }
+      goto LABEL_18;
+    }
+    goto LABEL_17;
+  }
+  if ( a2 != 0x2000 || !capsule[(int)v31] )
+  {
+LABEL_17:
+    v7 = -22LL;
+    goto LABEL_18;
+  }
+  v5 = kmem_cache_note;
+  v6 = 2LL * (int)v31;
+  v7 = 0LL;
+  metadata[v6] = 0LL;
+  qword_E28[v6] = 0LL;
+  kmem_cache_free(v5);
+LABEL_18:
+  mutex_unlock(&mutex_h);
+  return v7;
+}
+```
+
+`kmalloc` 크기는 `ioctl_init`에서 
