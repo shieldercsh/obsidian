@@ -926,4 +926,4 @@ LABEL_18:
 }
 ```
 
-`kmalloc` 크기는 `ioctl_init`에서 
+`kmalloc` 크기는 `ioctl_init`에서 0x200임을 확인할 수 있다. `kfree`에서 `UAF`를 확인할 수 있다. `pipe fake ops -> ret2usr`로 해결한다.
