@@ -759,4 +759,20 @@ p.interactive()
 
 ---
 
-# 
+# Time capsule
+
+```bash
+qemu-system-x86_64 \
+  -kernel bzImage \
+  -initrd $1 \
+  -nographic \
+  -append "console=ttyS0 quiet loglevel=3 oops=panic nopti nokaslr nosmep nosmap" \
+  -m 512M \
+  -cpu kvm64,-smep,-smap,rdrand \
+  -monitor /dev/null \
+  -no-reboot \
+  -s
+```
+
+nopti, nokaslr, nosmep, nosmap이다. `ret2usr`를 할 수 있는 환경이다.
+
