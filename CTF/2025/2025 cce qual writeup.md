@@ -626,4 +626,38 @@ __int64 view()
 }
 ```
 
-`view` 함수에서 미리 채워져 있던 함수 포인터의 실행으로 정해진 메모리의 값을 출력하는데, 위의 `oob memcpy` 취약점을 이용하여 `pie_base`, `libc_base`를 딸 수 있다. 이제 저 함수 포인터를 조작하여 임의 코드 실행을 수행할 수 있는데, `one_gadget`은 조건에 맞는 게 없어서 `system` 함수로 쉘을 따야 한다.
+`view` 함수에서 미리 채워져 있던 함수 포인터의 실행으로 정해진 메모리의 값을 출력하는데, 위의 `oob memcpy` 취약점을 이용하여 `pie_base`, `libc_base`를 딸 수 있다. 이제 저 함수 포인터를 조작하여 임의 코드 실행을 수행할 수 있는데, `one_gadget`은 조건에 맞는 게 없어서 `system` 함수로 쉘을 따야 한다. 그렇다면 `rdi`를 조작할 방법을 생각해야 한다.
+
+```c
+unsigned __int64 edit()
+{
+  unsigned int v1; // [rsp+0h] [rbp-10h] BYREF
+  unsigned int v2; // [rsp+4h] [rbp-Ch] BYREF
+  unsigned __int64 v3; // [rsp+8h] [rbp-8h]
+
+  v3 = __readfsqword(0x28u);
+  printf("chain idx: ");
+  __isoc99_scanf("%d", &v1);
+  if ( v1 <= 2 )
+  {
+    printf("destination: ");
+    __isoc99_scanf("%d", &v2);
+    if ( v2 < 8 )
+    {
+      printf("kor: ");
+      read(0, (char *)&dword_50E0[18 * v1 + 36] + 7 * (int)v2, 3uLL);
+    }
+    else
+    {
+      puts("invalid idx");
+    }
+  }
+  else
+  {
+    puts("invalid chain idx");
+  }
+  return v3 - __readfsqword(0x28u);
+}
+```
+
+`edit`에서 `chain 0, destination 0`에 `sh\x00`을 적는다. 함수 포인터 3번에 `copy`, 함수 포인터 4번에 `system` 함수 주소를 입력하고 ``
