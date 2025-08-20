@@ -21,6 +21,26 @@ yisf 본선에 진출한 팀원에게 문제를 받아 업솔빙을 진행하였
 PIE가 꺼져 있고 canary가 없다.
 
 ```c
+__int64 sub_401389()
+{
+  int v1; // [rsp+Ch] [rbp-4h] BYREF
+
+  printf("House index : ");
+  __isoc99_scanf("%d", &v1);
+  if ( (unsigned int)v1 <= 0x19 && qword_404060[v1] )
+  {
+    printf("House address : %p\n", (const void *)qword_404060[v1]);
+    printf("House data : %s\n", (const char *)qword_404060[v1]);
+    ++dword_404040;
+    return 0LL;
+  }
+  else
+  {
+    puts("Invalid house!");
+    return 0xFFFFFFFFLL;
+  }
+}
+
 __int64 __fastcall main(int a1, char **a2, char **a3)
 {
   __int64 v3; // rax
@@ -77,4 +97,4 @@ __int64 __fastcall main(int a1, char **a2, char **a3)
 }
 ```
 
-3번의 함수 포인터 실행
+3번의 함수 포인터 실행에 집중하자. 현재 저장되어 있는 `sub_4015AC`은 아무 기능도 안 하지만 `sub_401389`러 ㅂ
