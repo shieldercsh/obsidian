@@ -340,14 +340,10 @@ int __fastcall main(int argc, const char **argv, const char **envp)
 }
 ```
 
-입력을 세 번 받고, 그 중 유의미한 입력은 처음과 마지막이다.
+입력을 세 번 받고, 그 중 유의미한 입력은 처음과 마지막이다. 마지막 입력은 `ret`까지 덮을 수 있어서 이를 `admin_check` 함수로 변조할 것이다.
 
 ```c
-int __fastcall print_again(const char *a1)
-{
-  printf("돌거북 : 뭐? 너 지금 %s \b라고 했냐?\n", a1);
-  return printf("나(어스름 늑대) : ");
-}
+
 ```
 
- 첫 입력을 `%s`로 출력해준다. 여기서 `canary`르
+ 첫 입력을 `%s`로 출력해준다. 여기서 `canary`를 딸 수 있다.
