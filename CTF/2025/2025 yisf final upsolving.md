@@ -338,12 +338,102 @@ int __fastcall main(int argc, const char **argv, const char **envp)
   puts("게임이 종료되었습니다.");
   return 0;
 }
+
+int __fastcall print_again(const char *a1)
+{
+  printf("돌거북 : 뭐? 너 지금 %s \b라고 했냐?\n", a1);
+  return printf("나(어스름 늑대) : ");
+}
 ```
 
-입력을 세 번 받고, 그 중 유의미한 입력은 처음과 마지막이다. 마지막 입력은 `ret`까지 덮을 수 있어서 이를 `admin_check` 함수로 변조할 것이다.
+입력을 세 번 받고, 그 중 유의미한 입력은 처음과 마지막이다. 마지막 입력은 `ret`까지 덮을 수 있어서 이를 `admin_check` 함수로 변조할 것이다. 첫 입력은 `%s`로 출력해준다. 여기서 `canary`를 딸 수 있다.
 
 ```c
+unsigned __int64 __fastcall admin_check(__int64 a1)
+{
+  size_t len; // [rsp+18h] [rbp-28h] BYREF
+  unsigned __int64 v3; // [rsp+20h] [rbp-20h]
+  __int64 *v4; // [rsp+28h] [rbp-18h]
+  void *addr; // [rsp+30h] [rbp-10h]
+  unsigned __int64 v6; // [rsp+38h] [rbp-8h]
+  __int64 savedregs; // [rsp+40h] [rbp+0h] BYREF
+  unsigned __int64 retaddr; // [rsp+48h] [rbp+8h]
 
+  v6 = __readfsqword(0x28u);
+  v3 = retaddr;
+  v4 = &savedregs;
+  if ( retaddr < 0x400000 || v3 > 0x401A11 )
+  {
+    puts("do not jump admin_check");
+    exit(0);
+  }
+  if ( a1 == masterkey )
+  {
+    len = sysconf(30);
+    addr = (void *)((unsigned __int64)&len & -(__int64)len);
+    mprotect(addr, len, 7);
+    sub_routine(a1);
+  }
+  return v6 - __readfsqword(0x28u);
+}
+
+unsigned __int64 __fastcall sub_routine(__int64 a1)
+{
+  size_t len; // [rsp+18h] [rbp-38h] BYREF
+  unsigned __int64 v3; // [rsp+20h] [rbp-30h]
+  void *addr; // [rsp+28h] [rbp-28h]
+  char buf[24]; // [rsp+30h] [rbp-20h] BYREF
+  unsigned __int64 v6; // [rsp+48h] [rbp-8h]
+  unsigned __int64 retaddr; // [rsp+58h] [rbp+8h]
+
+  v6 = __readfsqword(0x28u);
+  v3 = retaddr;
+  if ( retaddr < 0x400000 || v3 > 0x401A11 )
+  {
+    puts("do not jump sub_routine");
+    exit(0);
+  }
+  if ( a1 != masterkey )
+  {
+    puts("key error");
+    exit(0);
+  }
+  len = sysconf(30);
+  addr = (void *)((unsigned __int64)&len & -(__int64)len);
+  mprotect(addr, len, 7);
+  LOBYTE(len) = 0;
+  while ( 1 )
+  {
+    puts("관리자 계정에 로그인 되었습니다.\n");
+    puts("어떤 명령을 수행하시겠습니까?");
+    puts("1. 입력");
+    puts("2. 출력");
+    puts("3. 종료");
+    read(0, &len, 1uLL);
+    getchar();
+    if ( (char)len == 51 )
+      break;
+    if ( (char)len > 51 )
+      goto LABEL_15;
+    if ( (char)len == '1' )
+    {
+      puts("입력 : ");
+      read(0, buf, 0x60uLL);
+    }
+    else if ( (char)len == 50 )
+    {
+      puts("출력 : ");
+      printf("%s", buf);
+    }
+    else
+    {
+LABEL_15:
+      puts("잘못된 입력입니다.");
+    }
+  }
+  puts("종료합니다.");
+  return v6 - __readfsqword(0x28u);
+}
 ```
 
- 첫 입력을 `%s`로 출력해준다. 여기서 `canary`를 딸 수 있다.
+`admin check`의 조건문을 통과하면 스택을 `RWX`로 만들어서 쉘
