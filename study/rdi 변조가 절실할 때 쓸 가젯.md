@@ -2,4 +2,8 @@
 
 ```
 0x00000000000984df : mov rdi, qword ptr [rdi + 0x10] ; call qword ptr [rax + 0x380]
+0x00000000000af7b5 : mov rdi, qword ptr [rdi + 0x48] ; mov rsi, r12 ; call rax
+0x0000000000085fba : mov rdi, qword ptr [rdi + 0xe0] ; call rax
+0x0000000000085f7d : mov rdi, qword ptr [rdi + 0xe0] ; jmp rax
+0x00000000000a1f47 : mov rdi, qword ptr [rdi + 8] ; call qword ptr [rbx]
 ```
