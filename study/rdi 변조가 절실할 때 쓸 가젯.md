@@ -39,7 +39,7 @@ void update(void)
 }
 ```
 
-`v3`은 `heap chunk`를 가르키는 주소이다. `v3 chunk`에 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다.  그런데 `rdi`가 `v3`이라서 `rdi`에 `&"/bin/sh"`를 저장할 수가 없다. 
+`v3`은 `heap chunk`를 가르키는 주소이다. `v3 chunk`에 `vtable`의 역할을 하는 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다. 이 문제에는 `heap overflow`가 있기 때문에 `vtable overwrite`는 할 수 있지만 `rdi`가 `v3`이라서 `rdi`에 `&"/bin/sh"`를 저장할 수가 없다. 
 
 ```asm
 mov     rax, [rbp+var_18]
