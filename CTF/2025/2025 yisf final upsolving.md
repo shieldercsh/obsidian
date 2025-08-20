@@ -781,4 +781,4 @@ __int64 pipe_create()
 }
 ```
 
-`pipe_control`이다. `pipe_create`는 할당, `pipe_resize`는 해제 후 재할당, `pipe_read`는 출력, `pipe_write`는 입력이다. `pipe_create`에서 알 수 있듯이 
+`pipe_control`이다. `pipe_create`는 할당, `pipe_resize`는 해제 후 재할당, `pipe_read`는 출력, `pipe_write`는 입력이다. `pipe_create`에서 알 수 있듯이 청크를 하나 할당받고 거기에서 청크 주소와 크기를 관리한다. 위의 `heap overflow` 취약점을 이용해서 청크 사이즈를 바꾸고 해제시킨다. 그러고 `pipe` 기능들로 청크를 할당시키면 `un`
