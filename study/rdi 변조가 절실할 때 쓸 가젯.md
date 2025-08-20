@@ -7,3 +7,5 @@
 0x0000000000085f7d : mov rdi, qword ptr [rdi + 0xe0] ; jmp rax
 0x00000000000a1f47 : mov rdi, qword ptr [rdi + 8] ; call qword ptr [rbx]
 ```
+
+특히 첫 번째 가젯은 힙에 있는 함수 포인터를 참조하여 실행할 때 쓰기 좋다.
