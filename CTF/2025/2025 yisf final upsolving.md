@@ -283,3 +283,61 @@ p.interactive()
 ---
 # m2Protector_LoL
 
+```bash
+[*] '/mnt/d/yisf/final/m2protector/prob'
+    Arch:       amd64-64-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x3fe000)
+    RUNPATH:    b'.'
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+
+PIE가 꺼져 있고, Partial RELRO이다.
+
+```c
+int __fastcall main(int argc, const char **argv, const char **envp)
+{
+  int i; // [rsp+0h] [rbp-40h]
+  int j; // [rsp+4h] [rbp-3Ch]
+  _BYTE buf[40]; // [rsp+10h] [rbp-30h] BYREF
+  unsigned __int64 v7; // [rsp+38h] [rbp-8h]
+
+  v7 = __readfsqword(0x28u);
+  setup(argc, argv, envp);
+  admin_check(0LL);
+  print_loading();
+  print_chating();
+  read(0, buf, 0x30uLL);
+  for ( i = 0; i <= 47; ++i )
+  {
+    if ( buf[i] == 10 )
+    {
+      buf[i] = 0;
+      break;
+    }
+  }
+  print_again(buf);
+  print_last();
+  read(0, buf, 0x50uLL);
+  for ( j = 0; j <= 47; ++j )
+  {
+    if ( buf[j] == 10 )
+    {
+      buf[j] = 0;
+      break;
+    }
+  }
+  print_end(buf);
+  sleep(1u);
+  puts("패배 !");
+  sleep(1u);
+  puts("게임이 종료되었습니다.");
+  return 0;
+}
+```
+
+입력을 두 번 받는다. 
