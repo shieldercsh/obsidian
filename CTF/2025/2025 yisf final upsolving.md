@@ -643,4 +643,78 @@ __int64 __fastcall binder_thread_write(void **a1, unsigned int a2)
 }
 ```
 
-입력을 받고 `binder_thread_write`로 넘긴다.
+입력을 받고 `binder_thread_write`로 넘긴다. 여기서 명령어를 해석한 후에 `binder_transaction`로 보낸다. `user_mem`이 고정 주소이므로 잘 계산해서 페이로드를 짜면 된다.
+
+```c
+__int64 __fastcall binder_transaction(binder_transaction_data *a1)
+{
+  size_t offsets_size; // r12
+  const void *offsets_buffer; // rbx
+  char *user_data_buffer; // r13
+  int v4; // eax
+  int v5; // eax
+  int v7; // [rsp+1Ch] [rbp-84h]
+  unsigned __int64 i; // [rsp+20h] [rbp-80h]
+  __int64 v9; // [rsp+28h] [rbp-78h]
+  transaction_metadata *ptr; // [rsp+30h] [rbp-70h]
+  unsigned __int64 v11; // [rsp+40h] [rbp-60h]
+  __int64 v12; // [rsp+58h] [rbp-48h]
+  _BYTE dest[24]; // [rsp+60h] [rbp-40h] BYREF
+  unsigned __int64 v14; // [rsp+78h] [rbp-28h]
+
+  v14 = __readfsqword(0x28u);
+  ptr = (transaction_metadata *)malloc(0x30uLL);
+  v9 = 0LL;
+  target_mem = mmap(0LL, 0x4000uLL, 3, 33, -1, 0LL);
+  if ( ptr && target_mem )
+  {
+    ptr->flags = a1->flags;
+    ptr->code = a1->code;
+    if ( (ptr->code & 1) != 0 )
+    {
+      ptr->user_data_buffer = malloc(a1->data_size + a1->offsets_size);
+      offsets_size = a1->offsets_size;
+      offsets_buffer = a1->offsets_buffer;
+      user_data_buffer = (char *)ptr->user_data_buffer;
+      v4 = align(a1->data_size, 8u);
+      memcpy(&user_data_buffer[v4], offsets_buffer, offsets_size);
+      v5 = align(a1->data_size, 8u);
+      v11 = a1->offsets_size + v5;
+      for ( i = v5; i < v11; i += 8LL )
+      {
+        v12 = *(_QWORD *)((char *)ptr->user_data_buffer + i);
+        memcpy((char *)ptr->user_data_buffer + v9, a1->data_buffer, v12 - v9);
+        v7 = *(_DWORD *)((char *)ptr->user_data_buffer + v9);
+        memcpy(dest, (char *)ptr->user_data_buffer + 4, sizeof(dest));
+        v9 = v12 + 24;
+        if ( v12 + 24 > a1->data_size )
+          goto LABEL_13;
+        if ( v7 != 0x4142 )
+        {
+          puts("[-] Not Supported");
+          goto LABEL_13;
+        }
+        memcpy(target_mem, dest, 0x18uLL);
+      }
+    }
+    else
+    {
+      puts("[-] TF 2-Way is not supporting");
+    }
+    return 0LL;
+  }
+  else
+  {
+LABEL_13:
+    if ( ptr->user_data_buffer )
+      free(ptr->user_data_buffer);
+    if ( target_mem )
+      munmap(target_mem, 0x4000uLL);
+    if ( ptr )
+      free(ptr);
+    return 0xFFFFFFFFLL;
+  }
+}
+```
+
+여기서 `heap overflow`가 밠
