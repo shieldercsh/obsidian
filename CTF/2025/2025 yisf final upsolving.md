@@ -717,4 +717,30 @@ LABEL_13:
 }
 ```
 
-할당은 `data_size`를 참조해놓고, `memcpy`의 `n`은 `offsets_buffer`를 참조하기 때문ㅇ여기서 `heap overflow`가 발생한다.
+할당은 `data_size`를 참조해놓고, `memcpy`의 `n`은 `offsets_buffer`를 참조하기 때문에 `heap overflow`가 발생한다.
+
+```c
+__int64 pipe_control()
+{
+  __int64 result; // rax
+
+  result = pipe_menu();
+  if ( (int)result > 0 && (int)result <= 4 )
+  {
+    switch ( (_DWORD)result )
+    {
+      case 4:
+        return pipe_write();
+      case 3:
+        return pipe_read();
+      case 1:
+        return pipe_create();
+      default:
+        return pipe_resize();
+    }
+  }
+  return result;
+}
+```
+
+`pipe_control`이다. `pipe_create`는 할당,
