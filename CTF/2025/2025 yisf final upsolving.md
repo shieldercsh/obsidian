@@ -169,6 +169,8 @@ __int64 sub_4012D6()
 
 `edit`도 있고, `free`에서는 `UAF`도 발생한다. `edit`에서 함수 포인터를 릭 함수로 변조하고 `unsorted bin`에 있는 청크로 `heap, libc` 릭을 동시에 한 다음 `FSOP`로 마무리한다.
 
+### ex.py
+
 ```python
 from pwn import *
 import argparse
