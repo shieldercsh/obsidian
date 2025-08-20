@@ -509,3 +509,57 @@ p.interactive()
 ```
 
 특징은 없다.
+
+```c
+int __fastcall __noreturn main(int argc, const char **argv, const char **envp)
+{
+  int v3; // [rsp+Ch] [rbp-4h]
+
+  puts("Welcome to YISF 2025!");
+  puts("We learning about android binder IPC for Transaction and Exploit Tech");
+  puts("Let's Dive into IPC World, Good Luck! [Made by Igunis]");
+  puts("Waiting for init...");
+  initialize();
+  while ( 1 )
+  {
+    v3 = menu();
+    if ( v3 == 3 )
+    {
+      puts("[-] Bye Bye~");
+      exit(1);
+    }
+    if ( v3 > 3 )
+      break;
+    if ( v3 == 1 )
+    {
+      binder_ioctl();
+    }
+    else
+    {
+      if ( v3 != 2 )
+        break;
+      pipe_control();
+    }
+  }
+  puts("Error: Invalid Input");
+  exit(-1);
+}
+
+void *initialize()
+{
+  void *result; // rax
+
+  setvbuf(stdin, 0LL, 2, 0LL);
+  setvbuf(stdout, 0LL, 2, 0LL);
+  setvbuf(stderr, 0LL, 2, 0LL);
+  user_mem = mmap((void *)0x20000000, 0x4000uLL, 3, 49, -1, 0LL);
+  result = user_mem;
+  if ( user_mem == (void *)-1LL )
+  {
+    puts("[-] Uhmm... Restart Please!");
+    exit(-1);
+  }
+  return result;
+}
+```
+
