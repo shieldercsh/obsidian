@@ -39,4 +39,16 @@ void update(void)
 }
 ```
 
-`v3`은 `heap chunk`를 가르키는 주소이다. `v3 chunk`에 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다.  그런데 `rdi`가 `v3`이라서 `system("/bin/sh")`를 실행시킬 수가 없다. 
+`v3`은 `heap chunk`를 가르키는 주소이다. `v3 chunk`에 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다.  그런데 `rdi`가 `v3`이라서 `rdi`에 `&"/bin/sh"`를 저장할 수가 없다. 
+
+```asm
+mov     rax, [rbp+var_18]
+mov     rax, [rax]
+add     rax, 18h
+mov     rdx, [rax]
+mov     rax, [rbp+var_18]
+mov     rdi, rax
+call    rdx
+```
+
+어셈블리어로 보면 위와 같다.
