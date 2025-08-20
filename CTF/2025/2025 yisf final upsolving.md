@@ -600,4 +600,47 @@ __int64 __fastcall binder_ioctl_write_read(void *a1)
     puts("[-] Error Android binder ioctl read write");
   return (unsigned int)v2;
 }
+
+__int64 __fastcall binder_thread_write(void **a1, unsigned int a2)
+{
+  unsigned int v3; // [rsp+10h] [rbp-60h]
+  int v4; // [rsp+14h] [rbp-5Ch]
+  void **src; // [rsp+18h] [rbp-58h]
+  void *ptr; // [rsp+28h] [rbp-48h]
+  binder_transaction_data dest; // [rsp+30h] [rbp-40h] BYREF
+  unsigned __int64 v8; // [rsp+68h] [rbp-8h]
+
+  v8 = __readfsqword(0x28u);
+  src = a1;
+  v3 = 0;
+  while ( (void **)((char *)a1 + a2) > src && !v3 )
+  {
+    v4 = *(_DWORD *)src;
+    src = (void **)((char *)src + 4);
+    if ( v4 == 0x4201 )
+    {
+      ptr = *src;
+      src = (void **)((char *)src + 1);
+      if ( ptr )
+        free(ptr);
+      puts("[+] Android Binder: Data Free Success");
+    }
+    else if ( v4 == 0x46740 )
+    {
+      memcpy(&dest, src, sizeof(dest));
+      src += 6;
+      v3 = binder_transaction(&dest);
+      if ( !v3 )
+        puts("[+] Android Binder: Transaction Success");
+    }
+    else
+    {
+      puts("[-] Android Binder: Invalid CMD ioctl write");
+      v3 = -1;
+    }
+  }
+  return v3;
+}
 ```
+
+입력을 받고 `binder_thread_write`로 넘긴다.
