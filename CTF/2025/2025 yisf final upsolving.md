@@ -124,4 +124,47 @@ __int64 sub_4011F6()
 }
 ```
 
-`create` 부분이다. 인덱스 계산을 해보면 `&dword_404140[25] == &dword_4041A4`이다. 따라서 인덱스 변조가 가능하고, 이를 음수로 변경하면 의도하지 않은 곳에 값을 쓸 수 있다.
+`create` 부분이다. 인덱스 계산을 해보면 `&dword_404140[25] == &dword_4041A4`이다. 따라서 인덱스 변조가 가능하고, 이를 음수로 변경하면 의도하지 않은 곳에 값을 쓸 수 있다. 이는 `qword_404060` 영역에 `bss` 영역의 주소를 넣어서 `qword_4041A8`를 변조하는 시나리오로 이용한다.
+
+```c
+__int64 sub_40147A()
+{
+  int v1; // [rsp+Ch] [rbp-4h] BYREF
+
+  printf("House index : ");
+  __isoc99_scanf("%d", &v1);
+  if ( (unsigned int)v1 <= 25 && qword_404060[v1] )
+  {
+    printf("Decoration : ");
+    read(0, (void *)qword_404060[v1], (int)dword_404140[v1]);
+    puts("House decorated!");
+    return 0LL;
+  }
+  else
+  {
+    puts("Invalid house!");
+    return 0xFFFFFFFFLL;
+  }
+}
+
+__int64 sub_4012D6()
+{
+  int v1; // [rsp+Ch] [rbp-4h] BYREF
+
+  printf("House index : ");
+  __isoc99_scanf("%d", &v1);
+  if ( (unsigned int)v1 <= 0x19 && qword_404060[v1] )
+  {
+    free((void *)qword_404060[v1]);
+    puts("House sold!");
+    return 0LL;
+  }
+  else
+  {
+    puts("Invalid house!");
+    return 0xFFFFFFFFLL;
+  }
+}
+```
+
+`edit`도 있고, `fr`
