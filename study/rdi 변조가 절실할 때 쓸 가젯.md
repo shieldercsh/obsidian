@@ -9,4 +9,8 @@
 0x00000000000a1f47 : mov rdi, qword ptr [rdi + 8] ; call qword ptr [rbx]
 ```
 
-특히 첫 번째, 두 번째 가젯은 힙에 있는 함수 포인터를 참조하여 실행할 때 쓰기 좋다.
+특히 첫 번째, 두 번째 가젯은 힙에 있는 함수 포인터를 참조하여 실행할 때 쓰기 좋다. 예시로 2025 sekaictf의 Learning OOP라는 문제를 들어보겠다.
+
+---
+# Learning OOP
+
