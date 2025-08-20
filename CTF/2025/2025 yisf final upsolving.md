@@ -494,3 +494,18 @@ p.interactive()
 ```
 
 ---
+# bad_binder
+
+```bash
+[*] '/mnt/d/yisf/final/bad_binder/prob'
+    Arch:       amd64-64-little
+    RELRO:      Full RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        PIE enabled
+    SHSTK:      Enabled
+    IBT:        Enabled
+    Stripped:   No
+```
+
+특징은 없다.
