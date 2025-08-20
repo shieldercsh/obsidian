@@ -14,3 +14,29 @@
 ---
 # Learning OOP
 
+```c
+void update(void)
+{
+  unsigned __int64 v0; // rbx
+  unsigned __int64 i; // [rsp+0h] [rbp-20h]
+  Animal *v3; // [rsp+8h] [rbp-18h]
+
+  for ( i = 0LL; i <= 9; ++i )
+  {
+    v3 = (Animal *)pets[i];
+    if ( v3 )
+    {
+      if ( !(unsigned int)Animal::fullness_down(v3)
+        || (v0 = (int)Animal::age_up(v3), (*(__int64 (__fastcall **)(Animal *))(*(_QWORD *)v3 + 24LL))(v3) < v0) )
+      {
+        Animal::die(v3);
+        operator delete(v3, 0x118uLL);
+        pets[i] = 0LL;
+        --num_pets;
+      }
+    }
+  }
+}
+```
+
+`v3`은 `heap chunk`를 가르키는 주소이다. 따라서 `chunk`에 저장되어 있는 함수 포인터를 
