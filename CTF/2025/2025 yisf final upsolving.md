@@ -741,6 +741,44 @@ __int64 pipe_control()
   }
   return result;
 }
+
+__int64 pipe_create()
+{
+  pipes *v1; // rbx
+  int i; // [rsp+Ch] [rbp-14h]
+
+  for ( i = 0; i <= 15 && pipeFd[i]; ++i )
+    ;
+  if ( i == 16 )
+  {
+    puts("No more Pipe !");
+    return 0xFFFFFFFFLL;
+  }
+  else
+  {
+    pipeFd[i] = (pipes *)malloc(0x10uLL);
+    if ( pipeFd[i] )
+    {
+      v1 = pipeFd[i];
+      v1->mems = malloc(0x1000uLL);
+      pipeFd[i]->siz = 4096LL;
+      memset(pipeFd[i]->mems, 0, 0x1000uLL);
+      if ( !pipeFd[i]->mems )
+      {
+        puts("Pipe Page Allocate Failed..");
+        free(pipeFd[i]);
+        pipeFd[i] = 0LL;
+      }
+      printf("Pipe Create Success %d\n", i);
+      return (unsigned int)i;
+    }
+    else
+    {
+      puts("Pipe Page Allocate Failed..");
+      return 0xFFFFFFFFLL;
+    }
+  }
+}
 ```
 
-`pipe_control`이다. `pipe_create`는 할당,
+`pipe_control`이다. `pipe_create`는 할당, `pipe_resize`는 해제 후 재할당, `pipe_read`는 출력, `pipe_write`는 입력이다. `pipe_create`에서 알 수 있듯이 
