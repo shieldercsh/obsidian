@@ -563,4 +563,41 @@ void *initialize()
 }
 ```
 
-`user_mem`의 주소가 정해져 있다. 메뉴는 `binder_ioctl`과 `pipe_control`
+`user_mem`의 주소가 정해져 있다. 메뉴는 `binder_ioctl`과 `pipe_control`이 있다.
+
+```c
+__int64 binder_ioctl()
+{
+  unsigned int v1; // [rsp+Ch] [rbp-4h]
+
+  printf("What you want ioctl ? ");
+  read(0, user_mem, 0x4000uLL);
+  puts("Okay,,, Let's go into binder ioctl !!");
+  v1 = binder_ioctl_write_read(user_mem);
+  if ( v1 )
+    puts("Hmm... binder ioctl fail,, but it is necessary,,?");
+  return v1;
+}
+
+__int64 __fastcall binder_ioctl_write_read(void *a1)
+{
+  int v2; // [rsp+1Ch] [rbp-34h]
+  _QWORD dest[2]; // [rsp+20h] [rbp-30h] BYREF
+  __int64 v4; // [rsp+30h] [rbp-20h]
+  void *v5; // [rsp+38h] [rbp-18h]
+  unsigned __int64 v6; // [rsp+48h] [rbp-8h]
+
+  v6 = __readfsqword(0x28u);
+  v2 = 1;
+  memcpy(dest, a1, 0x20uLL);
+  if ( !dest[0] || (v2 = binder_thread_write((void **)dest[1], dest[0]), v2 >= 0) )
+  {
+    if ( v4 )
+      v2 = binder_thread_read(v5, v4);
+  }
+  memcpy(a1, dest, 0x20uLL);
+  if ( v2 < 0 )
+    puts("[-] Error Android binder ioctl read write");
+  return (unsigned int)v2;
+}
+```
