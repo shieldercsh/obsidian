@@ -98,3 +98,30 @@ __int64 __fastcall main(int a1, char **a2, char **a3)
 ```
 
 3번의 함수 포인터 실행에 집중하자. 현재 저장되어 있는 `sub_4015AC`은 아무 기능도 안 하지만 `sub_401389`로 바꾸면 릭을 할 수 있다.
+
+```c
+__int64 sub_4011F6()
+{
+  int v1; // ebx
+  int v2[3]; // [rsp+Ch] [rbp-14h] BYREF
+
+  if ( dword_4041A4 <= 25 )
+  {
+    printf("House size : ");
+    __isoc99_scanf("%d", v2);
+    v1 = dword_4041A4;
+    qword_404060[v1] = malloc(v2[0]);
+    dword_404140[dword_4041A4] = v2[0];
+    printf("House bought at index %d\n", dword_4041A4);
+    ++dword_4041A4;
+    return 0LL;
+  }
+  else
+  {
+    puts("City is full!");
+    return 0xFFFFFFFFLL;
+  }
+}
+```
+
+`create` 부분이다. 인덱스 계산을 해보면 `&dword_404140[25] == &dword_4041A4`이다. 따라서 
