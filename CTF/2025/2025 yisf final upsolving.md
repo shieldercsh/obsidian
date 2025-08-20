@@ -717,4 +717,4 @@ LABEL_13:
 }
 ```
 
-여기서 `heap overflow`가 밠
+할당은 `data_size`를 참조해놓고, `memcpy`의 `n`은 `offsets_buffer`를 참조하기 때문ㅇ여기서 `heap overflow`가 발생한다.
