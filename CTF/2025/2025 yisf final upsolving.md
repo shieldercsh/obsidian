@@ -563,3 +563,4 @@ void *initialize()
 }
 ```
 
+`user_mem`의 주소가 정해져 있다. 메뉴는 `binder_ioctl`과 `pipe_control`
