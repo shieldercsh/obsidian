@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "About me.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
+              "title": "About me"
             }
           }
         ]
@@ -170,13 +170,13 @@
   },
   "active": "1b60b4a27d9bbb04",
   "lastOpenFiles": [
+    "FSOP/FSOPpayload.md",
     "study/rdi 변조가 절실할 때 쓸 가젯.md",
     "FSOP/FSOP.md",
     "image/Pasted image 20250817185028.png",
     "study",
     "CTF/2024/2024 0xl4ugh CTF.md",
     "CTF/2025/2025 yisf final upsolving.md",
-    "FSOP/FSOPpayload.md",
     "CTF/2025/2025 cce quals writeup.md",
     "CTF/2025/2025 SSU CTF.md",
     "Dreamhack/writeup/pwn/pop rdi.md",

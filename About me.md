@@ -16,6 +16,7 @@ Seoul National University 25, Energy Resources Engineering Major
 
 ### Competition
 
+- 2025 DEFCON 33 ed Alert ICS CTF
 - 2025 Codegate Finalist
 - 2025 SSU CTF 3rd place
 - 2024 JBU CTF 1st place
