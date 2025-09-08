@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "study/리모트에서 libc(ld) offset 찾느라 브포 돌리는 당신 이 글을 정독하길.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
+              "title": "리모트에서 libc(ld) offset 찾느라 브포 돌리는 당신 이 글을 정독하길"
             }
           }
         ],
@@ -186,6 +186,7 @@
   "active": "9e8758521dec8a43",
   "lastOpenFiles": [
     "FSOP/FSOPpayload.md",
+    "study/리모트에서 libc(ld) offset 찾느라 브포 돌리는 당신 이 글을 정독하길.md",
     "study/rdi 변조가 절실할 때 쓸 가젯.md",
     "FSOP/FSOP.md",
     "image/Pasted image 20250817185028.png",
@@ -212,7 +213,6 @@
     "Dreamhack/writeup/pwn/Command_Line_Instagram.md",
     "Dreamhack/writeup/pwn/Chat with Me.md",
     "Dreamhack/writeup/pwn/bytechanger.md",
-    "Dreamhack/writeup/pwn/cats-and-dogs.md",
     "school",
     "kernel",
     "image/Pasted image 20250604005139.png",
