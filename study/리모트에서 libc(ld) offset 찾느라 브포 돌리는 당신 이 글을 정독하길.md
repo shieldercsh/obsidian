@@ -6,6 +6,8 @@ pwn을 하면서 `libc` 주소를 알아내고 `ld` 영역을 overwrite해야 �
 2. `nc localhost {port}`를 실행한 후 `ls /proc`을 쳐서 1번에서 없던 pid를 찾는다.
 3. `cat /proc/{pid}/maps`를 하면 `lib` 주소들이 나와서 우리가 찾던 offset을 모두 계산할 수 있다.
 
+아래는 내 도커에서 그대로 실행한 로그이다.
+
 ```bash
 /srv # ls /proc
 1             cgroups       devices       fs            kcore         kpageflags    modules       schedstat     sysvipc       vmallocinfo
@@ -71,3 +73,5 @@ cat: can't open '/proc/28/maps': No such file or directory
 7ffd0057e000-7ffd00580000 r-xp 00000000 00:00 0                          [vdso]
 /srv #
 ```
+
+이 글을 읽는 포너들은 앞으로 브포하지 말고 도커에서 한 번에 offset을 구하길 바란다.
