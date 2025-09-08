@@ -2,4 +2,5 @@ pwn을 하면서 `libc` 주소를 알아내고 `ld` 영역을 overwrite해야 �
 
 - 준비물 : Dockerfile
 
-1. `ls /proc`
+1. `ls /proc`을 친다.
+2. `nc localhost {`
