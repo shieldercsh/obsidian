@@ -5,5 +5,5 @@
 목차 ???
 # Page UAF는 왜 발생할까
 
-첫 번째 이유는 Page Table(이하 PT)를 직접 손상시켰을 때이다. PT도 커널 데이터이므로 커널 메모리 손상 취약점으로 PT를 조작하면 된다.
-두 번째 이유는 커널의 Danglingpage mapping 
+첫 번째는 Page Table(이하 PT)를 직접 손상시켰을 때이다. PT도 커널 데이터이므로 커널 메모리 손상 취약점으로 PT를 조작하면 된다.
+두 번째는 커널의 Dangling page mapping 취약점이 발생할 때이다.
