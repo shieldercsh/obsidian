@@ -35,8 +35,7 @@
               "title": "Page UAF"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -183,12 +182,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9e8758521dec8a43",
+  "active": "1b60b4a27d9bbb04",
   "lastOpenFiles": [
+    "study/Page UAF.md",
     "Pasted image 20250913210337.png",
     "Pasted image 20250913210250.png",
     "Dreamhack/writeup/pwn/note.md",
-    "study/Page UAF.md",
     "Dreamhack/writeup/pwn/nbase.md",
     "Dreamhack/writeup/pwn/msg_msg.md",
     "study/리모트에서 lib(ld) offset 찾느라 브포 돌리는 당신 이 글을 정독하길.md",
@@ -227,7 +226,6 @@
     "pwnable.kr",
     "my prob",
     "knights",
-    "image/Pasted image 20250420233911.png",
     "image",
     "FSOP",
     "Dreamhack/writeup/pwn"
