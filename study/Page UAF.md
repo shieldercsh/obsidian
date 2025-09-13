@@ -4,4 +4,4 @@
 
 # Page UAF는 왜 발생할까
 
-첫 번째 이유는 Page Table(이하 PT)
+첫 번째 이유는 Page Table(이하 PT)를 직접 손상시켰을 때이다. PT도 커널 데이터이므로 
