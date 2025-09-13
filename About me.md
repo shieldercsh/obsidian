@@ -16,10 +16,10 @@ Seoul National University 25, Energy Resources Engineering Major
 
 ### Competition
 
-- 2025 CCE 3rd
+- 2025 CCE jr 3rd
 - 2025 DEFCON 33 Red Alert ICS CTF 1st
-- 2025 Codegate Finalist
-- 2025 SSU CTF 3rd
+- 2025 Codegate jr Finalist
+- 2025 SSU CTF general 3rd
 - 2024 JBU CTF 1st
 - 2024 CCE Finalist
 - 2023 Whitehat Contest Finalist
