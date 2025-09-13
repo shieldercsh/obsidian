@@ -4,3 +4,4 @@
 
 # Page UAF는 왜 발생할까
 
+첫 번째 이유는 Page Table(이하 PT)
