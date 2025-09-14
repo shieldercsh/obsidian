@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "3dc529f7971ecbdd",
+            "id": "aac375deefe3fa0c",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -20,23 +20,8 @@
               "icon": "lucide-file",
               "title": "Page UAF"
             }
-          },
-          {
-            "id": "aac375deefe3fa0c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "FSOP/FSOPpayload.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "FSOPpayload"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -185,8 +170,8 @@
   },
   "active": "aac375deefe3fa0c",
   "lastOpenFiles": [
-    "FSOP/FSOP.md",
     "FSOP/FSOPpayload.md",
+    "FSOP/FSOP.md",
     "study/Page UAF.md",
     "Dreamhack/writeup/pwn/note.md",
     "About me.md",
