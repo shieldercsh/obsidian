@@ -49,12 +49,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "About me.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
+              "title": "About me"
             }
           }
         ],
@@ -207,6 +207,7 @@
   },
   "active": "ba1d5a08fd9bffb7",
   "lastOpenFiles": [
+    "FSOP/FSOPpayload.md",
     "About me.md",
     "image/Pasted image 20250928172933.png",
     "image/Pasted image 20250928172742.png",
@@ -214,7 +215,6 @@
     "image/Pasted image 20250913210250.png",
     "CTF/2025/2025 LG uplus ctf qual.md",
     "study/Page UAF.md",
-    "FSOP/FSOPpayload.md",
     "FSOP/FSOP.md",
     "Dreamhack/writeup/pwn/note.md",
     "Dreamhack/writeup/pwn/nbase.md",
