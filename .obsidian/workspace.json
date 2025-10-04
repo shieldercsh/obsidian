@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "school/CA/Lab 1.md",
+                "file": "FSOP/FSOPpayload.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lab 1"
+              "title": "FSOPpayload"
             }
           }
         ]
@@ -170,8 +170,8 @@
   },
   "active": "530368a7cad2f506",
   "lastOpenFiles": [
-    "image/2025ssuctf.webp",
     "school/CA/Lab 1.md",
+    "image/2025ssuctf.webp",
     "image/Pasted image 20251005021843.png",
     "school/CA",
     "Untitled",
@@ -210,7 +210,6 @@
     "image/Pasted image 20250604005139.png",
     "image/Pasted image 20250604005800.png",
     "image/Pasted image 20250604010036.png",
-    "image/Pasted image 20250604012317.png",
     "school/통실",
     "pwnable.kr",
     "my prob",
