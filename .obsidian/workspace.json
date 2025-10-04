@@ -56,9 +56,23 @@
               "icon": "lucide-file",
               "title": "About me"
             }
+          },
+          {
+            "id": "37c177e3f997d437",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "school/CA/Lab 1.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Lab 1"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -205,8 +219,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ba1d5a08fd9bffb7",
+  "active": "37c177e3f997d437",
   "lastOpenFiles": [
+    "school/CA/Lab 1.md",
+    "school/CA",
+    "Untitled",
     "FSOP/FSOPpayload.md",
     "About me.md",
     "image/Pasted image 20250928172933.png",
@@ -249,8 +266,6 @@
     "pwnable.kr",
     "my prob",
     "knights",
-    "image",
-    "FSOP",
-    "Dreamhack/writeup/pwn"
+    "image"
   ]
 }
