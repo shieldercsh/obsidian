@@ -148,4 +148,10 @@ p.interactive()
 ---
 ## storage
 
-`store`에서 
+In `store` function,
+```c
+getline(&lineptr, &n, stdin);
+s = (char *)malloc(0x60uLL);
+v3 = snprintf(s, 0x5FuLL, "%s", lineptr);
+```
+`v3`는 0x5f가 아니라, 0x5f라는 제한이 없었을 때 얼마나 쓸지
