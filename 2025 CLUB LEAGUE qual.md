@@ -148,3 +148,4 @@ p.interactive()
 ---
 ## storage
 
+`store`에서 
