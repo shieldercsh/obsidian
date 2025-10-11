@@ -37,4 +37,4 @@ struct VarDyn // sizeof=0x10
 00000108 };
 ```
 
-구조체를 위와 같이 정의할 수 있다. 중요한 것은 `Variant` 함수에서 0x100 만큼을 차지하는 `union Variant::$B24CBE35B6509F7A0727794E4B7DDDE2 v;`이다. edit -> fixed string에서 입력을 257바이트 받기 때문에 
+구조체를 위와 같이 정의할 수 있다. 중요한 것은 `Variant` 함수에서 0x100 만큼을 차지하는 `union Variant::$B24CBE35B6509F7A0727794E4B7DDDE2 v;`이다. edit -> fixed string에서 입력을 257바이트 받기 때문에 1바이트 overflow가 발생해서 
