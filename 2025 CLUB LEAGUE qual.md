@@ -37,4 +37,6 @@ struct VarDyn // sizeof=0x10
 00000108 };
 ```
 
-구조체를 위와 같이 정의할 수 있다. 중요한 것은 `Variant` 함수에서 0x100 만큼을 차지하는 `union Variant::$B24CBE35B6509F7A0727794E4B7DDDE2 v;`이다. edit -> fixed string에서 입력을 257바이트 받기 때문에 1바이트 overflow가 발생해서 `tag`를 변경할 수 있다. pie가 꺼져 있기 ㄸ
+구조체를 위와 같이 정의할 수 있다. 중요한 것은 `Variant` 함수에서 0x100 만큼을 차지하는 `union Variant::$B24CBE35B6509F7A0727794E4B7DDDE2 v;`이다. edit -> fixed string에서 입력을 257바이트 받기 때문에 1바이트 overflow가 발생해서 `tag`를 변경할 수 있다. pie가 꺼져 있기 때문에 dynamic으로 해석할 때의 size와 주소를 변조하고 dynamic으로 tag를 변경하면 libc를 긁을 수 있고, 그 뒤에 같은 방식으로 변조해서 FSOP한다.
+
+# 
