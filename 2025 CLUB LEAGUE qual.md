@@ -145,3 +145,6 @@ edit(1, [3, FSOP])
 p.interactive()
 ```
 
+---
+## storage
+
