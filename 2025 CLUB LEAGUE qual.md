@@ -154,4 +154,4 @@ getline(&lineptr, &n, stdin);
 s = (char *)malloc(0x60uLL);
 v3 = snprintf(s, 0x5FuLL, "%s", lineptr);
 ```
-`v3`는 0x5f가 아니라, 0x5f라는 제한이 없었을 때 얼마나 쓸지
+`v3`는 0x5f가 아니라, 0x5f라는 제한이 없었을 때 써지는 바이트 수를 반환받는다. 따라서 우리는 힙 영역에서 원하는 바이트를 \x00으로 만들 수 있다. 힙 영역에 힙 주소가 있으므로 이를 변조해서 size 조작하고, free -> unsorted bin -> libc leak 한다. 그 다음 힙 주소 변조 -> 
