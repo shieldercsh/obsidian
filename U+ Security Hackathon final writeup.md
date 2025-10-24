@@ -194,4 +194,4 @@ p.interactive()
 
 # dfir / 시나리오-1
 
-`C:\Windows\System32\config\SYSTEM`에서 `ControlSet001/Control/ComputerName/ComputerName` 레지스트리에서 호스트 네임 `DESKTOP-ABDAIP8`를 확인할 수 있다.  `ControlSet001/Tcpip/Parameters/Interfaces` 레지스트리에서 IP `192.168.18.123`을 확인할 수 있다. `ControlSet001/Control/TimeZoneInformation`에서 KST를 사용함을 확인하고, `C:\Windows\System32\config\SOFTWARE`에서 `Microsoft/`
+`C:\Windows\System32\config\SYSTEM`에서 `ControlSet001\Control\ComputerName\ComputerName` 레지스트리에서 호스트 네임 `DESKTOP-ABDAIP8`를 확인할 수 있다.  `ControlSet001\Tcpip\Parameters\Interfaces` 레지스트리에서 IP `192.168.18.123`을 확인할 수 있다. `ControlSet001\Control\TimeZoneInformation`에서 KST를 사용함을 확인하고, `C:\Windows\System32\config\SOFTWARE`에서 `Microsoft\Windows NT\CurrentVersion`에서 InstallDate `1760081313`
