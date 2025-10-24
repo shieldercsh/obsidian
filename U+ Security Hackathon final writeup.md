@@ -191,7 +191,7 @@ for i in trange(15, -1, -1):
 p.sendlineafter(b'> ', b'4\n')
 p.interactive()
 ```
-
+![[Pasted image 20251024162846.png]]
 # dfir / 시나리오-1
 
-`C:\Windows\System32\config\SYSTEM`에서 `ControlSet001\Control\ComputerName\ComputerName` 레지스트리에서 호스트 네임 `DESKTOP-ABDAIP8`를 확인할 수 있다.  `ControlSet001\Tcpip\Parameters\Interfaces` 레지스트리에서 IP `192.168.18.123`을 확인할 수 있다. `ControlSet001\Control\TimeZoneInformation`에서 KST를 사용함을 확인하고, `C:\Windows\System32\config\SOFTWARE`에서 `Microsoft\Windows NT\CurrentVersion`에서 InstallDate `1760081313`
+`C:\Windows\System32\config\SYSTEM`에서 `ControlSet001\Control\ComputerName\ComputerName` 레지스트리에서 호스트 네임 `DESKTOP-ABDAIP8`를 확인할 수 있다.  `ControlSet001\Tcpip\Parameters\Interfaces` 레지스트리에서 IP `192.168.18.123`을 확인할 수 있다. `ControlSet001\Control\TimeZoneInformation`에서 KST를 사용함을 확인하고, `C:\Windows\System32\config\SOFTWARE`에서 `Microsoft\Windows NT\CurrentVersion`에서 InstallDate `1760081313`을 확인할 수 있고, 이는 한국시간으로 2025년 10월 10일 16시 28분 33초이다. 크롬의 히스토리에서 다른 정상적인 파일 사이에 Guide.zip이라는 수상한 팡
