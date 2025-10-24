@@ -62,4 +62,6 @@ unsigned __int64 create()
 }
 ```
 
-`create`의 `strcpy`에서 힙 오버플로우가 발생한다. 이를 이용해서 size 조작을 할 수 있고, 서로 다른 위치에 있는 unsorted bin이 두 개 있으면 힙주소도 저장되기 때문에 립씨, 힙릭 모두 가능하다.
+`create`의 `strcpy`에서 힙 오버플로우가 발생한다. 이를 이용해서 size 조작을 할 수 있고, 서로 다른 위치에 있는 unsorted bin이 두 개 있으면 힙주소도 저장되기 때문에 립씨, 힙릭 모두 가능하다. 익스는 `strcpy`가 null까지만 복사하고, null까지 복사하기 때문에 가장 편한 방법인 `exit handler overwrite`로 진행하였다.
+
+#
