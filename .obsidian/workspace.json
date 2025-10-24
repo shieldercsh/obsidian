@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "Untitled.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
+              "title": "Untitled"
             }
           }
         ]
@@ -170,9 +170,10 @@
   },
   "active": "530368a7cad2f506",
   "lastOpenFiles": [
+    "FSOP/FSOPpayload.md",
+    "Untitled.md",
     "FSOP/FSOP.md",
     "2025 CLUB LEAGUE qual.md",
-    "FSOP/FSOPpayload.md",
     "school/CA/Lab 1.md",
     "image/2025ssuctf.webp",
     "image/Pasted image 20251005021843.png",
@@ -205,7 +206,6 @@
     "Dreamhack/writeup/pwn/ODS 1.md",
     "Dreamhack/writeup/pwn/Mili.md",
     "Dreamhack/writeup/pwn/kapomarket.md",
-    "Dreamhack/writeup/pwn/IhrVertra.md",
     "school",
     "kernel",
     "image/Pasted image 20250604005139.png",
