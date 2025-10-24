@@ -194,4 +194,4 @@ p.interactive()
 
 # dfir / 시나리오-1
 
-`C:\Windows\System32\config\SYSTEM`에서 
+`C:\Windows\System32\config\SYSTEM`에서 `ControlSet001/Control/ComputerName/ComputerName` 레지스트리에서 호스트 네임
