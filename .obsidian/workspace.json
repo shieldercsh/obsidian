@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "U+ Security Hackathon final writeup.md",
+                "file": "school/CA/Lab 2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "U+ Security Hackathon final writeup"
+              "title": "Lab 2"
             }
           }
         ]
@@ -170,11 +170,12 @@
   },
   "active": "530368a7cad2f506",
   "lastOpenFiles": [
-    "Pasted image 20251024163119.png",
-    "Pasted image 20251024163059.png",
-    "Pasted image 20251024162846.png",
+    "CTF/2025/U+ Security Hackathon final writeup.md",
+    "school/CA/Lab 2.md",
+    "image/Pasted image 20251024163119.png",
+    "image/Pasted image 20251024163059.png",
+    "image/Pasted image 20251024162846.png",
     "FSOP/FSOPpayload.md",
-    "U+ Security Hackathon final writeup.md",
     "FSOP/FSOP.md",
     "2025 CLUB LEAGUE qual.md",
     "school/CA/Lab 1.md",
@@ -210,7 +211,6 @@
     "Dreamhack/writeup/pwn/Mili.md",
     "school",
     "kernel",
-    "image/Pasted image 20250604005139.png",
     "school/통실",
     "pwnable.kr",
     "my prob",
