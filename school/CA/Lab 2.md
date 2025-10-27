@@ -14,3 +14,4 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 이를 수행하는 과정에서 오류가 두 가지 발생했다. 첫 번째는 컴파일 단계에서 `registers` 모듈이 이상하게 처리되어서 제대로 실행이 안 되었는데, 이는 `dontTouch(registers.regs)`을 추가하여 해결할 수 있다. 두 번쨰는 우리에게 주어진 `components/control.scala`에서 `regwrite`를 절대 `true` 처리해주지 않는 문제가 있었는데, 이 부분만 잘 작동하도록 조금 구현해주어 해결하였다.
 
 ![[Pasted image 20251027181323.png]]
+
