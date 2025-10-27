@@ -16,3 +16,10 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 ![[Pasted image 20251027181323.png]]
 
 # Todo 4
+
+디버깅 로그 출력은 
+```
+printf(p"Write Reg index : ${registers.io.writereg}, Write value : ${alu.io.result}, Wen Signal : ${registers.io.wen}\n")
+```
+
+![[Pasted image 20251027191034.png]]
