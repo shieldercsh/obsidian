@@ -10,6 +10,6 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 
 # Todo 3
 
-`components/control.scala`를 읽으면 `opcode`를 `control.io.opcode`에 연결해야 함을 알 수 있다. `components/register-file.scala`를 읽고 `rs1, rs2, rd`를 잘 연결해준다. `components/control.scala`를 읽으면 `opcode`를 `control.io.opcode`에 연결해야 함을 알 수 있다.
+`components/control.scala`를 읽으면 `opcode`를 `control.io.opcode`에 연결해야 함을 알 수 있다. `components/register-file.scala`를 읽고 `rs1, rs2, rd`를 잘 연결해준다. 우리가 작성한 `components/alucontrol.scala`에 따라 `func7, func3`을 연결해주고 `add, immediate`는 가정에 따라 `false`로 처리한다. 
 
 ![[Pasted image 20251027181323.png]]
