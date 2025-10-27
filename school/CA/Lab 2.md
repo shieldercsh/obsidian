@@ -5,4 +5,4 @@ ppt에 주어진 opcode map과 riscv_format을 바탕으로 `func3`, `func7`을 
 
 # Todo 2
 
-중간고사 공부할 때 그린 `single-cycle `
+중간고사 공부할 때 그린 `single-cycle cpu` 그림으로 대체하겠습니다.
