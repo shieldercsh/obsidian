@@ -24,4 +24,4 @@ printf(p"Write Reg index : ${registers.io.writereg}, Write value : ${alu.io.resu
 ```
 를 이용하였다. 아래에는 마지막 테스트 케이스에 대한 로그 출력과 함께 성공 장면을 찍은 것이다.
 
-![[Pasted image 20251027191034.png]]
+![[Pasted image 20251027191034.png]]![[Pasted image 20251027191638.png]]
