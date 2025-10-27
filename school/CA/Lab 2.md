@@ -10,3 +10,4 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 
 # Todo 3
 
+![[Pasted image 20251027181303.png]]
