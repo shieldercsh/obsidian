@@ -15,3 +15,4 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 
 ![[Pasted image 20251027181323.png]]
 
+![[Pasted image 20251027190806.png]]
