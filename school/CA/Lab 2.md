@@ -6,7 +6,7 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 # Todo 2
 
 중간고사 공부할 때 그린 `single-cycle cpu` 그림으로 대체하겠습니다.
-![[KakaoTalk_20251020_013221328.png]]
+![[KakaoTalk_20251020_013221328.png|300]]
 # Todo 3
 
 `components/control.scala`를 읽으면 `opcode`를 `control.io.opcode`에 연결해야 함을 알 수 있다. `components/register-file.scala`를 읽고 `rs1, rs2, rd`를 잘 연결해준다. 우리가 작성한 `components/alucontrol.scala`에 따라 `func7, func3`을 연결해주고 `add, immediate`는 가정에 따라 `false`로 처리한다. `alu`는 과제 1과 작동 방법이 같은데, `components/alu.scala`에 따라 `operation`을 연결해준다. `Write-Back` 단계와 `PC` 증가도 구현해주면 끝이다.
@@ -23,4 +23,4 @@ printf(p"Write Reg index : ${registers.io.writereg}, Write value : ${alu.io.resu
 ```
 를 이용하였다. 아래에는 마지막 테스트 케이스에 대한 로그 출력과 함께 성공 장면을 찍은 것이다.
 
-![[Pasted image 20251027191034.png]]![[Pasted image 20251027191638.png]]
+![[Pasted image 20251027191034.png|300]]![[Pasted image 20251027191638.png|300]]
