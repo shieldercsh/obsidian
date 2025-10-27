@@ -9,3 +9,4 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 ![[KakaoTalk_20251020_013221328.png]]
 
 # Todo 3
+
