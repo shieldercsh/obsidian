@@ -17,9 +17,11 @@ ppt에 주어진 `opcode map`과 `riscv_format`을 바탕으로 `func3`, `func7`
 
 # Todo 4
 
+`Todo 3`에서 구현을 다 해놨기 때문에 크게 바꿔줄 
 디버깅 로그 출력은 
 ```
 printf(p"Write Reg index : ${registers.io.writereg}, Write value : ${alu.io.result}, Wen Signal : ${registers.io.wen}\n")
 ```
+를 이용하였다. 아래에는 마지막 테스트 케이스에 대한 로그 출력과 함께 성공 장면을 찍은 것이다.
 
 ![[Pasted image 20251027191034.png]]
