@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "school/에자실/week 7 homework.md",
+                "file": "school/에자실/week 7.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "week 7 homework"
+              "title": "week 7"
             }
           }
         ]
@@ -170,8 +170,9 @@
   },
   "active": "530368a7cad2f506",
   "lastOpenFiles": [
+    "Pasted image 20251031011355.png",
     "school/CA/Lab 2.md",
-    "school/에자실/week 7 homework.md",
+    "school/에자실/week 7.md",
     "school/에자실",
     "KakaoTalk_20251020_013221328.png",
     "KakaoTalk_20251020_013221328.png.~tmp",
@@ -210,7 +211,6 @@
     "Dreamhack/writeup/pwn/PAC-MAN.md",
     "Dreamhack/writeup/pwn/operator.md",
     "Dreamhack/writeup/pwn/oob.md",
-    "Dreamhack/writeup/pwn/ODS 1.md",
     "school",
     "kernel",
     "school/통실",
