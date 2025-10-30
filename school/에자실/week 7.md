@@ -26,3 +26,15 @@ imshow(No_Dambe);
 곱하기를 통해서 자연스럽게 합칠 수 있다.
 
 ## 3. 어파인 변환 중 하나를 택하여 결과 이미지 출력(픽셀 수는 자유롭게
+
+```
+% Work 3
+Cars = imread('./실습이미지 파일1-2/Cars.jpg');
+tform = affine2d([0.05 0 0; 0 0.02 0; 0 0 1]);
+J = imwarp(Cars, tform);
+imshow(J);
+```
+
+![[Pasted image 20251031012446.png]]
+
+## 4. LUT를 만들어서 명암 영상인 cat1.png에 대해 화소 값이 100-150 사이의 픽셀은 0으로 출력한 영상을 제작
