@@ -38,3 +38,20 @@ imshow(J);
 ![[Pasted image 20251031012446.png]]
 
 ## 4. LUT를 만들어서 명암 영상인 cat1.png에 대해 화소 값이 100-150 사이의 픽셀은 0으로 출력한 영상을 제작
+
+```
+% Work 4
+cat1 = imread('./실습이미지 파일1-2/cat1.png');
+F = 0:255;
+T = F;
+for k = 100:150
+    T(k+1)=0;
+end
+T = uint8(T);
+cat1_after = T(cat1 + 1);
+imshow(cat1_after);
+```
+
+![[Pasted image 20251031013015.png]]
+
+for 문을 이용하여 100-150의 값을 가지는 부분을 0으로 바꿔주면 된다.
