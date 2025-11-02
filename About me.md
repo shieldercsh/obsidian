@@ -32,7 +32,7 @@ Seoul National University 25, Energy Resources Engineering Major
 	- [one_apple](https://github.com/layer7-kr/SSD-CTF-2025-Challenges/tree/main/Programming/one_apple)
 - [드창섭](https://dreamhack.io/wargame/challenges/2139)
 - [permutation](https://forge.hspace.io/competitions/6848320663989ac2d2878737/challenges/6853a07ccab2f3bc02114834)
-- 
+- [8_chances](https://forge.hspace.io/competitions/682c1224cae9c2aca1520b05/challenges/682dbb7b6aeec2c310e9301a)
 - 2024 WaRP CTF Organizer
 	- [crosssssstack](https://dreamhack.io/wargame/challenges/1727)
 	- [GoOutside](https://dreamhack.io/wargame/challenges/1729)
