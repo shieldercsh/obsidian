@@ -27,7 +27,9 @@ Seoul National University 25, Energy Resources Engineering Major
 ### Authored Problems
 
 - 2025 SSD CTF
-	- 
+	- [bot_cake](https://github.com/layer7-kr/SSD-CTF-2025-Challenges/tree/main/PWN/bot_cake)
+	- [double](https://github.com/layer7-kr/SSD-CTF-2025-Challenges/tree/main/Programming/double)
+	- [one_apple](https://github.com/layer7-kr/SSD-CTF-2025-Challenges/tree/main/Programming/one_apple)
 - [드창섭](https://dreamhack.io/wargame/challenges/2139)
 - 2024 WaRP CTF Organizer
 	- [crosssssstack](https://dreamhack.io/wargame/challenges/1727)
