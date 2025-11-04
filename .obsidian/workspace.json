@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "About me.md",
+                "file": "Untitled.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "About me"
+              "title": "Untitled"
             }
           }
         ]
@@ -170,6 +170,8 @@
   },
   "active": "530368a7cad2f506",
   "lastOpenFiles": [
+    "About me.md",
+    "Untitled.md",
     "school/에자실/week 7.md",
     "image/Pasted image 20251031013015.png",
     "image/Pasted image 20251031012446.png",
@@ -191,7 +193,6 @@
     "school/CA/Lab 1.md",
     "school/CA",
     "Untitled",
-    "About me.md",
     "CTF/2025/2025 LG uplus ctf qual.md",
     "study/Page UAF.md",
     "Dreamhack/writeup/pwn/note.md",
