@@ -21,7 +21,7 @@ Seoul National University 25, Energy Resources Engineering Major
 - 2025.07 Codegate junior Finalist
 - 2025.01 SSU CTF general 3rd
 - 2024.10 JBU CTF overall 1st
-- 2024 CCE junior Finalist
+- 2024.09 CCE junior Finalist
 - 2023 Whitehat Contest junior Finalist
 
 ### Authored Problems
