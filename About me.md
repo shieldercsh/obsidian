@@ -16,6 +16,7 @@ Seoul National University 25, Energy Resources Engineering Major
 
 ### Competition
 
+- 2025.11 Snake CTF finalist
 - 2025.08 CCE junior 3rd
 - 2025.08 DEFCON 33 Red Alert ICS CTF 1st
 - 2025.07 Codegate junior Finalist
