@@ -7,4 +7,4 @@
 
 ## Part II: Branch Instructions
 
-Part 2에서는 단일 사이클 CPU가 `branch`와 `JAL/JALR` 명령을 올바르게 수행할 수 있도록 제어 신호와 PC 업데이트 경로를 구현해야 했다. 이를 위해 제어 회로(Control), 브랜치 판별 회로(BranchControl), 그리고 CPU 상위 모듈(SingleCycleCPU)에 필요한 기능을 추가하였다. 아래는 각각 어떤 부분을 구현했고, 왜 필요한지에 대한 설명이다.
+Part 2에서는 단일 사이클 CPU가 `branch`와 `JAL/JALR` 명령을 올바르게 수행할 수 있도록 제어 신호와 PC 업데이트 경로를 구현해야 했다. 
