@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "FSOPpayload"
             }
+          },
+          {
+            "id": "5cb02439f16158f8",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.10.6"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.10.6"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -159,7 +172,6 @@
   "left-ribbon": {
     "hiddenItems": {
       "bases:Create new base": false,
-      "obsidian-git:Open Git source control": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -168,7 +180,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3044ef8865dac89b",
+  "active": "5cb02439f16158f8",
   "lastOpenFiles": [
     "About me.md",
     "school/CA/Lab 3.md",
