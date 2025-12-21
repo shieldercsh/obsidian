@@ -15,3 +15,9 @@ CPU 본체에서는 ForwardingUnit 출력에 따라 EX 단계의 rs1 rs2 값이 
 
 3번 문항에서는 always not-taken 예측을 가정하고, 분기/점프가 실제로 taken이 되는 경우 잘못 가져온 명령들을 제거(flush/bubble)하고 PC를 올바른 타겟으로 갱신하도록 구현하였다. IF 단계는 항상 PC+4로 fetch를 진행하고, EX 단계에서 분기 비교 및 점프 조건을 통해 taken과 nextpc를 계산한 뒤 이를 EX/MEM 레지스터에 저장한다.
 MEM 단계에서는 ex_mem.taken이 1일 때 hazard unit이 pcwrite를 통해 PC MUX가 next_pc를 선택하도록 하여 다음 사이클부터 정상 경로를 fetch하게 만든다. 동시에 오경로 명령이 부작용을 일으키지 않도록 ifid_flush로 IF/ID를 비우고, idex_bubble 및 exmem_bubble로 ID/EX와 EX/MEM에 NOP(bubble)을 주입하여 제어 신호와 데이터 경로를 무효화하였다. 이 방식으로 분기/점프 taken 발생 시 파이프라인에 남아 있던 잘못된 명령들이 모두 제거되고, 올바른 제어 흐름으로 복구된다.
+
+# 4. Hazard detection
+
+4번 문항에서는 포워딩만으로 해결되지 않는 해저드를 처리하기 위해 Hazard Detection Unit을 구현하였다. 과제 요구사항에 따라 load-use hazard와 branch hazard를 구분하여 처리하며, 필요 시 파이프라인을 1사이클 스톨하거나(taken 시에는 flush) 오경로 명령의 부작용을 제거하도록 구성하였다.
+먼저 load-use hazard는 ID/EX 단계의 명령이 메모리에서 값을 읽는(load) 경우에 발생한다. 이때 바로 뒤 명령이 같은 목적지 레지스터(idex_rd)를 rs1 또는 rs2로 사용하면 EX 단계에서 값이 아직 준비되지 않으므로, hazard unit은 이를 감지하여 1사이클 스톨을 발생시킨다. 구현에서는 idex_memread가 1이고 idex_rd가 0이 아니며, idex_rd가 rs1 또는 rs2와 같을 때 load-use hazard로 판정하였다. 판정 시 pcwrite를 “stall” 값으로 설정하여 PC가 증가하지 않게 하고, IF/ID는 bubble(유지)시키며, ID/EX에는 bubble을 주입하여 잘못된 제어 신호가 다음 단계로 진행되지 않도록 했다. 이를 통해 load 결과가 MEM/WB까지 도달한 뒤 포워딩으로 안전하게 사용할 수 있게 된다.
+다음으로 branch hazard는 always not-taken 가정에서 분기/점프가 taken으로 판정되었을 때 발생하는 제어 해저드이다. EX/MEM에 저장된 taken 신호가 1이면 hazard unit은 pcwrite를 “nextpc 선택”으로 설정하여 PC를 올바른 타겟으로 갱신하고, 동시에 IF/ID flush와 ID/EX, EX/MEM bubble inject를 활성화하여 오경로로 fetch/decoded/in-flight 되어 있던 명령들을 NOP로 무효화하였다. 이 과정에서 메모리 쓰기나 레지스터 쓰기 같은 부작용이 발생하지 않도록 제어 신호가 모두 제거되며, 다음 사이클부터 정상 경로의 명령 실행이 이어지도록 하였다.
