@@ -13,28 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FSOP/FSOPpayload.md",
+                "file": "school/CA/Lab 4.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FSOPpayload"
-            }
-          },
-          {
-            "id": "5cb02439f16158f8",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.10.6"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.10.6"
+              "title": "Lab 4"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -177,16 +164,18 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "5cb02439f16158f8",
+  "active": "3044ef8865dac89b",
   "lastOpenFiles": [
+    "FSOP/FSOPpayload.md",
+    "school/CA/Lab 4.md",
     "About me.md",
     "school/CA/Lab 3.md",
     "school/CA/Lab 2.md",
     "school/에자실/week 7.md",
-    "FSOP/FSOPpayload.md",
     "FSOP/FSOP.md",
     "Untitled.md",
     "image/Pasted image 20251031013015.png",
@@ -222,7 +211,6 @@
     "Dreamhack/writeup/pwn/Pet Pals.md",
     "Dreamhack/writeup/pwn/Period.md",
     "Dreamhack/writeup/pwn/PAC-MAN.md",
-    "Dreamhack/writeup/pwn/operator.md",
     "school",
     "kernel",
     "school/통실",
