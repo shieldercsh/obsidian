@@ -168,8 +168,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3044ef8865dac89b",
+  "active": "16cc5e275117f2a0",
   "lastOpenFiles": [
+    "dev/maf",
+    "Untitled",
+    "dev",
     "FSOP/FSOPpayload.md",
     "school/CA/Lab 4.md",
     "About me.md",
@@ -194,7 +197,6 @@
     "2025 CLUB LEAGUE qual.md",
     "school/CA/Lab 1.md",
     "school/CA",
-    "Untitled",
     "CTF/2025/2025 LG uplus ctf qual.md",
     "study/Page UAF.md",
     "Dreamhack/writeup/pwn/note.md",
@@ -210,11 +212,9 @@
     "Dreamhack/writeup/pwn/pop rdi.md",
     "Dreamhack/writeup/pwn/Pet Pals.md",
     "Dreamhack/writeup/pwn/Period.md",
-    "Dreamhack/writeup/pwn/PAC-MAN.md",
     "school",
     "kernel",
     "school/통실",
-    "pwnable.kr",
-    "my prob"
+    "pwnable.kr"
   ]
 }
