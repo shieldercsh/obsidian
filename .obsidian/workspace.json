@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "school/CA/Lab 4.md",
+                "file": "FSOP/FSOPpayload.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lab 4"
+              "title": "FSOPpayload"
             }
           }
         ]
@@ -168,13 +168,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "16cc5e275117f2a0",
+  "active": "3044ef8865dac89b",
   "lastOpenFiles": [
+    "school/CA/Lab 4.md",
     "dev/maf",
     "Untitled",
     "dev",
     "FSOP/FSOPpayload.md",
-    "school/CA/Lab 4.md",
     "About me.md",
     "school/CA/Lab 3.md",
     "school/CA/Lab 2.md",
@@ -214,7 +214,6 @@
     "Dreamhack/writeup/pwn/Period.md",
     "school",
     "kernel",
-    "school/통실",
-    "pwnable.kr"
+    "school/통실"
   ]
 }
