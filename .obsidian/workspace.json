@@ -39,12 +39,14 @@
             "id": "dbc815082af2a3ba",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.12.4"
+                "file": "About me.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "릴리즈 노트 1.12.4"
+              "icon": "lucide-file",
+              "title": "About me"
             }
           }
         ],
